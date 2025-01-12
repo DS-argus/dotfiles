@@ -17,16 +17,9 @@ alias lt3="eza -aT -L3 --color=always --group-directories-first --icons"
 # aliases for Zoxide
 alias cd="z"
 
-# Yazi
-export EDITOR="nvim"
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
+# aliaes for rust
+alias cn="cargo new"
+alias cr="cargo run"
 
 # other aliases
 alias c="clear"
