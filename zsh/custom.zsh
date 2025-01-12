@@ -15,3 +15,14 @@ export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
 
 # zxoxide - a better cd dommand
 eval "$(zoxide init zsh)"
+
+# Yazi
+export EDITOR="nvim"
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}

@@ -8,7 +8,7 @@ setopt HIST_IGNORE_ALL_DUPS
 [ -f "$HOME/.config/zsh/aliases.zsh" ] && source "$HOME/.config/zsh/aliases.zsh"
 
 # Private
-[ -f "$HOME/.config/zsh/privates.zsh" ] && source "$HOME/.config/zsh/privats.zsh"
+[ -f "$HOME/.config/zsh/privates.zsh" ] && source "$HOME/.config/zsh/privates.zsh"
 
 # Plugins
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
