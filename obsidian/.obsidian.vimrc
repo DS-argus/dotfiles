@@ -22,21 +22,21 @@ exmap surround_red surround <font\ color=FF0000> </font>
 
 " Visual 모드에서 surround를 사용하기 위한 매핑 정의
 " NOTE: Normal 모드에서 surround 명령어를 실행하려면 <CR> 필요
-vmap [[ :surround_wiki<CR>               " Visual 모드에서 선택된 텍스트를 [[ ]]로 감쌈
-vunmap s                                " 기본 s 키 매핑 해제
-vmap s" :surround_double_quotes<CR>     " Visual 모드에서 선택된 텍스트를 " "로 감쌈
-vmap s' :surround_single_quotes<CR>     " Visual 모드에서 선택된 텍스트를 ' '로 감쌈
-vmap s` :surround_backticks<CR>         " Visual 모드에서 선택된 텍스트를 ` `로 감쌈
-vmap s( :surround_brackets<CR>          " Visual 모드에서 선택된 텍스트를 ( )로 감쌈
-vmap s) :surround_brackets<CR>          " Visual 모드에서 선택된 텍스트를 ( )로 감쌈
-vmap s[ :surround_square_brackets<CR>   " Visual 모드에서 선택된 텍스트를 [ ]로 감쌈
-vmap s{ :surround_curly_brackets<CR>    " Visual 모드에서 선택된 텍스트를 { }로 감쌈
-vmap s_ :surround_under_bar<CR>         " Visual 모드에서 선택된 텍스트를 _ _로 감쌈
-vmap s* :surround_star<CR>              " Visual 모드에서 선택된 텍스트를 ** **로 감쌈
+vmap [[ :surround_wiki<CR>              
+vunmap s                                
+vmap s" :surround_double_quotes<CR>     
+vmap s' :surround_single_quotes<CR>     
+vmap s` :surround_backticks<CR>         
+vmap s( :surround_brackets<CR>          
+vmap s) :surround_brackets<CR>          
+vmap s[ :surround_square_brackets<CR>   
+vmap s{ :surround_curly_brackets<CR>    
+vmap s_ :surround_under_bar<CR>         
+vmap s* :surround_star<CR>              
 
-" Visual 모드에서 HTML 색상 태그 surround 매핑 정의
-vmap scyan :surround_cyan<CR>           " 선택된 텍스트를 Cyan 색상 태그로 감쌈
-vmap sblue :surround_blue<CR>           " 선택된 텍스트를 Blue 색상 태그로 감쌈
-vmap sgold :surround_gold<CR>           " 선택된 텍스트를 Gold 색상 태그로 감쌈
-vmap sgreen :surround_green<CR>         " 선택된 텍스트를 Green 색상 태그로 감쌈
-vmap sred :surround_red<CR>             " 선택된 텍스트를 Red 색상 태그로 감쌈
+" Visual 모드에서 HTML 색상 태그 surroun
+vmap scyan :surround_cyan<CR>           
+vmap sblue :surround_blue<CR>           
+vmap sgold :surround_gold<CR>           
+vmap sgreen :surround_green<CR>          
+vmap sred :surround_red<CR>             
