@@ -10,7 +10,7 @@ config.font = wezterm.font_with_fallback({
 	{ family = "D2Coding ligature", weight = "Black" },
 })
 
-config.font_size = 17
+config.font_size = 14
 
 -- cursor
 config.animation_fps = 120
