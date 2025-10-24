@@ -1,21 +1,23 @@
-# Locale settings
-export LANG="en_US.UTF-8" # Sets default locale for all categories
-export LC_ALL="en_US.UTF-8" # Overrides all other locale settings
-export LC_CTYPE="en_US.UTF-8" # Controls character classification and case conversion
+# =============================================================================
+# .zshenv - Environment Variables (모든 zsh 세션에서 실행)
+# =============================================================================
+# 이 파일은 모든 zsh 세션(로그인/비로그인, 인터랙티브/비인터랙티브)에서 실행됩니다.
+# 환경 변수와 기본 시스템 설정만 포함해야 합니다.
 
-# Themes
-export STARSHIP_THEME="nord"
+# -----------------------------------------------------------------------------
+# Locale Settings (언어 및 지역 설정)
+# -----------------------------------------------------------------------------
+export LANG="en_US.UTF-8"        # 모든 카테고리의 기본 로케일 설정
+export LC_ALL="en_US.UTF-8"      # 다른 모든 로케일 설정을 덮어씀
+export LC_CTYPE="en_US.UTF-8"    # 문자 분류 및 대소문자 변환 제어
 
-HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
-setopt share_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_verify
+# -----------------------------------------------------------------------------
+# Application Themes (애플리케이션 테마 설정)
+# -----------------------------------------------------------------------------
+export STARSHIP_THEME="nord"     # Starship 프롬프트 테마
 
-# bindkey '^[[A' history_search_backward
-# bindkey '^[[B' history_search_forward
-
-# rust
-. "$HOME/.cargo/env"
+# -----------------------------------------------------------------------------
+# Development Environment (개발 환경 설정)
+# -----------------------------------------------------------------------------
+# Rust 개발 환경 초기화
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

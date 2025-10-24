@@ -10,10 +10,7 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 starship config palette $STARSHIP_THEME
 
-# pygrahpviz
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
-
-# zxoxide - a better cd dommand
+# zoxide - a better cd command
 eval "$(zoxide init zsh)"
 
 # Yazi
@@ -26,3 +23,9 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+# PostgreSQL@16
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+# # pygraphviz
+# export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"

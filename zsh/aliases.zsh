@@ -21,9 +21,16 @@ alias cd="z"
 alias cn="cargo new"
 alias cr="cargo run"
 
+# aliaes for docker
+alias dkn='docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Status}}"'     # 실행 중인 컨테이너 목록 출력 (ID, Image, Names, Status)
+alias dkna='docker ps -a --format "table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Status}}"' # 모든 컨테이너 dkn처럼 출력
+alias dkp='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}"'      # 실행 중인 컨테이너 포트 정보 포함 출력
+alias dks='docker ps -s --format "table {{.Names}}\t{{.Size}}"'                         # 실행 중인 컨테이너 디스크 사용량 출력
+alias dkQuartz='docker run --rm -itp 8080:8080 -p 3001:3001 -v ./content:/usr/src/app/content $(docker build -q .)'
+alias dkrmAll='docker rm -f $(docker ps -aq)'
+
 # other aliases
 alias c="clear"
 alias e="exit"
-alias DO="viu /Users/argus/Desktop/Docalculus.png"
 
 

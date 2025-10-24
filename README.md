@@ -1,4 +1,28 @@
 ### Quick Start Guide
+0. installation 
+   ```bash
+   // neovim : advanced vim editor
+   brew install neovim
+
+   // wezterm : cross-platform terminal emulator and multiplexer
+   brew install --cask wezterm
+
+   // tmux : terminal mutiplexer
+   brew install tmux
+
+   // starship : cross-platform customizable prompt
+   brew install starship
+
+   // yazi : fast terminal file manager
+   brew install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick font-symbols-only-nerd-font
+
+   // zsh plugins
+   brew install zsh-syntax-highlighting
+   brew install zsh-autosuggestions
+   brew install zsh-completions
+   ```
+
+
 1. clone this repo to `~/.config`
    ```bash
    git clone https://github.com/DS-argus/dotfiles.git ~./config
@@ -17,15 +41,9 @@
 ### References
 
 ##### git : https://johngrib.github.io/wiki/git-alias/
-
 ##### nvim : https://youtu.be/6pAG3BHurdM?si=AzUMnrt0LlFBmmLY
-
 ##### starship : https://starship.rs/, https://youtu.be/v2S18Xf2PRo?si=b04d67p8WgvWG6ZX
-
 ##### tmux : https://youtu.be/U-omALWIBos?si=SSd_mR2AfuQRy3wVj
-
 ##### wezterm : https://wezfurlong.org/wezterm/index.html, https://youtu.be/TTgQV21X0SQ?si=eVhORB4VAHLTW-Xz
-
 ##### yazi : https://youtu.be/iKb3cHDD9hw?si=cVznD2jK16f8JKUx
-
 ##### zsh : https://github.com/hendrikmi/dotfiles/tree/3cf2c969323e1f33255743b04d9d7750cfee7496/zsh
