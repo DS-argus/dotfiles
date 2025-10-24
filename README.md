@@ -25,7 +25,7 @@
 
 1. clone this repo to `~/.config`
    ```bash
-   git clone https://github.com/DS-argus/dotfiles.git ~./config
+   git clone https://github.com/DS-argus/dotfiles.git ~/.config
    ```
    
 2. create symbolic links to the appropriate directories : `ln -s <source-path> <target-path>`
