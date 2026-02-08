@@ -1,19 +1,11 @@
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-
-#  Starship
+#  Starship : brew install starship
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
-starship config palette $STARSHIP_THEME
 
-# zoxide - a better cd command
+# zoxide - a better cd command : brew install zoxide
 eval "$(zoxide init zsh)"
 
-# Yazi
+# Yazi : brew install yazi
 export EDITOR="nvim"
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -26,6 +18,13 @@ function y() {
 
 # PostgreSQL@16
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+# Ghostty : Shell Integration
+# Ghostty shell integration (for tmux panes too)
+if [[ -n "${GHOSTTY_RESOURCES_DIR}" ]]; then
+  source "${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"
+fi
+
 
 # # pygraphviz
 # export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
