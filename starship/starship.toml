@@ -7,20 +7,17 @@ $fill\
 $python\
 $lua\
 $rust\
-$time\
-$battery\
-$memory_usage\
 $docker_context\
+$time\
 $jobs\
 $cmd_duration\
 $line_break\
 $character"""
 
 add_newline = true
-palette = "nord"
+palette = 'onedark' # nord | onedark
 
 [directory]
-# style = 'bold fg:dark_blue'
 style = 'bold fg:red'
 format = '[$path ]($style)'
 truncation_length = 3
@@ -162,7 +159,7 @@ detect_extensions = ['Dockerfile']
 [jobs]
 symbol = ' '
 style = 'red'
-number_threshold = 1
+number_threshold = 2
 format = '[$symbol]($style)'
 
 [cmd_duration]

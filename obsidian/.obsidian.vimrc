@@ -1,6 +1,12 @@
 " Insert 모드에서 'jk'를 입력하면 Normal 모드로 전환
 inoremap jk <Esc>
 
+
+" Outliner plugin을 사용할 때 o,  O 에서 발생하는 오류 해결 
+" https://github.com/vslinko/obsidian-outliner/issues/556
+nunmap o
+unumap O
+
 " 특정 텍스트를 원하는 형식으로 감싸는 surround 함수 정의
 " 예: '[[ ]]', '" "', "' '", '` `' 등으로 감쌀 수 있음
 exmap surround_wiki surround [[ ]]
@@ -34,7 +40,7 @@ vmap s{ :surround_curly_brackets<CR>
 vmap s_ :surround_under_bar<CR>         
 vmap s* :surround_star<CR>              
 
-" Visual 모드에서 HTML 색상 태그 surroun
+" Visual 모드에서 HTML 색상 태그 surround
 vmap scyan :surround_cyan<CR>           
 vmap sblue :surround_blue<CR>           
 vmap sgold :surround_gold<CR>           
