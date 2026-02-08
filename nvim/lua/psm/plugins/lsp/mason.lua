@@ -26,23 +26,20 @@ return {
 			"pyright",
 			"lua_ls",
 			"rust_analyzer",
-			"html",
-			"cssls",
 		}
 		mason_lspconfig.setup({
 			ensure_installed = servers,
 			automatic_installation = false,
 		})
 
-		-- 3. Tool 설치 (포매터, 린터 등)
+		-- 3. Tool 설치 (포매터, 린터 등) - LSP와 분리
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"black", -- python formatter
-				"isort", -- python import formatter
-				"pylint", -- python linter
+				"ruff", -- python linter & formatter (black, isort, pylint 대체)
 				"stylua", -- lua formatter
 				"prettier", -- HTML/CSS/JS formatter
 			},
+			run_on_start = false, -- 시작 시 자동 실행 비활성화
 		})
 
 		-- 4. LSP 서버 개별 설정은 lspconfig.lua에서 처리 (mason.lua에서는 하지 않음)

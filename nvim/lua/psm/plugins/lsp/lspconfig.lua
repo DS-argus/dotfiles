@@ -38,7 +38,7 @@ return {
 		})
 
 		-- LSP 서버 목록 (mason.lua와 동일하게 유지)
-		local servers = { "pyright", "lua_ls", "rust_analyzer", "html", "cssls" }
+		local servers = { "pyright", "lua_ls", "rust_analyzer" } -- CSS도 제거
 
 		-- mason-lspconfig의 setup은 mason.lua에서 처리하므로 여기서는 호출하지 않음
 		-- 각 서버별 lspconfig 설정을 반복문으로 처리
@@ -49,6 +49,14 @@ return {
 					Lua = {
 						diagnostics = { globals = { "vim" } },
 						completion = { callSnippet = "Replace" },
+						workspace = {
+							library = {
+								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+								[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+							},
+							maxPreload = 100000,
+							preloadFileSize = 10000,
+						},
 					},
 				}
 			end
@@ -56,12 +64,12 @@ return {
 				opts.settings = {
 					python = {
 						analysis = {
-							typeCheckingMode = "basic",         -- 타입 체크를 엄격하게!
-							diagnosticMode = "openFilesOnly",    -- 열려있는 파일만 분석 (속도 ↑, 필요시 "workspace"로)
-							autoSearchPaths = true,
-							useLibraryCodeForTypes = true,
-							extraPaths = {},                     -- 필요시 패키지 경로 추가 가능
-							exclude = { "venv", ".venv" },      -- 가상환경 폴더 분석 제외
+							typeCheckingMode = "off",              -- 타입 체크 비활성화 (속도 향상)
+							diagnosticMode = "openFilesOnly",       -- 열려있는 파일만 분석
+							autoSearchPaths = false,                -- 자동 경로 검색 비활성화 (속도 향상)
+							useLibraryCodeForTypes = false,         -- 라이브러리 코드 타입 분석 비활성화 (속도 향상)
+							extraPaths = {},                        -- 필요시 패키지 경로 추가 가능
+							exclude = { "venv", ".venv", "__pycache__", "*.pyc" }, -- 캐시 파일도 제외
 						},
 					},
 				}

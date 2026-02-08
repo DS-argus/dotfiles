@@ -42,6 +42,7 @@ return {
 				"query",
 				"vimdoc",
 				"c",
+				"python", -- Python 파서 추가 (성능 개선)
 			},
 			incremental_selection = {
 				enable = true,

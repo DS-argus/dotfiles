@@ -1,0 +1,2 @@
+WRN 2026-02-01T09:08:25.829 ?.36235    server_start:193: Failed to start server: operation not permitted: /var/folders/__/4fkccwzn4898x6sm4zh8dkth0000gn/T/nvim.argus/06PfvD/nvim.36235.0
+WRN 2026-02-01T09:10:03.401 ?.43101    server_start:193: Failed to start server: operation not permitted: /var/folders/__/4fkccwzn4898x6sm4zh8dkth0000gn/T/nvim.argus/YqU3Kx/nvim.43101.0

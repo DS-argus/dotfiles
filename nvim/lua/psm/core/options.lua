@@ -1,5 +1,8 @@
 vim.cmd("let g:netrw_liststyle = 3")
 
+-- Python provider 비활성화 (사용하는 플러그인 없음, 시작 속도 향상)
+vim.g.loaded_python3_provider = 0
+
 local opt = vim.opt
 
 opt.relativenumber = true

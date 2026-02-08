@@ -19,20 +19,20 @@ return {
 				-- graphql = { "prettier" },
 				-- liquid = { "prettier" },
 				lua = { "stylua" },
-				python = { "isort", "black" },
+				python = { "ruff_organize_imports", "ruff_format" },
 			},
-			format_on_save = {
+			format_after_save = {
 				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
+				-- async = true, -- 비동기 포맷팅으로 변경 (속도 향상)
+				-- timeout_ms = 3000, -- 타임아웃 증가
 			},
 		})
 
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
 			conform.format({
 				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
+				async = true, -- 비동기 포맷팅으로 변경
+				timeout_ms = 3000,
 			})
 		end, { desc = "Format file or range (in visual mode)" })
 	end,
