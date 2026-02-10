@@ -1,14 +1,14 @@
 theme = TokyoNight
 
-font-family = "PCMyungjo Regular"
+font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 13
 window-inherit-font-size = true
 
 window-padding-x = 12
 window-padding-y = 10
 
-cursor-style = block
-cursor-style-blink = true
+cursor-style = block_hollow
+cursor-style-blink = false
 
 cursor-color = "#00FFAA"
 cursor-opacity = 0.5
@@ -24,5 +24,5 @@ macos-titlebar-style = hidden
 macos-window-buttons = hidden
 macos-window-shadow = true
 
-copy-on-select = clipboard
+copy-on-select = false
 right-click-action = context-menu
