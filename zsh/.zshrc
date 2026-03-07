@@ -28,6 +28,9 @@ setopt HIST_IGNORE_ALL_DUPS      # 모든 중복 명령어 무시
 # 개인적인 설정 (민감한 정보 포함 가능)
 [ -f "$HOME/.config/zsh/privates.zsh" ] && source "$HOME/.config/zsh/privates.zsh"
 
+# Codex MCP env
+[[ -f "$HOME/.codex/mcp.env" ]] && source "$HOME/.codex/mcp.env"
+
 # -----------------------------------------------------------------------------
 # Zsh Plugins (zsh 플러그인들)
 # 설치 필요: brew install zsh-syntax-highlighting zsh-autosuggestions zsh-completions
@@ -62,3 +65,4 @@ bindkey '^O' autosuggest-accept
 
 # Added by Antigravity
 export PATH="/Users/argus/.antigravity/antigravity/bin:$PATH"
+
