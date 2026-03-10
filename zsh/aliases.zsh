@@ -29,6 +29,9 @@ alias dks='docker ps -s --format "table {{.Names}}\t{{.Size}}"'                 
 alias dkQuartz='docker run --rm -itp 8080:8080 -p 3001:3001 -v ./content:/usr/src/app/content $(docker build -q .)'
 alias dkrmAll='docker rm -f $(docker ps -aq)'
 
+# alias for lazygit
+alias lg="lazygit"
+
 # other aliases
 alias c="clear"
 alias e="exit"

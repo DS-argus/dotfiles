@@ -57,12 +57,3 @@ bindkey "$terminfo[kcbt]" reverse-menu-complete  # Shift+Tab 키
 # Ctrl+O로 autosuggestion 수락 : 원래는 오른쪽 방향키
 bindkey '^O' autosuggest-accept
 
-# -----------------------------------------------------------------------------
-# Terminal Integration (터미널 통합)
-# -----------------------------------------------------------------------------
-# Kiro 터미널 통합 (해당 터미널 사용 시에만)
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
-
-# Added by Antigravity
-export PATH="/Users/argus/.antigravity/antigravity/bin:$PATH"
-

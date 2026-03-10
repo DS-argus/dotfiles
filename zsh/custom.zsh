@@ -5,6 +5,9 @@ eval "$(starship init zsh)"
 # zoxide - a better cd command : brew install zoxide
 eval "$(zoxide init zsh)"
 
+# fzf - general purpose command-line fuzzy finder
+source <(fzf --zsh)
+
 # Yazi : brew install yazi
 export EDITOR="nvim"
 function y() {
