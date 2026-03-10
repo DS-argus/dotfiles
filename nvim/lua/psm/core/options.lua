@@ -42,3 +42,16 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+opt.autoread = true
+
+local autoread_group = vim.api.nvim_create_augroup("PsmAutoread", { clear = true })
+
+-- Reload files changed outside Neovim when it's safe to do so.
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI", "TermClose", "TermLeave" }, {
+  group = autoread_group,
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
