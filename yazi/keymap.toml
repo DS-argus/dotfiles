@@ -2,7 +2,8 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[manager]
+### 어떤 UI에서 어떤 Keymap을 사용할지 정의
+[mgr]   # 메인 파일 목록 화면
 
 keymap = [
 	{ on = "<Esc>", run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
@@ -150,14 +151,14 @@ keymap = [
 	{ on = "}", run = "tab_swap 1",  desc = "Swap current tab with next tab" },
 
 	# Tasks
-	{ on = "w", run = "tasks_show", desc = "Show task manager" },
+	{ on = "w", run = "tasks:show", desc = "Show task manager" },
 
 	# Help
 	{ on = "~",    run = "help", desc = "Open help" },
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
-[tasks]
+[tasks]   # 작업 관리자 창
 
 keymap = [
 	{ on = "<Esc>", run = "close", desc = "Close task manager" },
@@ -179,7 +180,7 @@ keymap = [
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
-[spot]
+[spot]    # 파일 정보 보기 화면
 
 keymap = [
 	{ on = "<Esc>", run = "close", desc = "Close the spot" },
@@ -205,7 +206,7 @@ keymap = [
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
-[pick]
+[pick]    # 선택창 레이어 (Open --interactive 와 같은 화면)
 
 keymap = [
 	{ on = "<Esc>",   run = "close",          desc = "Cancel pick" },
@@ -224,7 +225,7 @@ keymap = [
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
-[input]
+[input]   # 입력창 레이어 (create, rename, cd, search 등)
 
 keymap = [
 	{ on = "<C-c>",   run = "close",          desc = "Cancel input" },
@@ -294,7 +295,7 @@ keymap = [
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
-[confirm]
+[confirm]   # 확인 대화상자 레이어 (삭제, 덮어쓰기 확인 창 등)
 
 keymap = [
 	{ on = "<Esc>",   run = "close",          desc = "Cancel the confirm" },
@@ -316,12 +317,12 @@ keymap = [
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
-[completion]
+[cmp]    # 자동완성 레이어 (입력창 아래 경로/후보 목록이 뜰 때)
 
 keymap = [
 	{ on = "<C-c>",   run = "close",                                      desc = "Cancel completion" },
 	{ on = "<Tab>",   run = "close --submit",                             desc = "Submit the completion" },
-	{ on = "<Enter>", run = [ "close --submit", "close_input --submit" ], desc = "Submit the completion and input" },
+	{ on = "<Enter>", run = [ "close --submit", "input:close --submit" ], desc = "Submit the completion and input" },
 
 	{ on = "<A-k>", run = "arrow -1", desc = "Move cursor up" },
 	{ on = "<A-j>", run = "arrow 1",  desc = "Move cursor down" },

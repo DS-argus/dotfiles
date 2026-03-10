@@ -2,21 +2,21 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
-[manager]
-ratio          = [ 2, 4, 3 ]
-sort_by        = "alphabetical"
+[mgr]
+ratio          = [ 2, 4, 3 ]            # 3개 패널 너비 비율
+sort_by        = "alphabetical"         # 파일명 정렬. vs natural
 sort_sensitive = false
 sort_reverse 	 = false
 sort_dir_first = true
-sort_translit  = false
-linemode       = "none"
+sort_translit  = false                  # 정렬 시 음역 변환 여부 (sort_by = natural일 때만 유의미)
+linemode       = "size_and_mtime"       # none, size, btime, mtime, permissions, owner | init.lua에서 custom 정의 가능
 show_hidden    = true
 show_symlink   = true
 scrolloff      = 5
 mouse_events   = [ "click", "scroll" ]
 title_format   = "Yazi: {cwd}"
 
-[preview]
+[preview] # 우측 preview 패널
 wrap            = "no"
 tab_size        = 2
 max_width       = 1200
@@ -29,9 +29,16 @@ sixel_fraction  = 15
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
-[opener]
+[opener]  # 어떤 명령을 실행할지 정의
+# csv 여는 명령어
+csv = [
+  { run = 'csvlens %s', block = true, desc = "csvlens", for = "unix"}
+]
+# editor 띄우는 명령어
 edit = [
-	{ run = '${EDITOR:-vi} %s', desc = "$EDITOR", block = true, for = "unix" },
+	{ run = 'nvim %*', block = true, desc = "nvim", for = "macos" },
+	{ run = 'cursor %*', orphan = true, desc = "Cursor", for = "macos" },
+	{ run = '${EDITOR:-vi} %*', desc = "$EDITOR", block = true, for = "linux" },
 	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
 	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
 ]
@@ -39,6 +46,9 @@ open = [
 	{ run = 'xdg-open %s1',                 desc = "Open", for = "linux" },
 	{ run = 'open %s',                      desc = "Open", for = "macos" },
 	{ run = 'start "" %s1', orphan = true,  desc = "Open", for = "windows" },
+]
+chafa = [
+	{ run = '''chafa %s1; echo "Press enter to exit"; read _''', block = true, desc = "chafa", for = "unix" },
 ]
 reveal = [
 	{ run = 'xdg-open %d1',                        desc = "Reveal", for = "linux" },
@@ -56,14 +66,16 @@ play = [
 	{ run = '''mediainfo %s1; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 
-[open]
+[open]  # 파일 타입별 라우팅 : 어떤 파일에 어떤 opener를 사용할지
 rules = [
+  # csv
+	{ url = "*.csv", use = [ "csv", "reveal" ] },
 	# Folder
 	{ url = "*/", use = [ "edit", "open", "reveal" ] },
 	# Text
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
 	# Image
-	{ mime = "image/*", use = [ "open", "reveal" ] },
+	{ mime = "image/*", use = [ "open", "chafa", "reveal" ] },
 	# Media
 	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
 	# Archive
@@ -77,7 +89,7 @@ rules = [
 	{ url = "*", use = [ "open", "reveal" ] },
 ]
 
-[tasks]
+[tasks] # Yazi 내부 동기 작업 스케줄러 설정
 micro_workers    = 10
 macro_workers    = 10
 bizarre_retry    = 3
@@ -85,7 +97,7 @@ image_alloc      = 536870912  # 512MB
 image_bound      = [ 0, 0 ]
 suppress_preload = false
 
-[plugin]
+[plugin]  # 파일 정보 조회와 미리보기를 어떻게 처리할지
 
 fetchers = [
 	# Mimetype

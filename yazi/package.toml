@@ -1,5 +1,14 @@
-[plugin]
-deps = []
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "1962818"
+hash = "6fa6a05a81c98dd000fbca3cca6e9682"
 
-[flavor]
-deps = [{ use = "tkapias/nightfly", rev = "599b8ad" }]
+[[plugin.deps]]
+use = "Rolv-Apneseth/starship"
+rev = "eca1861"
+hash = "e519d894e94ded741e06aae4d4775981"
+
+[[flavor.deps]]
+use = "tkapias/nightfly"
+rev = "599b8ad"
+hash = ""
