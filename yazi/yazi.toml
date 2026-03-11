@@ -42,6 +42,9 @@ edit = [
 	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
 	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
 ]
+enter = [
+	{ run = 'ya emit enter', desc = "Enter" },
+]
 open = [
 	{ run = 'xdg-open %s1',                 desc = "Open", for = "linux" },
 	{ run = 'open %s',                      desc = "Open", for = "macos" },
@@ -55,6 +58,17 @@ reveal = [
 	{ run = 'open -R %s1',                         desc = "Reveal", for = "macos" },
 	{ run = 'explorer /select,%s1', orphan = true, desc = "Reveal", for = "windows" },
 	{ run = '''exiftool %s1; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+]
+reveal_dir = [
+	{ run = 'xdg-open %d1',                        desc = "Reveal", for = "linux" },
+	{ run = 'open -R %s1',                         desc = "Reveal", for = "macos" },
+	{ run = 'explorer /select,%s1', orphan = true, desc = "Reveal", for = "windows" },
+]
+zip_dir = [
+	{ run = '''path=%s1; name=$(basename "$path"); parent=$(dirname "$path"); cd "$parent" && zip -r "$name.zip" "$name"; echo "Press enter to exit"; read _''', block = true, desc = "zip", for = "unix" },
+]
+tar_gz_dir = [
+	{ run = '''path=%s1; name=$(basename "$path"); parent=$(dirname "$path"); cd "$parent" && tar -czf "$name.tar.gz" "$name"; echo "Press enter to exit"; read _''', block = true, desc = "tar.gz", for = "unix" },
 ]
 extract = [
 	{ run = 'ya pub extract --list %s',  desc = "Extract here", for = "unix" },
@@ -71,7 +85,7 @@ rules = [
   # csv
 	{ url = "*.csv", use = [ "csv", "reveal" ] },
 	# Folder
-	{ url = "*/", use = [ "edit", "open", "reveal" ] },
+	{ url = "*/", use = [ "enter", "zip_dir", "tar_gz_dir", "reveal_dir" ] },
 	# Text
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
 	# Image
