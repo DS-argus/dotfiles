@@ -7,8 +7,6 @@ return {
 		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
-		local mason_lspconfig = require("mason-lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local keymap = vim.keymap -- for conciseness
@@ -40,8 +38,7 @@ return {
 		-- LSP 서버 목록 (mason.lua와 동일하게 유지)
 		local servers = { "pyright", "lua_ls", "rust_analyzer" } -- CSS도 제거
 
-		-- mason-lspconfig의 setup은 mason.lua에서 처리하므로 여기서는 호출하지 않음
-		-- 각 서버별 lspconfig 설정을 반복문으로 처리
+		-- Neovim 0.11+ 방식: 서버별 설정을 등록하고, 필요한 서버만 명시적으로 활성화한다.
 		for _, server in ipairs(servers) do
 			local opts = { capabilities = capabilities }
 			if server == "lua_ls" then
@@ -74,7 +71,8 @@ return {
 					},
 				}
 			end
-			lspconfig[server].setup(opts)
+			vim.lsp.config(server, opts)
+			vim.lsp.enable(server)
 		end
 	end,
 }

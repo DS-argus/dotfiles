@@ -30,6 +30,7 @@ return {
 		mason_lspconfig.setup({
 			ensure_installed = servers,
 			automatic_installation = false,
+			automatic_enable = false,
 		})
 
 		-- 3. Tool 설치 (포매터, 린터 등) - LSP와 분리
