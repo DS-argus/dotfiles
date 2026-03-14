@@ -23,17 +23,17 @@ return {
 		vim.keymap.set("n", "<leader>lt", function()
 			lint_enabled = not lint_enabled -- Linting 활성화/비활성화 전환
 			if lint_enabled then
-				vim.notify("Linting Enabled")
+				vim.notify("린트 활성화됨")
 				lint.try_lint() -- 바로 Linting 실행
 			else
-				vim.notify("Linting Disabled")
+				vim.notify("린트 비활성화됨")
 				clear_lint() -- 진단 결과 제거
 			end
-		end, { desc = "Toggle linting on/off" })
+		end, { desc = "린트 토글" })
 
 		-- 수동 Linting 실행 키맵
-		vim.keymap.set("n", "<leader>l", function()
+		vim.keymap.set("n", "<leader>ll", function()
 			lint.try_lint()
-		end, { desc = "Trigger linting for current file" })
+		end, { desc = "현재 파일 린트 실행" })
 	end,
 }

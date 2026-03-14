@@ -50,8 +50,11 @@ local autoread_group = vim.api.nvim_create_augroup("PsmAutoread", { clear = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI", "TermClose", "TermLeave" }, {
   group = autoread_group,
   callback = function()
-    if vim.fn.mode() ~= "c" then
-      vim.cmd("checktime")
+    -- :checktime is invalid in the command-line window opened by q:, q/, q?
+    if vim.fn.mode() == "c" or vim.fn.getcmdwintype() ~= "" then
+      return
     end
+
+    pcall(vim.cmd, "checktime")
   end,
 })

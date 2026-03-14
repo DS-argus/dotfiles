@@ -28,12 +28,12 @@ return {
 			},
 		})
 
-		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+		vim.keymap.set({ "n", "v" }, "<leader>mf", function()
 			conform.format({
 				lsp_fallback = true,
 				async = true, -- 비동기 포맷팅으로 변경
 				timeout_ms = 3000,
 			})
-		end, { desc = "Format file or range (in visual mode)" })
+		end, { desc = "파일/선택 영역 포맷팅" })
 	end,
 }
