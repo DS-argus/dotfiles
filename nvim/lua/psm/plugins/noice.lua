@@ -13,9 +13,9 @@ return {
 		--   If not available, we use `mini` as the fallback
 		"rcarriga/nvim-notify",
 	},
-	keys = {
-		{ "<leader>nd", "<cmd>NoiceDismiss<CR>", desc = "Dismiss Noice Message" },
-	},
+		keys = {
+			{ "<leader>nd", "<cmd>NoiceDismiss<CR>", desc = "Noice 메시지 닫기" },
+		},
 	-- config=function (
 	--   require("noice").setup({
 	--     style = ""

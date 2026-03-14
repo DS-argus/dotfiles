@@ -18,7 +18,7 @@ return {
       local function set_markdown_keymaps(buf)
         vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown buf_toggle<CR>", {
           buffer = buf,
-          desc = "Toggle markdown rendering",
+          desc = "마크다운 렌더링 토글",
         })
       end
 
