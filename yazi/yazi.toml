@@ -65,10 +65,10 @@ reveal_dir = [
 	{ run = 'explorer /select,%s1', orphan = true, desc = "Reveal", for = "windows" },
 ]
 zip_dir = [
-	{ run = '''path=%s1; name=$(basename "$path"); parent=$(dirname "$path"); cd "$parent" && zip -r "$name.zip" "$name"; echo "Press enter to exit"; read _''', block = true, desc = "zip", for = "unix" },
+	{ run = 'ya emit plugin compress zip', desc = "zip" },
 ]
 tar_gz_dir = [
-	{ run = '''path=%s1; name=$(basename "$path"); parent=$(dirname "$path"); cd "$parent" && tar -czf "$name.tar.gz" "$name"; echo "Press enter to exit"; read _''', block = true, desc = "tar.gz", for = "unix" },
+	{ run = 'ya emit plugin compress tar.gz', desc = "tar.gz" },
 ]
 extract = [
 	{ run = 'ya pub extract --list %s',  desc = "Extract here", for = "unix" },
