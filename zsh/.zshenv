@@ -16,3 +16,6 @@ export LC_CTYPE="en_US.UTF-8"    # 문자 분류 및 대소문자 변환 제어
 # -----------------------------------------------------------------------------
 # Rust 개발 환경 초기화
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# uv
+export PATH="/Users/argus/.local/bin:$PATH"
