@@ -57,26 +57,40 @@ return {
 			return nil
 		end
 
+		local function with_pyright_python_path(settings, python_path)
+			if not python_path or python_path == "" then
+				return settings
+			end
+
+			return vim.tbl_deep_extend("force", settings or {}, {
+				python = { pythonPath = python_path },
+			})
+		end
+
 		local function update_pyright_python_path(client, python_path)
 			if not python_path or python_path == "" then
 				return
 			end
 
+			local runtime_path = client.settings
+				and client.settings.python
+				and client.settings.python.pythonPath
 			local current_path = client.config.settings
 				and client.config.settings.python
 				and client.config.settings.python.pythonPath
 
-			if current_path == python_path then
+			if runtime_path == python_path and current_path == python_path then
 				return
 			end
 
-			client.settings = vim.tbl_deep_extend("force", client.settings or {}, {
-				python = { pythonPath = python_path },
-			})
-			client.config.settings = vim.tbl_deep_extend("force", client.config.settings or {}, {
-				python = { pythonPath = python_path },
-			})
-			client:notify("workspace/didChangeConfiguration", { settings = nil })
+			client.settings = with_pyright_python_path(client.settings, python_path)
+			client.config.settings = with_pyright_python_path(client.config.settings, python_path)
+
+			if client.workspace_did_change_configuration then
+				client.workspace_did_change_configuration(client.settings)
+			else
+				client:notify("workspace/didChangeConfiguration", { settings = client.settings })
+			end
 		end
 
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -155,11 +169,8 @@ return {
 			end
 			if server == "pyright" then
 				opts.root_markers = python_root_markers
-				opts.before_init = function(_, config)
-					local python_path = find_python_path(config.root_dir)
-					config.settings = vim.tbl_deep_extend("force", config.settings or {}, {
-						python = { pythonPath = python_path },
-					})
+				opts.on_new_config = function(new_config, root_dir)
+					new_config.settings = with_pyright_python_path(new_config.settings, find_python_path(root_dir))
 				end
 				opts.settings = {
 					python = {
