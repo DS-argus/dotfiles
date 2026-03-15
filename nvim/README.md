@@ -79,7 +79,8 @@ vim.g.loaded_python3_provider = 0
 
 | 플러그인 | 기능 |
 |---------|------|
-| `snacks.nvim` | 대시보드, 파일 탐색기, 찾기 UI |
+| `snacks.nvim` | 대시보드, 보조 탐색기, 찾기 UI |
+| `nvim-tree.lua` | 기본 파일 탐색기 |
 | `bufferline.nvim` | 탭/버퍼 라인 |
 | `lualine.nvim` | 상태 표시줄 |
 | `tokyonight.nvim` | 컬러스킴 |
@@ -122,6 +123,7 @@ LocalLeader 키: `,`
 |----|------|
 | `<leader>ee` | 파일 탐색기 토글 |
 | `<leader>ef` | 현재 파일 위치에서 탐색기 열기 |
+| `<leader>es` | Snacks 탐색기 열기 |
 | `<leader>ff` | 파일 찾기 |
 | `<leader>fs` | 텍스트 검색 (live grep) |
 | `<leader>fr` | 최근 파일 |

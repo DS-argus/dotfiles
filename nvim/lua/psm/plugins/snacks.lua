@@ -2,34 +2,6 @@ local function snacks()
 	return require("snacks")
 end
 
-local function current_explorer()
-	local picker = snacks().picker.get({ source = "explorer" })
-	if vim.islist(picker) then
-		return picker[1]
-	end
-	return picker
-end
-
-local function toggle_explorer()
-	local picker = current_explorer()
-	if picker then
-		picker:close()
-		return
-	end
-
-	snacks().explorer()
-end
-
-local function explorer_action(action)
-	local picker = current_explorer()
-	if picker then
-		picker:action(action)
-		return
-	end
-
-	snacks().explorer()
-end
-
 return {
 	"folke/snacks.nvim",
 	priority = 900,
@@ -63,9 +35,7 @@ return {
 						icon = " ",
 						key = "f",
 						desc = "파일 탐색기",
-						action = function()
-							snacks().explorer()
-						end,
+						action = ":NvimTreeToggle",
 					},
 					{
 						icon = "󰱼 ",
@@ -102,6 +72,7 @@ return {
 		},
 		explorer = {
 			enabled = true,
+			replace_netrw = false,
 		},
 		indent = {
 			enabled = true,
@@ -135,32 +106,11 @@ return {
 	},
 	keys = {
 		{
-			"<leader>ee",
+			"<leader>es",
 			function()
-				toggle_explorer()
+				snacks().explorer()
 			end,
-			desc = "파일 탐색기 토글",
-		},
-		{
-			"<leader>ef",
-			function()
-				snacks().explorer.reveal()
-			end,
-			desc = "현재 파일 위치 보기",
-		},
-		{
-			"<leader>ec",
-			function()
-				explorer_action("explorer_close_all")
-			end,
-			desc = "탐색기 접기",
-		},
-		{
-			"<leader>er",
-			function()
-				explorer_action("explorer_update")
-			end,
-			desc = "탐색기 새로고침",
+			desc = "Snacks 탐색기 열기",
 		},
 		{
 			"<leader>sm",
