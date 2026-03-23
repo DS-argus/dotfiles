@@ -4,11 +4,6 @@ rev = "1962818"
 hash = "6fa6a05a81c98dd000fbca3cca6e9682"
 
 [[plugin.deps]]
-use = "Rolv-Apneseth/starship"
-rev = "eca1861"
-hash = "e519d894e94ded741e06aae4d4775981"
-
-[[plugin.deps]]
 use = "KKV9/compress"
 rev = "cb6e8ec"
 hash = "424ada4807b20ccd4fc85d1d7c26d1e4"
