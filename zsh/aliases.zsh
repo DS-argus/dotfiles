@@ -32,8 +32,10 @@ alias dkrmAll='docker rm -f $(docker ps -aq)'
 # alias for lazygit
 alias lg="lazygit"
 
+# aliases for GitHub
+alias ghr="gh repo view --web"
+
 # other aliases
 alias c="clear"
 alias e="exit"
-
 
