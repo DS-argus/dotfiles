@@ -1,194 +1,84 @@
 format = """
-$os\
-$directory\
-$git_branch\
-$git_status\
-$fill\
-$python\
-$lua\
-$rust\
-$docker_context\
-$time\
-$jobs\
-$cmd_duration\
-$line_break\
+$directory$git_branch$git_status$python$lua$rust$docker_context$cmd_duration
 $character"""
 
 add_newline = true
-palette = 'onedark' # nord | onedark
+palette = 'tokyonight_night'
 
 [directory]
-style = 'bold fg:red'
-format = '[$path ]($style)'
+style = 'bold fg:neon_cyan'
+format = '[$path]($style) '
 truncation_length = 3
-truncation_symbol = '…/'
+truncation_symbol = '.../'
 truncate_to_repo = false
 
 [directory.substitutions]
-'Documents' = '󰈙 '
-'Downloads' = ' '
-'Music' = ' '
-'Pictures' = ' '
-'Desktop' = ' '
-'Programming' = ' '
-'~' = ' '
-
-[time]
-disabled = false
-format = '[󱑆 $time]($style) '
-style = 'fg:#756bb1 bold'
-time_format = '%T'
-utc_time_offset = '+9'
-time_range = '00:00:00-23:59:59'
-
-[memory_usage]
-disabled = false
-format = '[$symbol $ram_pct]($style)'
-symbol = "󰍛"
-threshold = 50
-style = 'fg:#756bb1 bold'
-
-[battery]
-full_symbol = "🔋"
-charging_symbol = "🔌"
-discharging_symbol = "⚡"
-
-[[battery.display]]
-threshold = 20
-style = 'fg:#756bb1 bold'
-
-[[battery.display]]
-threshold = 60
-style = 'fg:#756bb1 bold'
-
-[[battery.display]]
-threshold = 80
-style = 'fg:#756bb1 bold'
-
-[os]
-disabled = false
-format = "[$symbol]($style) "
-symbols.Ubuntu = ""
-symbols.Windows = ""
-symbols.Macos = ""
-style = "#f7f7f7 bold" 
+'~' = '~'
 
 [character]
-success_symbol = '[❯](bold green) '
-error_symbol = '[✗](bold red) '
+success_symbol = '[❯](bold fg:neon_blue) '
+error_symbol = '[❯](bold fg:neon_pink) '
 
 [git_branch]
-style = 'fg:green bold'
-symbol = ' '
-format = '[on](white bold) [$symbol$branch ]($style)'
+style = 'fg:neon_purple bold'
+symbol = ''
+format = '[$branch]($style) '
 
 [git_status]
-ahead = "↑${count} "
-behind = "↓${count} "
-diverged = "↕${ahead_count} ${behind_count}"
-untracked = "?${count} "
-modified = "!${count} "
-conflicted = "≠${count} "
-staged = "✓${count} "
-stashed = "*${count} "
-style = "bright-white"
-format = """\
-[$ahead_behind](bold green)\
-[$stashed](bold green)\
-[$behind_behind](bold red)\
-[$diverged](bold yellow)\
-[$conflicted](bold red)\
-[$modified](bold blue)\
-[$untracked](bold cyan)\
-[$staged](bold green)\
-"""
-
-[fill]
-symbol = ' '
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+untracked = '?${count}'
+modified = '!${count}'
+conflicted = '=${count}'
+staged = '+${count}'
+stashed = '*${count}'
+deleted = '-${count}'
+style = 'fg:neon_orange bold'
+format = '[$all_status$ahead_behind]($style) '
 
 [python]
-style = 'yellow bold'
-symbol = ' '
-format = '[${symbol} ${version}(\($virtualenv\)) ]($style)'
-pyenv_version_name = false 
-version_format = "${raw}"
-pyenv_prefix = ''
+style = 'fg:neon_yellow bold'
+symbol = ''
+format = '[$symbol]($style) '
 
 [lua]
-style = 'yellow bold'
-format = '[$symbol($version) ]($style)'
-symbol = ' '
+style = 'fg:neon_cyan bold'
+symbol = ''
+format = '[$symbol]($style) '
 
 [rust]
-style = 'red bold'
-format = '[$symbol($version) ]($style)'
-symbol = ' '
-version_format = "${raw}"
-
-[nodejs]
-style = 'yellow bold'
-symbol = ' '
-
-[golang]
-style = 'blue'
-symbol = ' '
-
-[haskell]
-style = 'blue'
-symbol = ' '
-
-[ruby]
-style = 'blue'
-symbol = ' '
-
-[package]
-symbol = '󰏗 '
-
-[aws]
-symbol = ' '
-style = 'yellow'
-format = '[$symbol($profile )(\[$duration\] )]($style)'
+style = 'fg:neon_orange bold'
+symbol = ''
+format = '[$symbol]($style) '
 
 [docker_context]
-symbol = ' '
-style = 'fg:#06969A'
-format = '[$symbol]($style) $path'
+symbol = ''
+style = 'fg:neon_cyan'
+format = '[$symbol]($style) '
 detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
 detect_extensions = ['Dockerfile']
 
-[jobs]
-symbol = ' '
-style = 'red'
-number_threshold = 2
-format = '[$symbol]($style)'
-
 [cmd_duration]
 min_time = 500
-style = 'fg:gray'
-format = '[$duration]($style)'
+style = 'fg:soft_gray'
+format = '[$duration]($style) '
 
-[palettes.nord]
-dark_blue = '#5E81AC'
-blue = '#81A1C1'
-teal = '#88C0D0'
-red = '#BF616A'
-orange = '#D08770'
-green = '#A3BE8C'
-yellow = '#EBCB8B'
-purple = '#B48EAD'
-gray = '#434C5E'
-black = '#2E3440'
-white='#D8DEE9'
-
-[palettes.onedark]
-dark_blue='#61afef'
-blue='#56b6c2'
-red='#e06c75'
-green='#98c379'
-purple='#c678dd'
-cyan='#56b6c2'
-orange='#be5046'
-yellow='#e5c07b'
-gray='#828997'
-white ='#abb2bf'
-black='#2c323c'
+[palettes.tokyonight_night]
+blue = '#7aa2f7'
+cyan = '#7dcfff'
+green = '#9ece6a'
+orange = '#ff9e64'
+purple = '#bb9af7'
+red = '#f7768e'
+yellow = '#e0af68'
+gray = '#627e97'
+white = '#cbe0f0'
+black = '#011628'
+neon_blue = '#82aaff'
+neon_cyan = '#86e1fc'
+neon_purple = '#c099ff'
+neon_pink = '#ff7ab8'
+neon_orange = '#ffb86c'
+neon_yellow = '#ffd866'
+soft_gray = '#7f96aa'
