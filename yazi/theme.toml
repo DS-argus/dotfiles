@@ -1,3 +1,55 @@
 [flavor]
 use = "tokyo-night"
+# use = "nightfly"
 dark = "tokyo-night"
+
+[cmp]
+icon_file = "󰈔"
+icon_folder = "󰉋"
+icon_command = "󰘳"
+
+[icon]
+prepend_dirs = [
+	{ name = ".config", text = "󰒓", fg = "#7dcfff" },
+	{ name = ".git", text = "󰊢", fg = "#f7768e" },
+	{ name = "Desktop", text = "󰟀", fg = "#7aa2f7" },
+	{ name = "Documents", text = "󰈙", fg = "#9ece6a" },
+	{ name = "Downloads", text = "󰉍", fg = "#e0af68" },
+	{ name = "Pictures", text = "󰋩", fg = "#e0af68" },
+]
+
+prepend_files = [
+	{ name = ".gitignore", text = "󰊢", fg = "#f7768e" },
+	{ name = "Dockerfile", text = "󰡨", fg = "#7dcfff" },
+	{ name = "README.md", text = "󰍔", fg = "#7dcfff" },
+]
+
+prepend_exts = [
+	{ name = "md", text = "󰍔", fg = "#7dcfff" },
+	{ name = "lua", text = "󰢱", fg = "#7aa2f7" },
+	{ name = "toml", text = "󰰤", fg = "#e0af68" },
+	{ name = "yaml", text = "󰈙", fg = "#e0af68" },
+	{ name = "yml", text = "󰈙", fg = "#e0af68" },
+	{ name = "json", text = "󰘦", fg = "#9ece6a" },
+	{ name = "lock", text = "󰌾", fg = "#bb9af7" },
+	{ name = "png", text = "󰋩", fg = "#e0af68" },
+	{ name = "jpg", text = "󰋩", fg = "#e0af68" },
+	{ name = "jpeg", text = "󰋩", fg = "#e0af68" },
+	{ name = "svg", text = "󰜡", fg = "#7dcfff" },
+	{ name = "zip", text = "󰗄", fg = "#bb9af7" },
+	{ name = "tar", text = "󰗄", fg = "#bb9af7" },
+	{ name = "gz", text = "󰗄", fg = "#bb9af7" },
+	{ name = "7z", text = "󰗄", fg = "#bb9af7" },
+	{ name = "mp3", text = "󰎆", fg = "#f7768e" },
+	{ name = "wav", text = "󰎆", fg = "#f7768e" },
+	{ name = "mp4", text = "󰕧", fg = "#f7768e" },
+]
+
+prepend_conds = [
+	{ if = "hidden & dir", text = "󰉖", fg = "#565f89" },
+	{ if = "hidden", text = "󰘓", fg = "#565f89" },
+	{ if = "link", text = "", fg = "#7dcfff" },
+	{ if = "orphan", text = "", fg = "#f7768e" },
+	{ if = "exec & !dir", text = "󰆍", fg = "#9ece6a" },
+	{ if = "dir", text = "󰉋", fg = "#7aa2f7" },
+]
