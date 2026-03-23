@@ -1,35 +1,84 @@
-theme = TokyoNight
+# 사용할 컬러 테마.
+theme = "TokyoNight Storm"
 
+# 기본 코드 폰트는 JetBrains Mono로 유지.
 font-family = "JetBrains Mono"
+# Nerd Font 아이콘은 Symbols Nerd Font Mono에서 fallback 받아 조금 더 또렷하고 크게 보이게 함.
+font-family = "Symbols Nerd Font Mono"
+# JetBrains에 없는 한글 글립은 D2Coding Ligature로 fallback.
 font-family = "D2Coding ligature"
 
+# 기본 텍스트를 약간 기울어진 Medium Italic으로 렌더링.
+font-style = "Medium Italic"
+# ANSI bold 요청은 SemiBold 스타일로 매핑.
+font-style-bold = "SemiBold Italic"
+# ANSI italic 요청은 Medium Italic으로 매핑.
+font-style-italic = "Medium Italic"
+# ANSI bold+italic 요청은 SemiBold Italic으로 매핑.
+font-style-bold-italic = "SemiBold Italic"
+
+# 기본 폰트 크기.
 font-size = 12
+# macOS에서 글꼴 획을 약간 두껍게 보정.
+font-thicken = true
+# 두께 보정 강도. 너무 높이면 번져 보일 수 있어서 낮게 유지.
+font-thicken-strength = 32
+# 새 창/탭/분할이 현재 폰트 크기 상태를 이어받도록 설정.
 window-inherit-font-size = true
 
+# 좌우 내부 여백.
 window-padding-x = 12
+# 상하 내부 여백.
 window-padding-y = 10
+# 셀 단위로 나눠 떨어지지 않는 여백을 네 방향에 균등 분배.
+window-padding-balance = true
+# 가장자리 패딩 색을 인접 셀 배경과 자연스럽게 이어서 표시.
+window-padding-color = extend
 
+# 커서 모양은 block.
 cursor-style = block
+# 커서 깜빡임 비활성화.
 cursor-style-blink = false
 
+# 커서 색상.
 cursor-color = "#00FFAA"
-cursor-opacity = 1.0
+# 커서 불투명도.
+cursor-opacity = 0.8
+# 블록 커서를 약간 더 도톰하게 표시.
 adjust-cursor-thickness = 120%
 
-unfocused-split-opacity = 0.8
-split-divider-color = "#444444"
-
+# 창 전체 배경 투명도.
 background-opacity = 0.9
+# 투명 배경 뒤를 부드럽게 블러 처리.
+background-blur = 20
+# 셀 배경에도 투명도 적용.
 background-opacity-cells = true
 
+# macOS 타이틀바 숨김.
 macos-titlebar-style = hidden
+# macOS 창 버튼(traffic lights) 숨김.
 macos-window-buttons = hidden
-macos-window-shadow = true
+# macOS 창 그림자는 유지.
+macos-window-shadow = false
 
+# 텍스트 선택만으로 자동 복사하지 않음.
 copy-on-select = false
+# 우클릭 시 컨텍스트 메뉴 표시.
 right-click-action = context-menu
+# 타이핑 중에는 마우스 커서를 숨겨 화면을 더 깔끔하게 유지.
+mouse-hide-while-typing = true
 
-# Keep shell integration, but prevent runtime cursor-shape overrides from zsh integration.
+# 창 크기 조절 시 표시되는 오버레이를 숨김.
+resize-overlay = never
+
+# shell integration은 유지하되 zsh가 런타임에 커서 모양을 바꾸지 못하게 제한.
 shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,path
 
+# 앱이 OSC로 보내는 데스크톱 알림 허용.
 desktop-notifications = true
+
+# D2Coding Ligature를 기본 폰트로 쓰고 싶으면 아래처럼 순서를 바꾸면 됨.
+# font-family = ""
+# font-family = "D2Coding ligature"
+# font-family = "Symbols Nerd Font Mono"
+# font-family = "JetBrains Mono"
