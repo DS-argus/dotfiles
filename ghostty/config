@@ -48,9 +48,9 @@ cursor-opacity = 0.8
 adjust-cursor-thickness = 120%
 
 # 창 전체 배경 투명도.
-background-opacity = 0.9
+background-opacity = 0.8
 # 투명 배경 뒤를 부드럽게 블러 처리.
-background-blur = 20
+background-blur = 15
 # 셀 배경에도 투명도 적용.
 background-opacity-cells = true
 
@@ -77,8 +77,3 @@ shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,
 # 앱이 OSC로 보내는 데스크톱 알림 허용.
 desktop-notifications = true
 
-# D2Coding Ligature를 기본 폰트로 쓰고 싶으면 아래처럼 순서를 바꾸면 됨.
-# font-family = ""
-# font-family = "D2Coding ligature"
-# font-family = "Symbols Nerd Font Mono"
-# font-family = "JetBrains Mono"
