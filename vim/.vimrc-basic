@@ -1,0 +1,246 @@
+"==============================================================
+" ~/.vimrc
+" 폐쇄망 / 서버 환경용 플러그인 없는 Vim 설정
+" 주 목적: 쉘 스크립트(sh/bash/zsh) 열람, 확인, 가벼운 수정
+"==============================================================
+
+"--------------------------------------------------------------
+" Vim 기본 모드
+"--------------------------------------------------------------
+set nocompatible                " vi 호환 모드 해제, Vim 기능 온전히 사용
+syntax on                       " 문법 하이라이트 활성화
+filetype plugin indent on       " 파일 타입 감지, 기본 플러그인/들여쓰기 활성화
+set encoding=utf-8              " 내부 인코딩 UTF-8
+set fileencodings=utf-8,euc-kr,cp949 " 파일 열 때 시도할 인코딩 순서
+set fileformats=unix,dos        " 줄바꿈 형식 우선순위: unix -> dos
+set ttyfast                     " 빠른 터미널 최적화
+set hidden                      " 저장 안 한 버퍼가 있어도 다른 버퍼로 이동 가능
+set autoread                    " 외부에서 파일 변경 시 자동 다시 읽기
+set history=1000                " 명령어/검색 기록 수
+set undolevels=1000             " undo 기록 수
+set timeoutlen=800              " 매핑 대기 시간
+set ttimeoutlen=10              " 터미널 키코드 대기 시간
+set updatetime=300              " CursorHold 등의 반응 시간
+set shell=/bin/bash             " 기본 쉘 지정
+
+let mapleader = " "             " 리더 키를 스페이스로 설정
+
+"--------------------------------------------------------------
+" 화면 표시
+"--------------------------------------------------------------
+set number                      " 절대 줄 번호 표시
+set relativenumber              " 상대 줄 번호 표시
+set cursorline                  " 현재 줄 강조
+set ruler                       " 상태줄에 커서 위치 표시
+set showcmd                     " 입력 중인 명령 하단 표시
+set showmode                    " 현재 모드(-- INSERT -- 등) 표시
+set laststatus=2                " 항상 상태줄 표시
+set signcolumn=yes              " sign column 항상 표시
+set nowrap                      " 긴 줄 자동 줄바꿈 끄기
+set scrolloff=5                 " 위아래로 최소 5줄 여유 유지
+set sidescrolloff=8             " 좌우로 최소 8칸 여유 유지
+set display+=lastline           " 긴 줄도 가능한 끝까지 표시
+set splitright                  " 세로 분할 시 오른쪽에 새 창
+set splitbelow                  " 가로 분할 시 아래쪽에 새 창
+
+if has('termguicolors')
+  set termguicolors             " 터미널이 지원하면 true color 사용
+endif
+
+colorscheme default             " 기본 색상 사용
+set background=dark             " 어두운 터미널 배경 가정
+
+"--------------------------------------------------------------
+" 검색
+"--------------------------------------------------------------
+set ignorecase                  " 검색 시 기본은 대소문자 무시
+set smartcase                   " 대문자 포함 검색이면 대소문자 구분
+set incsearch                   " 검색어 입력 중 실시간 탐색
+set hlsearch                    " 검색 결과 하이라이트 유지
+
+"--------------------------------------------------------------
+" 들여쓰기 / 탭
+"--------------------------------------------------------------
+set tabstop=4                   " 탭 폭 4칸
+set softtabstop=4               " 편집 중 탭 입력 폭 4칸
+set shiftwidth=4                " 자동 들여쓰기 폭 4칸
+set expandtab                   " 탭을 공백으로 입력
+set autoindent                  " 이전 줄 들여쓰기 유지
+set smartindent                 " 코드 문맥 기반 추가 들여쓰기
+set shiftround                  " >, < 시 shiftwidth 단위로 반올림
+
+"--------------------------------------------------------------
+" 편집 편의
+"--------------------------------------------------------------
+set backspace=indent,eol,start  " 백스페이스 동작 확장
+set whichwrap+=<,>,[,],h,l      " 줄 끝에서도 좌우 이동 자연스럽게
+set virtualedit=block           " 비주얼 블록 모드에서 빈 공간까지 이동 허용
+set wildmenu                    " 명령줄 자동완성 메뉴 표시
+set wildmode=longest:full,full  " 명령 자동완성 방식
+set completeopt=menu,menuone,noselect " 자동완성 메뉴 동작
+set confirm                     " 저장 안 된 변경사항 있을 때 확인창
+set formatoptions-=cro          " 자동 주석 이어쓰기 비활성화
+set showmatch                   " 괄호 짝 잠깐 표시
+set matchtime=2                 " 괄호 짝 표시 시간
+set list                        " 탭/공백 등 보이지 않는 문자 표시
+set listchars=tab:>-,trail:·,extends:>,precedes:<,nbsp:+
+
+"--------------------------------------------------------------
+" 파일 저장 / 백업 / swap / undo
+"--------------------------------------------------------------
+set nobackup                    " 백업 파일 생성 안 함
+set nowritebackup               " 저장 전 백업 파일 생성 안 함
+set noswapfile                  " 스왑 파일 생성 안 함
+
+if has('persistent_undo')
+  set undofile                  " Vim 종료 후에도 undo 이력 유지
+
+  " ~/.vim/undo 디렉토리가 없으면 생성
+  if isdirectory($HOME . '/.vim') == 0
+    call mkdir($HOME . '/.vim', 'p')
+  endif
+
+  if isdirectory($HOME . '/.vim/undo') == 0
+    call mkdir($HOME . '/.vim/undo', 'p')
+  endif
+
+  let &undodir = $HOME . '/.vim/undo'
+endif
+
+"--------------------------------------------------------------
+" 클립보드
+" 서버 빌드 옵션에 clipboard가 없을 수도 있어서 조건부 적용
+"--------------------------------------------------------------
+if has('clipboard')
+  if has('unnamedplus')
+    set clipboard=unnamedplus
+  else
+    set clipboard=unnamed
+  endif
+endif
+
+"--------------------------------------------------------------
+" 마우스
+" 터미널 복사/붙여넣기와 충돌하면 이 줄은 지워도 됨
+"--------------------------------------------------------------
+if has('mouse')
+  set mouse=a
+endif
+
+"--------------------------------------------------------------
+" 리더 키 기반 단축키
+"--------------------------------------------------------------
+
+" insert 모드에서 jk로 빠져나오기
+inoremap jk <Esc>
+
+" 검색 하이라이트 끄기
+nnoremap <leader>nh :nohlsearch<CR>
+
+" 저장 / 종료
+nnoremap <leader>w  :w<CR>
+nnoremap <leader>q  :q<CR>
+nnoremap <leader>wq :wq<CR>
+nnoremap <leader>qq :q!<CR>
+
+" 창 분할
+nnoremap <leader>sv <C-w>v      " 세로 분할
+nnoremap <leader>sh <C-w>s      " 가로 분할
+nnoremap <leader>se <C-w>=      " 창 크기 균등화
+nnoremap <leader>sx :close<CR>  " 현재 창 닫기
+
+" 창 이동
+nnoremap <C-h> <C-w>h           " 왼쪽 창 이동
+nnoremap <C-j> <C-w>j           " 아래 창 이동
+nnoremap <C-k> <C-w>k           " 위 창 이동
+nnoremap <C-l> <C-w>l           " 오른쪽 창 이동
+
+" 창 크기 조절
+nnoremap <leader><Left>  :vertical resize -3<CR>
+nnoremap <leader><Right> :vertical resize +3<CR>
+nnoremap <leader><Up>    :resize +2<CR>
+nnoremap <leader><Down>  :resize -2<CR>
+
+" 탭 관리
+nnoremap <leader>to :tabnew<CR>       " 새 탭
+nnoremap <leader>tx :tabclose<CR>     " 현재 탭 닫기
+nnoremap <leader>tn :tabnext<CR>      " 다음 탭
+nnoremap <leader>tp :tabprevious<CR>  " 이전 탭
+nnoremap <leader>tf :tabnew %<CR>     " 현재 파일을 새 탭으로
+
+" 보기 옵션 토글
+nnoremap <leader>rn :set relativenumber!<CR> " 상대번호 on/off
+nnoremap <leader>nw :set wrap!<CR>           " 줄바꿈 on/off
+nnoremap <leader>nl :set list!<CR>           " 보이지 않는 문자 표시 on/off
+
+" 붙여넣기 모드 토글
+" 터미널에서 복붙 시 자동 들여쓰기 깨질 때 유용
+nnoremap <F2> :set paste! paste?<CR>
+inoremap <F2> <C-o>:set paste! paste?<CR>
+
+" 비주얼 선택 상태 유지하며 들여쓰기
+vnoremap < <gv
+vnoremap > >gv
+
+" 비주얼 블록/선택 줄 이동 후 다시 정렬
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+"--------------------------------------------------------------
+" 쉘 스크립트 확인용 추가 매핑
+"--------------------------------------------------------------
+
+" 현재 파일 다시 문법 해석
+nnoremap <leader>ss :syntax sync fromstart<CR>
+
+" 현재 줄에 # 주석 추가
+" 쉘 스크립트 빠른 주석 처리용
+nnoremap <leader>c I# <Esc>
+
+" 현재 줄 맨 앞의 # 제거
+" 이미 주석인 줄을 빠르게 해제할 때 사용
+nnoremap <leader>u ^x
+
+" 선택한 줄들에 # 주석 추가
+vnoremap <leader>c :s/^/# /<CR>gv
+
+" 선택한 줄들 앞의 # 제거
+vnoremap <leader>u :s/^\s*#\s\?//<CR>gv
+
+"--------------------------------------------------------------
+" 자동 명령
+"--------------------------------------------------------------
+augroup my_vimrc
+  autocmd!
+
+  " 파일 다시 열 때 마지막 편집 위치로 이동
+  autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   execute "normal! g`\"" |
+        \ endif
+
+  " 저장 전 줄 끝 공백 제거
+  autocmd BufWritePre * %s/\s\+$//e
+
+  " 터미널 포커스 복귀 / 버퍼 진입 시 파일 변경 체크
+  autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime
+
+  " help 파일은 오른쪽 세로 분할로 열기
+  autocmd FileType help wincmd L
+
+  " 쉘 스크립트 계열 파일 설정
+  autocmd FileType sh,bash,zsh setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+  autocmd FileType sh,bash,zsh setlocal commentstring=#\ %s
+  autocmd FileType sh,bash,zsh setlocal iskeyword+=-
+  autocmd FileType sh,bash,zsh setlocal foldmethod=indent
+  autocmd FileType sh,bash,zsh setlocal foldlevel=99
+
+  " Makefile은 실제 탭이 필요하므로 expandtab 끄기
+  autocmd FileType make setlocal noexpandtab
+
+  " YAML/JSON은 2칸 들여쓰기
+  autocmd FileType yaml,yml,json setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+  " Python도 4칸 공백
+  autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+augroup END
