@@ -12,10 +12,18 @@ export LC_ALL="en_US.UTF-8"      # 다른 모든 로케일 설정을 덮어씀
 export LC_CTYPE="en_US.UTF-8"    # 문자 분류 및 대소문자 변환 제어
 
 # -----------------------------------------------------------------------------
+# Base Directories & Shared Environment
+# -----------------------------------------------------------------------------
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+export EDITOR="${EDITOR:-nvim}"
+export OBSIDIAN_VAULT_DIR="${OBSIDIAN_VAULT_DIR:-$HOME/Desktop/Obsidian/Argus}"
+
+# -----------------------------------------------------------------------------
 # Development Environment (개발 환경 설정)
 # -----------------------------------------------------------------------------
 # Rust 개발 환경 초기화
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$CARGO_HOME/env" ] && . "$CARGO_HOME/env"
 
 # uv
-export PATH="/Users/argus/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

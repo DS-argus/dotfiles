@@ -20,13 +20,13 @@ setopt HIST_IGNORE_ALL_DUPS      # 모든 중복 명령어 무시
 # Custom Configuration Files (사용자 정의 설정 파일들)
 # -----------------------------------------------------------------------------
 # 사용자 정의 zsh 설정
-[ -f "$HOME/.config/zsh/custom.zsh" ] && source "$HOME/.config/zsh/custom.zsh"
+[ -f "$XDG_CONFIG_HOME/zsh/custom.zsh" ] && source "$XDG_CONFIG_HOME/zsh/custom.zsh"
 
 # 별칭(aliases) 설정
-[ -f "$HOME/.config/zsh/aliases.zsh" ] && source "$HOME/.config/zsh/aliases.zsh"
+[ -f "$XDG_CONFIG_HOME/zsh/aliases.zsh" ] && source "$XDG_CONFIG_HOME/zsh/aliases.zsh"
 
 # 개인적인 설정 (민감한 정보 포함 가능)
-[ -f "$HOME/.config/zsh/privates.zsh" ] && source "$HOME/.config/zsh/privates.zsh"
+[ -f "$XDG_CONFIG_HOME/zsh/privates.zsh" ] && source "$XDG_CONFIG_HOME/zsh/privates.zsh"
 
 # Codex MCP env
 [[ -f "$HOME/.codex/mcp.env" ]] && source "$HOME/.codex/mcp.env"
@@ -35,17 +35,31 @@ setopt HIST_IGNORE_ALL_DUPS      # 모든 중복 명령어 무시
 # Zsh Plugins (zsh 플러그인들)
 # 설치 필요: brew install zsh-syntax-highlighting zsh-autosuggestions zsh-completions
 # -----------------------------------------------------------------------------
+BREW_PREFIX="${HOMEBREW_PREFIX:-}"
+if [[ -z "$BREW_PREFIX" ]] && command -v brew >/dev/null 2>&1; then
+  BREW_PREFIX="$(brew --prefix)"
+fi
+
 # 문법 강조 플러그인 : 입력한 명령어의 문법을 색상으로 구분
 # https://github.com/zsh-users/zsh-syntax-highlighting
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -n "$BREW_PREFIX" && -f "${BREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "${BREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 # 자동 제안 플러그인 : 이전에 입력한 명령을 자동으로 회색 글씨로 예측
 # https://github.com/zsh-users/zsh-autosuggestions
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+AUTOSUGGESTIONS_LOADED=0
+if [[ -n "$BREW_PREFIX" && -f "${BREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "${BREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  AUTOSUGGESTIONS_LOADED=1
+fi
 
 # 자동 완성 플러그인 : 기본 zsh 패키지에 포함되지 않은 외부 프로그램들에 대한 completion 스크립트를 추가로 제공
 # https://github.com/zsh-users/zsh-completions
-FPATH=$(brew --prefix)/share/zsh-completions:$FPATH && autoload -Uz compinit && compinit
+if [[ -n "$BREW_PREFIX" && -d "${BREW_PREFIX}/share/zsh-completions" ]]; then
+  FPATH="${BREW_PREFIX}/share/zsh-completions:${FPATH}"
+fi
+autoload -Uz compinit && compinit
 
 # -----------------------------------------------------------------------------
 # Key Bindings (키 바인딩 설정)
@@ -55,5 +69,6 @@ bindkey '^I' menu-complete                    # Tab 키
 bindkey "$terminfo[kcbt]" reverse-menu-complete  # Shift+Tab 키
 
 # Ctrl+O로 autosuggestion 수락 : 원래는 오른쪽 방향키
-bindkey '^O' autosuggest-accept
-
+if (( AUTOSUGGESTIONS_LOADED )); then
+  bindkey '^O' autosuggest-accept
+fi

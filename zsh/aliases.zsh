@@ -1,10 +1,10 @@
 # aliases for configuration
 alias reload-zshrc="source ~/.zshrc"
 alias edit-zshrc="nvim ~/.zshrc"
-alias edit-alias="nvim ~/.config/zsh/aliases.zsh"
-alias edit-custom="nvim ~/.config/zsh/custom.zsh"
-alias edit-starship="nvim ~/.config/starship/starship.toml"
-alias edit-obsidian-vimrc="nvim ~/Desktop/Obsidian/Argus/.obsidian.vimrc"
+alias edit-alias='nvim "$XDG_CONFIG_HOME/zsh/aliases.zsh"'
+alias edit-custom='nvim "$XDG_CONFIG_HOME/zsh/custom.zsh"'
+alias edit-starship='nvim "$XDG_CONFIG_HOME/starship/starship.toml"'
+alias edit-obsidian-vimrc='nvim "$OBSIDIAN_VAULT_DIR/.obsidian.vimrc"'
 
 # aliases for eza
 alias ls="eza --icons=always"
@@ -38,4 +38,3 @@ alias ghr="gh repo view --web"
 # other aliases
 alias c="clear"
 alias e="exit"
-
