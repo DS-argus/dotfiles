@@ -15,6 +15,7 @@ git clone https://github.com/DS-argus/dotfiles.git ~/.config
 # Step 2 : Install terminal emulator. (one of them below)
 ## Terminal emulator: Ghostty
 brew install --cask ghostty
+brew install --cask font-jetbrains-mono font-symbols-only-nerd-font font-d2coding-nerd-font
 
 ## Terminal emulator and multiplexer: WezTerm
 brew install --cask wezterm
