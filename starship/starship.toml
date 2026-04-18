@@ -13,7 +13,10 @@ truncation_symbol = '.../'
 truncate_to_repo = false
 
 [directory.substitutions]
-'~' = '~'
+'~' = ' '
+'.config' = '󰒓'
+'Desktop' = ' '
+'Programming' = ' '
 
 [character]
 success_symbol = '[❯](bold fg:neon_blue) '
