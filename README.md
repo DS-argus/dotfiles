@@ -23,9 +23,12 @@ ln -sfn ~/.config/wezterm/.wezterm.lua ~/.wezterm.lua
 # Step 3 : Install terminal multiplexer
 ## Terminal multiplexer
 brew install tmux
+brew install bash
 ln -sfn ~/.config/tmux/.tmux.conf ~/.tmux.conf
 
 ## tmux plugin manager required by the current tmux.conf
+### `fabioluciano/tmux-powerkit` is implemented in Bash and uses Bash 4+ features
+### On macOS systems that still use the old system Bash, installing Homebrew Bash avoids plugin runtime issues
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Step 4 : Utilities
@@ -50,6 +53,7 @@ brew install zsh-autosuggestions
 ## zsh entrypoint files expected in the home directory
 ln -sfn ~/.config/zsh/.zshrc ~/.zshrc
 ln -sfn ~/.config/zsh/.zshenv ~/.zshenv
+ln -sfn ~/.config/zsh/.zprofile ~/.zprofile
 
 ## Modern ls replacement used by shell aliases
 brew install eza
@@ -115,6 +119,8 @@ ln -sfn ~/.config/git/.gitconfig ~/.gitconfig
 
 The following applications read their configuration directly from this repository without additional symlinks:  
 Ghostty, btop, gh, gh-dash, Neovim, Starship, and Yazi.
+
+Git also reads `~/.config/git/ignore` automatically as the XDG global ignore file, so it does not need a separate symlink.
 
 ## References
 
