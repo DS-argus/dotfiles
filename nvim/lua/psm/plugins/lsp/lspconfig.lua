@@ -146,7 +146,7 @@ return {
 		})
 
 		-- LSP 서버 목록 (mason.lua와 동일하게 유지)
-		local servers = { "pyright", "lua_ls", "rust_analyzer" } -- CSS도 제거
+		local servers = { "pyright", "lua_ls", "rust_analyzer", "gopls" } -- CSS도 제거
 
 		-- Neovim 0.11+ 방식: 서버별 설정을 등록하고, 필요한 서버만 명시적으로 활성화한다.
 		for _, server in ipairs(servers) do
@@ -181,6 +181,13 @@ return {
 							useLibraryCodeForTypes = true,          -- 라이브러리 타입 추론 강화
 							exclude = { "venv", ".venv", "__pycache__", "*.pyc" }, -- 캐시 파일도 제외
 						},
+					},
+				}
+			end
+			if server == "gopls" then
+				opts.settings = {
+					gopls = {
+						staticcheck = true,
 					},
 				}
 			end

@@ -26,6 +26,7 @@ return {
 			"pyright",
 			"lua_ls",
 			"rust_analyzer",
+			"gopls",
 		}
 		mason_lspconfig.setup({
 			ensure_installed = servers,
@@ -39,6 +40,7 @@ return {
 				"ruff", -- python linter & formatter (black, isort, pylint 대체)
 				"stylua", -- lua formatter
 				"prettier", -- HTML/CSS/JS formatter
+				"goimports", -- Go import organizer & formatter
 			},
 			run_on_start = false, -- 시작 시 자동 실행 비활성화
 		})

@@ -16,6 +16,7 @@ return {
 				json = { "prettier" },
 				yaml = { "prettier" },
 				markdown = { "prettier" },
+				go = { "goimports", "gofmt" },
 				-- graphql = { "prettier" },
 				-- liquid = { "prettier" },
 				lua = { "stylua" },

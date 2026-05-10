@@ -32,12 +32,6 @@ return {
 						action = ":ene | startinsert",
 					},
 					{
-						icon = " ",
-						key = "f",
-						desc = "파일 탐색기",
-						action = ":NvimTreeToggle",
-					},
-					{
 						icon = "󰱼 ",
 						key = "p",
 						desc = "파일 찾기",
@@ -70,10 +64,7 @@ return {
 				},
 			},
 		},
-		explorer = {
-			enabled = true,
-			replace_netrw = false,
-		},
+		explorer = { enabled = false },
 		indent = {
 			enabled = true,
 			indent = {
@@ -91,27 +82,13 @@ return {
 		},
 		picker = {
 			enabled = true,
-			sources = {
-				explorer = {
-					hidden = true,
-					ignored = false,
-					exclude = { "**/.DS_Store" },
-					layout = { preset = "sidebar", preview = false },
-				},
-			},
+			sources = {},
 		},
 		zen = {
 			enabled = true,
 		},
 	},
 	keys = {
-		{
-			"<leader>es",
-			function()
-				snacks().explorer()
-			end,
-			desc = "Snacks 탐색기 열기",
-		},
 		{
 			"<leader>sm",
 			function()
