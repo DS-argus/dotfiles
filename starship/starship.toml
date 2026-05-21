@@ -1,5 +1,5 @@
 format = """
-$directory$git_branch$git_status$python$lua$rust$docker_context$cmd_duration
+$directory$git_branch$git_status$python$lua$golang$rust$cmd_duration
 $character"""
 
 add_newline = true
@@ -41,26 +41,24 @@ style = 'fg:neon_orange bold'
 format = '[$all_status$ahead_behind]($style) '
 
 [python]
-style = 'fg:neon_yellow bold'
+style = 'fg:python_blue bold'
 symbol = ''
 format = '[$symbol]($style) '
 
 [lua]
-style = 'fg:neon_cyan bold'
+style = 'fg:lua_blue bold'
 symbol = ''
 format = '[$symbol]($style) '
 
 [rust]
-style = 'fg:neon_orange bold'
+style = 'fg:rust_orange bold'
 symbol = ''
 format = '[$symbol]($style) '
 
-[docker_context]
-symbol = ''
-style = 'fg:neon_cyan'
+[golang]
+style = 'fg:go_blue bold'
+symbol = "\U000f07d3"  # "󰟓 "
 format = '[$symbol]($style) '
-detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
-detect_extensions = ['Dockerfile']
 
 [cmd_duration]
 min_time = 500
@@ -85,3 +83,7 @@ neon_pink = '#ff7ab8'
 neon_orange = '#ffb86c'
 neon_yellow = '#ffd866'
 soft_gray = '#7f96aa'
+python_blue = '#3776ab'
+lua_blue = '#51a0cf'
+rust_orange = '#dea584'
+go_blue = '#00add8'

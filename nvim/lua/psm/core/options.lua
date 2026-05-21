@@ -1,60 +1,73 @@
-vim.cmd("let g:netrw_liststyle = 3")
+-- 기본 파일 탐색기(netrw)
+vim.g.netrw_liststyle = 3 -- 트리 스타일로 표시
 
 -- Python provider 비활성화 (사용하는 플러그인 없음, 시작 속도 향상)
 vim.g.loaded_python3_provider = 0
 
 local opt = vim.opt
 
-opt.relativenumber = true
-opt.number = true
+-- 줄 번호
+opt.number = true -- 현재 줄 번호 표시
+opt.relativenumber = true -- 현재 줄 기준 상대 줄 번호 표시
 
--- tabs & indentation
-opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
-opt.shiftwidth = 2-- 2 spaces for indent width
-opt.expandtab = true -- expand tab to spaces
-opt.autoindent = true -- copy indent form current line when starting new one
+-- 들여쓰기
+opt.tabstop = 2 -- 탭 문자 하나를 화면에서 2칸으로 표시
+opt.shiftwidth = 2 -- 자동 들여쓰기와 <<, >> 이동 폭을 2칸으로 설정
+opt.expandtab = true -- 탭 입력을 스페이스로 변환
+opt.autoindent = true -- 새 줄을 만들 때 현재 줄의 들여쓰기 유지
 
-opt.wrap = false
+-- 검색
+opt.ignorecase = true -- 검색할 때 대소문자 무시
+opt.smartcase = true -- 검색어에 대문자가 있으면 대소문자를 구분
 
--- search settings
-opt.ignorecase = true -- ignore case when searching
-opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
+-- 화면 표시
+opt.wrap = false -- 긴 줄을 자동 줄바꿈하지 않음
+opt.cursorline = true -- 현재 커서가 있는 줄 강조
+opt.termguicolors = true -- 터미널 true color 사용
+opt.background = "dark" -- 다크 배경 기준으로 컬러스킴 적용
+opt.signcolumn = "yes" -- 진단/깃 표시 영역을 항상 보여 텍스트 밀림 방지
 
-opt.cursorline = true
+-- 코드 접기
+opt.foldmethod = "expr" -- expression 기반으로 fold 계산
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Treesitter 문법 트리로 fold 계산
+opt.foldlevel = 99 -- 기본적으로 모든 fold를 펼쳐둠
+opt.foldlevelstart = 99 -- 파일을 열 때도 모든 fold를 펼쳐둠
 
--- appearance
+-- 편집 동작
+opt.backspace = "indent,eol,start" -- 들여쓰기, 줄 끝, 입력 시작 지점에서 백스페이스 허용
+opt.confirm = true -- 저장하지 않은 버퍼를 닫을 때 확인
 
--- turn on termguicolors for nightfly colorscheme to work
--- (have to use iterm2 or any other true color terminal)
-opt.termguicolors = true
-opt.background = "dark" -- colorschemes that can be light or dark will be made dark
-opt.signcolumn = "yes" -- show sign column so that text doesn't shift
+-- 클립보드
+opt.clipboard:append("unnamedplus") -- 시스템 클립보드를 기본 레지스터로 사용
 
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
+-- 창 분할
+opt.splitright = true -- 세로 분할을 오른쪽에 생성
+opt.splitbelow = true -- 가로 분할을 아래쪽에 생성
 
--- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register
-
--- split windows
-opt.splitright = true -- split vertical window to the right
-opt.splitbelow = true -- split horizontal window to the bottom
-
--- turn off swapfile
-opt.swapfile = false
-opt.autoread = true
+-- 파일 상태
+opt.swapfile = false -- swap 파일 생성 비활성화
+opt.undofile = true -- Neovim 재시작 후에도 undo 기록 유지
+opt.autoread = true -- 외부에서 바뀐 파일을 자동으로 다시 읽기
+opt.updatetime = 250 -- CursorHold 이벤트와 파일 변경 감지를 더 빠르게 실행
 
 local autoread_group = vim.api.nvim_create_augroup("PsmAutoread", { clear = true })
 
--- Reload files changed outside Neovim when it's safe to do so.
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI", "TermClose", "TermLeave" }, {
-  group = autoread_group,
-  callback = function()
-    -- :checktime is invalid in the command-line window opened by q:, q/, q?
-    if vim.fn.mode() == "c" or vim.fn.getcmdwintype() ~= "" then
-      return
-    end
+-- Neovim 밖에서 바뀐 파일을 안전한 시점에 다시 읽는다.
+vim.api.nvim_create_autocmd({
+	"FocusGained",
+	"BufEnter",
+	"CursorHold",
+	"CursorHoldI",
+	"TermClose",
+	"TermLeave",
+}, {
+	group = autoread_group,
+	callback = function()
+		-- q:, q/, q? 로 열린 command-line window에서는 :checktime을 실행할 수 없다.
+		if vim.fn.mode() == "c" or vim.fn.getcmdwintype() ~= "" then
+			return
+		end
 
-    pcall(vim.cmd, "checktime")
-  end,
+		pcall(vim.cmd, "checktime")
+	end,
 })

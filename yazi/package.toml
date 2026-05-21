@@ -9,6 +9,6 @@ rev = "cb6e8ec"
 hash = "424ada4807b20ccd4fc85d1d7c26d1e4"
 
 [[flavor.deps]]
-use = "tkapias/nightfly"
-rev = "599b8ad"
-hash = ""
+use = "BennyOe/tokyo-night"
+rev = "8e6296f"
+hash = "d9da921c3bd37ba32ee27a8a7a40461f"

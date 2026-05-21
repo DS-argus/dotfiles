@@ -1,7 +1,34 @@
+-- 설정에서 사용할 picker 관련 함수 미리 정의
 local function snacks()
 	return require("snacks")
 end
 
+local function find_files()
+	snacks().picker.files({ hidden = true, ignored = true })
+end
+
+local function find_text()
+	snacks().picker.grep()
+end
+
+local function find_recent()
+	snacks().picker.recent()
+end
+
+local function find_word()
+	snacks().picker.grep_word()
+end
+
+local function find_todos()
+	snacks().picker.grep({
+		search = [[\b(TODO|FIX|FIXME|HACK|WARN|PERF|NOTE|TEST)\b]],
+		regex = true,
+		live = false,
+		hidden = true,
+	})
+end
+
+-- snack configuration
 return {
 	"folke/snacks.nvim",
 	priority = 900,
@@ -10,83 +37,95 @@ return {
 	opts = {
 		dashboard = {
 			enabled = true,
-			sections = {
-				{ section = "header" },
-				{ section = "keys", gap = 1, padding = 1 },
-				{ section = "startup" },
-			},
 			preset = {
-				header = [[
-  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
-				]],
 				keys = {
+					{ icon = " ", key = "e", desc = "New File", action = ":ene | startinsert" },
+					{ icon = "󰱼 ", key = "p", desc = "Find File", action = find_files },
+					{ icon = " ", key = "g", desc = "Find Text", action = find_text },
+					{ icon = " ", key = "r", desc = "Recent Files", action = find_recent },
+					{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+				},
+			},
+			sections = {
+				{
+					{ section = "header" },
+					{ section = "keys", gap = 1 },
+					{ padding = 0.5, text = { { "", width = 0 } } },
 					{
 						icon = " ",
-						key = "e",
-						desc = "새 파일",
-						action = ":ene | startinsert",
+						title = "Recent Files",
+						section = "recent_files",
+						indent = 2,
+						padding = 1,
 					},
-					{
-						icon = "󰱼 ",
-						key = "p",
-						desc = "파일 찾기",
-						action = function()
-							snacks().picker.files()
-						end,
-					},
-					{
-						icon = " ",
-						key = "g",
-						desc = "문자열 찾기",
-						action = function()
-							snacks().picker.grep()
-						end,
-					},
-					{
-						icon = " ",
-						key = "r",
-						desc = "최근 파일",
-						action = function()
-							snacks().picker.recent()
-						end,
-					},
-					{
-						icon = " ",
-						key = "q",
-						desc = "NVIM 종료",
-						action = ":qa",
-					},
+					{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+					{ section = "startup" },
 				},
 			},
 		},
-		explorer = { enabled = false },
 		indent = {
 			enabled = true,
-			indent = {
-				char = "┊",
-			},
-			scope = {
-				enabled = false,
-			},
+			indent = { char = "┊" },
 			animate = {
-				enabled = false,
+				enabled = true,
+				style = "out",
+				easing = "linear",
+				duration = { step = 20, total = 500 },
 			},
-		},
-		input = {
-			enabled = true,
-		},
-		picker = {
-			enabled = true,
-			sources = {},
+			scope = { enabled = true },
+			chunk = {
+				enabled = true,
+				only_current = true,
+				priority = 200,
+				hl = "SnacksIndentChunk", ---@type string|string[] hl group for chunk scopes
+				char = {
+					corner_top = "╭",
+					corner_bottom = "╰",
+					horizontal = "─",
+					vertical = "│",
+					arrow = ">",
+				},
+			},
 		},
 		zen = {
 			enabled = true,
+			toggles = {
+				dim = true, -- 현재 scope 밖 코드를 흐리게 표시
+				git_signs = false, -- Zen 모드에서는 git sign 숨김
+				mini_diff_signs = false, -- mini.diff sign을 쓰는 경우 숨김
+				diagnostics = false, -- 진단 표시를 잠시 숨김
+				inlay_hints = false, -- inlay hint를 잠시 숨김
+			},
+			center = true, -- Zen 창을 열 때 커서 위치를 가운데로 맞춤
+			show = {
+				statusline = true, -- Zen 모드에서는 상태줄 숨김
+				tabline = false, -- Zen 모드에서는 탭라인 숨김
+			},
+			win = {
+				style = "zen",
+				width = 100, -- 집중 모드에서 사용할 편집 폭
+				height = 0, -- 가능한 전체 높이 사용
+				backdrop = {
+					transparent = false,
+					blend = 45,
+				},
+			},
+			zoom = {
+				toggles = {}, -- <leader>sm zoom은 UI 토글을 건드리지 않음
+				center = false,
+				show = {
+					statusline = true,
+					tabline = true,
+				},
+				win = {
+					backdrop = false,
+					width = 0, -- 현재 split을 전체 폭으로 확대
+				},
+			},
 		},
+		picker = { enabled = true },
+		explorer = { enabled = false }, -- Yazi 및 기본 netrw 사용
+		input = { enabled = true },
 	},
 	keys = {
 		{
@@ -97,43 +136,35 @@ return {
 			desc = "분할 최대화 토글",
 		},
 		{
-			"<leader>ff",
+			"<leader>sz",
 			function()
-				snacks().picker.files()
+				snacks().zen()
 			end,
+			desc = "Zen 모드 토글",
+		},
+		{
+			"<leader>ff",
+			find_files,
 			desc = "파일 찾기",
 		},
 		{
 			"<leader>fr",
-			function()
-				snacks().picker.recent()
-			end,
+			find_recent,
 			desc = "최근 파일 찾기",
 		},
 		{
 			"<leader>fs",
-			function()
-				snacks().picker.grep()
-			end,
+			find_text,
 			desc = "문자열 찾기",
 		},
 		{
 			"<leader>fc",
-			function()
-				snacks().picker.grep_word()
-			end,
+			find_word,
 			desc = "커서 아래 문자열 찾기",
 		},
 		{
 			"<leader>ft",
-			function()
-				snacks().picker.grep({
-					search = [[\b(TODO|FIX|FIXME|HACK|WARN|PERF|NOTE|TEST)\b]],
-					regex = true,
-					live = false,
-					hidden = true,
-				})
-			end,
+			find_todos,
 			desc = "TODO 찾기",
 		},
 	},

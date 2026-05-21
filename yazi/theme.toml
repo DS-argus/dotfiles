@@ -1,7 +1,6 @@
 [flavor]
-use = "tokyo-night"
-# use = "nightfly"
-dark = "tokyo-night"
+dark  = "tokyo-night"
+light = "tokyo-night"
 
 [cmp]
 icon_file = "󰈔"
