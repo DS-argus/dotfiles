@@ -28,10 +28,53 @@ opt.background = "dark" -- 다크 배경 기준으로 컬러스킴 적용
 opt.signcolumn = "yes" -- 진단/깃 표시 영역을 항상 보여 텍스트 밀림 방지
 
 -- 코드 접기
-opt.foldmethod = "expr" -- expression 기반으로 fold 계산
-opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Treesitter 문법 트리로 fold 계산
+opt.foldmethod = "manual" -- 특수 버퍼와 markdown에서 Treesitter fold 비동기 오류를 피한다.
+opt.foldexpr = "0"
 opt.foldlevel = 99 -- 기본적으로 모든 fold를 펼쳐둠
 opt.foldlevelstart = 99 -- 파일을 열 때도 모든 fold를 펼쳐둠
+
+local treesitter_fold_filetypes = {
+	c = true,
+	css = true,
+	dockerfile = true,
+	go = true,
+	gomod = true,
+	gosum = true,
+	gowork = true,
+	html = true,
+	json = true,
+	lua = true,
+	python = true,
+	rust = true,
+	vim = true,
+	yaml = true,
+}
+
+local fold_group = vim.api.nvim_create_augroup("PsmFolds", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = fold_group,
+	callback = function(args)
+		local filetype = vim.bo[args.buf].filetype
+
+		if not treesitter_fold_filetypes[filetype] then
+			vim.opt_local.foldmethod = "manual"
+			vim.opt_local.foldexpr = "0"
+			return
+		end
+
+		local has_parser = pcall(vim.treesitter.get_parser, args.buf)
+
+		if not has_parser then
+			vim.opt_local.foldmethod = "manual"
+			vim.opt_local.foldexpr = "0"
+			return
+		end
+
+		vim.opt_local.foldmethod = "expr"
+		vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+	end,
+})
 
 -- 편집 동작
 opt.backspace = "indent,eol,start" -- 들여쓰기, 줄 끝, 입력 시작 지점에서 백스페이스 허용
