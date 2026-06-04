@@ -3,16 +3,18 @@ return {
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		"neovim/nvim-lspconfig", -- LSP 서버 설정을 위해 필요!
+		"neovim/nvim-lspconfig",
 	},
 	config = function()
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
 		local mason_tool_installer = require("mason-tool-installer")
+		local lsp_servers = require("psm.lsp.servers")
 
 		-- 1. Mason UI 설정
 		mason.setup({
 			ui = {
+				border = "double",
 				icons = {
 					package_installed = "✓",
 					package_pending = "➜",
@@ -22,14 +24,8 @@ return {
 		})
 
 		-- 2. Mason-LspConfig로 LSP 서버 설치만 관리
-		local servers = {
-			"pyright",
-			"lua_ls",
-			"rust_analyzer",
-			"gopls",
-		}
 		mason_lspconfig.setup({
-			ensure_installed = servers,
+			ensure_installed = lsp_servers.names,
 			automatic_installation = false,
 			automatic_enable = false,
 		})
