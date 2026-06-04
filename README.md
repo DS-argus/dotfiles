@@ -8,7 +8,7 @@ Only tools that expect files in the home directory require symbolic links.
 
 ## Setup
 
-```bash
+```zsh
 # Step 1 : Clone this repository into ~/.config
 git clone https://github.com/DS-argus/dotfiles.git ~/.config
 
@@ -21,8 +21,7 @@ brew install --cask font-jetbrains-mono font-symbols-only-nerd-font font-d2codin
 brew install --cask wezterm
 ln -sfn ~/.config/wezterm/.wezterm.lua ~/.wezterm.lua
 
-# Step 3 : Install terminal multiplexer
-## Terminal multiplexer
+# Step 3 : Install terminal multiplexer ## Terminal multiplexer
 brew install tmux
 brew install bash
 ln -sfn ~/.config/tmux/.tmux.conf ~/.tmux.conf
@@ -122,6 +121,42 @@ The following applications read their configuration directly from this repositor
 Ghostty, btop, gh, gh-dash, Neovim, Starship, and Yazi.
 
 Git also reads `~/.config/git/ignore` automatically as the XDG global ignore file, so it does not need a separate symlink.
+
+## Troubleshooting
+
+### zsh `compinit` insecure directories warning
+
+If a new zsh login shell reports insecure completion directories, inspect the paths first:
+
+```zsh
+zsh -fc 'autoload -Uz compaudit; compaudit'
+```
+
+If `/opt/homebrew/share` is listed and still has group write permission, remove that permission:
+
+```zsh
+chmod g-w /opt/homebrew/share
+```
+
+Verify that the directory is no longer group-writable:
+
+```zsh
+stat -f '%Sp %Su:%Sg %N' /opt/homebrew/share
+```
+
+Expected permission shape:
+
+```text
+drwxr-xr-x <user>:admin /opt/homebrew/share
+```
+
+Then confirm that `compaudit` no longer reports anything:
+
+```zsh
+zsh -fc 'autoload -Uz compaudit; compaudit'
+```
+
+This setup intentionally avoids `compinit -u` and `compinit -i`; fixing the directory permission keeps zsh's completion security check enabled.
 
 ## References
 
