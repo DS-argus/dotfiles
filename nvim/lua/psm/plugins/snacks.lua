@@ -3,8 +3,28 @@ local function snacks()
 	return require("snacks")
 end
 
+local file_picker_title = "Files  ⏎ open  ^T tab  ^S/^V split  H/I filter"
+
 local function find_files()
-	snacks().picker.files({ hidden = true, ignored = true })
+	snacks().picker.files({
+		hidden = true,
+		ignored = false,
+		title = file_picker_title,
+		win = {
+			input = {
+				keys = {
+					["H"] = { "toggle_hidden", mode = { "n", "i" } },
+					["I"] = { "toggle_ignored", mode = { "n", "i" } },
+				},
+			},
+			list = {
+				keys = {
+					["H"] = "toggle_hidden",
+					["I"] = "toggle_ignored",
+				},
+			},
+		},
+	})
 end
 
 local function find_text()

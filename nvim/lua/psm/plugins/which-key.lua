@@ -35,6 +35,7 @@ return {
 			{ "<leader>n", group = "알림" },
 			{ "<leader>r", group = "이름 변경" },
 			{ "<leader>s", group = "검색/창/집중" },
+			{ "<leader>t", group = "탭" },
 			{ "<leader>x", group = "진단/문제" },
 			{ "[", group = "이전" },
 			{ "]", group = "다음" },

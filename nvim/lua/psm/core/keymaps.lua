@@ -16,3 +16,8 @@ keymap.set("n", "<leader>sv", "<C-w>v", { desc = "세로 분할" }) -- split win
 keymap.set("n", "<leader>sh", "<C-w>s", { desc = "가로 분할" }) -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "분할 크기 같게 맞추기" }) -- make split windows equal width & height
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "현재 분할 닫기" }) -- close current split window
+
+-- tab management
+keymap.set("n", "<leader>tn", "<cmd>tabnext<CR>", { desc = "다음 탭" })
+keymap.set("n", "<leader>tp", "<cmd>tabprevious<CR>", { desc = "이전 탭" })
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "현재 탭 닫기" })
