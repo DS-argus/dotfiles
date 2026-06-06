@@ -72,3 +72,6 @@ bindkey "$terminfo[kcbt]" reverse-menu-complete  # Shift+Tab 키
 if (( AUTOSUGGESTIONS_LOADED )); then
   bindkey '^O' autosuggest-accept
 fi
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
