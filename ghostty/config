@@ -48,7 +48,7 @@ cursor-opacity = 0.8
 adjust-cursor-thickness = 120%
 
 # 창 전체 배경 투명도.
-background-opacity = 0.8
+background-opacity = 0.95
 # 투명 배경 뒤를 부드럽게 블러 처리.
 background-blur = 15
 # 셀 배경에도 투명도 적용.
@@ -60,6 +60,8 @@ macos-titlebar-style = hidden
 macos-window-buttons = hidden
 # macOS 창 그림자는 유지.
 macos-window-shadow = false
+# 왼쪽 Option 키를 터미널 Alt 키로 전달.
+macos-option-as-alt = left
 
 # 텍스트 선택만으로 자동 복사하지 않음.
 copy-on-select = false
@@ -77,3 +79,5 @@ shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,
 # 앱이 OSC로 보내는 데스크톱 알림 허용.
 desktop-notifications = true
 
+# for tmux prefix : ctrl + space 를 ctrl + a로 전달 (윈도우 ssh 접속을 위해)
+keybind = ctrl+space=text:\x01
