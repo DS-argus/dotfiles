@@ -31,6 +31,9 @@ setopt HIST_IGNORE_ALL_DUPS      # 모든 중복 명령어 무시
 # Codex MCP env
 [[ -f "$HOME/.codex/mcp.env" ]] && source "$HOME/.codex/mcp.env"
 
+# OMC(oh-my-claudecode) Telegram 알림 활성화 : claude로 직접 실행해도 알림 전송
+export OMC_TELEGRAM=1
+
 # -----------------------------------------------------------------------------
 # Zsh Plugins (zsh 플러그인들)
 # 설치 필요: brew install zsh-syntax-highlighting zsh-autosuggestions zsh-completions
