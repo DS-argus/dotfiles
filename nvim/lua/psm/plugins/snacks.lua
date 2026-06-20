@@ -5,8 +5,73 @@ end
 
 local file_picker_title = "Files  ⏎ open  ^T tab  ^S/^V split  H/I filter"
 
+local project_root_markers = {
+	".git",
+	"package.json",
+	"pyproject.toml",
+	"uv.lock",
+	"Cargo.toml",
+	"go.mod",
+	"go.work",
+	"Gemfile",
+	"composer.json",
+	"Makefile",
+	"CMakeLists.txt",
+	"deno.json",
+	"deno.jsonc",
+	"bun.lock",
+	"pnpm-lock.yaml",
+	"yarn.lock",
+	"package-lock.json",
+	"flake.nix",
+}
+
+local function current_file_dir()
+	local file = vim.api.nvim_buf_get_name(0)
+
+	if file ~= "" then
+		return vim.fs.dirname(file)
+	end
+
+	return vim.fn.getcwd(0)
+end
+
+local function is_inside(path, root)
+	path = vim.fs.normalize(path)
+	root = vim.fs.normalize(root)
+
+	return path == root or path:find(root .. "/", 1, true) == 1
+end
+
+local function lsp_root(start_dir)
+	for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+		local root = client.config and client.config.root_dir
+
+		if root and root ~= "" and is_inside(start_dir, root) then
+			return root
+		end
+	end
+end
+
+local function marker_root(start_dir)
+	local marker = vim.fs.find(project_root_markers, {
+		path = start_dir,
+		upward = true,
+		limit = 1,
+	})[1]
+
+	return marker and vim.fs.dirname(marker) or nil
+end
+
+local function project_root()
+	local start_dir = current_file_dir()
+
+	return lsp_root(start_dir) or snacks().git.get_root(start_dir) or marker_root(start_dir) or vim.fn.getcwd(0)
+end
+
 local function find_files()
 	snacks().picker.files({
+		cwd = project_root(),
 		hidden = true,
 		ignored = false,
 		title = file_picker_title,
