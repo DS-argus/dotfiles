@@ -79,6 +79,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- 편집 동작
 opt.backspace = "indent,eol,start" -- 들여쓰기, 줄 끝, 입력 시작 지점에서 백스페이스 허용
 opt.confirm = true -- 저장하지 않은 버퍼를 닫을 때 확인
+opt.ttimeoutlen = 10 -- ESC 단독 입력과 alt 키(ESC+문자) 시퀀스 구분 대기 시간(ms), tmux escape-time과 통일
 
 -- 클립보드
 opt.clipboard:append("unnamedplus") -- 시스템 클립보드를 기본 레지스터로 사용
