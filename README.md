@@ -1,168 +1,87 @@
 # Dotfiles
 
-This repository contains my terminal-focused macOS setup built around Homebrew, zsh, tmux, Yazi, and Neovim.
+macOS terminal-focused dotfiles. This repository is intended to live at
+`~/.config`, so most applications read their configuration directly from this
+tree.
 
-The instructions below assume that Homebrew is already installed and that this repository will be cloned to `~/.config`.  
-Applications that read from `~/.config/<app>` will use these files directly.  
-Only tools that expect files in the home directory require symbolic links.
+Stow is intentionally not used here. The only required home-directory symlinks
+are for tools that still expect files under `$HOME`.
 
 ## Setup
 
 ```zsh
-# Step 1 : Clone this repository into ~/.config
+# Clone into the XDG config directory.
 git clone https://github.com/DS-argus/dotfiles.git ~/.config
 
-# Step 2 : Install terminal emulator. (one of them below)
-## Terminal emulator: Ghostty
+# Ghostty and fonts.
 brew install --cask ghostty
 brew install --cask font-jetbrains-mono font-symbols-only-nerd-font font-d2coding-nerd-font
 
-## Terminal emulator and multiplexer: WezTerm
-brew install --cask wezterm
-ln -sfn ~/.config/wezterm/.wezterm.lua ~/.wezterm.lua
+# zsh runtime, completions, and shell helpers.
+brew install zsh-completions zsh-syntax-highlighting zsh-autosuggestions
+brew install zoxide fzf eza
+ln -sfn ~/.config/zsh/.zshenv ~/.zshenv
 
-# Step 3 : Install terminal multiplexer ## Terminal multiplexer
-brew install tmux
-brew install bash
-ln -sfn ~/.config/tmux/.tmux.conf ~/.tmux.conf
-
-## tmux plugin manager required by the current tmux.conf
-### `fabioluciano/tmux-powerkit` is implemented in Bash and uses Bash 4+ features
-### On macOS systems that still use the old system Bash, installing Homebrew Bash avoids plugin runtime issues
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# Step 4 : Utilities
-## Prompt: Starship
+# Starship prompt.
 brew install starship
 
-## Smarter cd replacement used by zsh
-brew install zoxide
+# tmux and tpack.
+brew install tmux bash tmuxpack/tpack/tpack
+mkdir -p ~/.config/tmux/plugins
 
-## Fuzzy finder used by shell workflows and Yazi
-brew install fzf
+# Git and LazyGit.
+brew install git lazygit
+ln -sfn ~/.config/git/.gitconfig ~/.gitconfig
 
-## Extra zsh completions
-brew install zsh-completions
-
-## zsh syntax highlighting
-brew install zsh-syntax-highlighting
-
-## zsh command autosuggestions
-brew install zsh-autosuggestions
-
-## zsh entrypoint files expected in the home directory
-ln -sfn ~/.config/zsh/.zshrc ~/.zshrc
-ln -sfn ~/.config/zsh/.zshenv ~/.zshenv
-ln -sfn ~/.config/zsh/.zprofile ~/.zprofile
-
-## Modern ls replacement used by shell aliases
-brew install eza
-
-## Better cat replacement with syntax highlighting
-brew install bat
-
-## Terminal Markdown renderer
-brew install glow
-
-## Terminal image renderer, also used by Yazi interactive openers
-brew install chafa
-
-## CSV viewer
-brew install csvlens
-
-## Resource monitor
-brew install btop
-
-## Homebrew TUI
-brew install gromgit/brewtils/taproom
-
-## Git TUI
-brew install lazygit
-
-## GitHub CLI
-brew install gh
-gh auth login
-
-## GitHub dashboard extension for gh
-gh extension install dlvhdr/gh-dash
-
-## Yazi and its Homebrew-side dependencies
-### file(1) is also required by Yazi, but it is already available on macOS
-brew install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick font-symbols-only-nerd-font
-### yazi: file manager itself
-### ffmpeg: video thumbnails and preview
-### sevenzip: archive extraction and preview
-### jq: JSON preview
-### poppler: PDF preview
-### fd: file name search
-### ripgrep: file content search
-### fzf: quick subtree navigation
-### zoxide: historical directory navigation, often combined with fzf
-### resvg: SVG preview
-### imagemagick: font, HEIC, and JPEG XL preview
-### font-symbols-only-nerd-font: Nerd Font symbols for terminal icons
-
-## Yazi plugins and flavors declared in package.toml
-ya pkg install
-
-## Python package and project manager
-brew install uv
-
-## Main editor
+# Neovim.
 brew install neovim
 
-## Home-directory config files that should point into this repository
+# Yazi and preview/open helper tools used by this config.
+brew install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick chafa csvlens
+ya pkg install
+
+# Leaf Markdown previewer used from Yazi.
+brew install leaf-md
+
+# btop resource monitor.
+brew install btop
+```
+
+## Version Snapshot
+
+Current local versions as of 2026-06-26. These are a reference snapshot, not
+version pins for `brew install`.
+
+| Tool | Version |
+| --- | --- |
+| Ghostty | 1.3.1 |
+| zsh | 5.9 |
+| zsh-completions | 0.36.0 |
+| zsh-syntax-highlighting | 0.8.0 |
+| zsh-autosuggestions | 0.7.1 |
+| starship | 1.25.1 |
+| tmux | 3.6b |
+| tpack | 1.1.0 |
+| bash | 5.2.37 |
+| git | 2.53.0 |
+| Neovim | 0.12.2 |
+| Yazi | 26.5.6 |
+| leaf-md | 1.24.2 |
+| btop | 1.4.7 |
+
+## Required Symlinks
+
+```zsh
+ln -sfn ~/.config/zsh/.zshenv ~/.zshenv
 ln -sfn ~/.config/git/.gitconfig ~/.gitconfig
 ```
 
+Everything else in this README is expected to read directly from
+`~/.config/<tool>`.
+
 ## Notes
 
-The following applications read their configuration directly from this repository without additional symlinks:  
-Ghostty, btop, gh, gh-dash, Neovim, Starship, and Yazi.
-
-Git also reads `~/.config/git/ignore` automatically as the XDG global ignore file, so it does not need a separate symlink.
-
-## Troubleshooting
-
-### zsh `compinit` insecure directories warning
-
-If a new zsh login shell reports insecure completion directories, inspect the paths first:
-
-```zsh
-zsh -fc 'autoload -Uz compaudit; compaudit'
-```
-
-If `/opt/homebrew/share` is listed and still has group write permission, remove that permission:
-
-```zsh
-chmod g-w /opt/homebrew/share
-```
-
-Verify that the directory is no longer group-writable:
-
-```zsh
-stat -f '%Sp %Su:%Sg %N' /opt/homebrew/share
-```
-
-Expected permission shape:
-
-```text
-drwxr-xr-x <user>:admin /opt/homebrew/share
-```
-
-Then confirm that `compaudit` no longer reports anything:
-
-```zsh
-zsh -fc 'autoload -Uz compaudit; compaudit'
-```
-
-This setup intentionally avoids `compinit -u` and `compinit -i`; fixing the directory permission keeps zsh's completion security check enabled.
-
-## References
-
-- git: https://johngrib.github.io/wiki/git-alias/
-- nvim: https://youtu.be/6pAG3BHurdM?si=AzUMnrt0LlFBmmLY
-- starship: https://starship.rs/
-- tmux: https://youtu.be/U-omALWIBos?si=SSd_mR2AfuQRy3wVj
-- wezterm: https://wezfurlong.org/wezterm/index.html
-- yazi: https://yazi-rs.github.io/
+- `zsh/privates.zsh` is intentionally ignored and sourced only when present.
+- `tmux/plugins/` and `yazi/flavors/` are generated or installed content and are
+  ignored by Git.
+- Run `ya pkg install` after cloning or pulling Yazi plugin/flavor changes.
