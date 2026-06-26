@@ -1,19 +1,36 @@
-gh/
-htop/
-karabiner/
-neofetch/
+# Private shell files
 zsh/privates.zsh
-configstore/
-raycast/
-k3d/
-.omx/
+zsh/.zsh_sessions/
+
+# Agent and CLI runtime state
+.gjc/
 .omc/
-posting/
+.omx/
+
+# App-local state not managed by this repo
+gh/
+glazepkg/
+homebrew/
+htop/
+k3d/
+karabiner/
 lazydocker/
 lazygit/
-TROUBLESHOOTING.md
-ytdc/
-homebrew/
-glazepkg/
+neofetch/
+posting/
+raycast/
 sqlit/
+ytdc/
+
+# Herdr runtime artifacts
+herdr/*.bak-*
+herdr/*.log
+herdr/*.sock
+herdr/session.json
+
+# Installed/generated plugin assets
+tmux/plugins/
 yazi/flavors/
+
+# Local notes
+TROUBLESHOOTING.md
