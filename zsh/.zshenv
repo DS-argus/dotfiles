@@ -15,6 +15,7 @@ export LC_CTYPE="en_US.UTF-8"    # 문자 분류 및 대소문자 변환 제어
 # Base Directories & Shared Environment
 # -----------------------------------------------------------------------------
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export ZDOTDIR="${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}"
 export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
 export EDITOR="${EDITOR:-nvim}"
 export OBSIDIAN_VAULT_DIR="${OBSIDIAN_VAULT_DIR:-$HOME/Desktop/Obsidian/Argus}"

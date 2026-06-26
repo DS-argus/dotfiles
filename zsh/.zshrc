@@ -62,7 +62,9 @@ fi
 if [[ -n "$BREW_PREFIX" && -d "${BREW_PREFIX}/share/zsh-completions" ]]; then
   FPATH="${BREW_PREFIX}/share/zsh-completions:${FPATH}"
 fi
-autoload -Uz compinit && compinit
+ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump"
+mkdir -p "${ZSH_COMPDUMP:h}"
+autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
 
 # -----------------------------------------------------------------------------
 # Key Bindings (키 바인딩 설정)

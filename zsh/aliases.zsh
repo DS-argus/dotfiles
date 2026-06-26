@@ -1,6 +1,6 @@
 # aliases for configuration
-alias reload-zshrc="source ~/.zshrc"
-alias edit-zshrc="nvim ~/.zshrc"
+alias reload-zshrc='source "$ZDOTDIR/.zshrc"'
+alias edit-zshrc='nvim "$ZDOTDIR/.zshrc"'
 alias edit-alias='nvim "$XDG_CONFIG_HOME/zsh/aliases.zsh"'
 alias edit-custom='nvim "$XDG_CONFIG_HOME/zsh/custom.zsh"'
 alias edit-starship='nvim "$XDG_CONFIG_HOME/starship/starship.toml"'
@@ -13,6 +13,16 @@ alias la="eza -a --icons=always"
 alias lt="eza -aT -L1 --color=always --group-directories-first --icons"
 alias lt2="eza -aT -L2 --color=always --group-directories-first --icons"
 alias lt3="eza -aT -L3 --color=always --group-directories-first --icons"
+
+# Dirs
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+# nvim
+alias v="nvim"
 
 # aliases for Zoxide
 alias cd="z"

@@ -35,6 +35,10 @@ ueberzug_offset = [ 0, 0, 0, 0 ]
 csv = [
   { run = 'csvlens %s', block = true, desc = "csvlens", for = "unix"}
 ]
+# markdown previewer
+leaf = [
+	{ run = 'leaf --watch %s1', block = true, desc = "leaf --watch", for = "unix" },
+]
 # editor 띄우는 명령어
 edit = [
 	{ run = 'nvim %*', block = true, desc = "nvim", for = "macos" },
@@ -85,6 +89,8 @@ play = [
 rules = [
   # csv
 	{ url = "*.csv", use = [ "csv", "reveal" ] },
+	# Markdown
+	{ url = "*.{md,markdown,mdown,mkdn,mkdown}", use = [ "leaf", "edit", "reveal" ] },
 	# Folder
 	{ url = "*/", use = [ "enter", "zip_dir", "tar_gz_dir", "reveal_dir" ] },
 	# Text
