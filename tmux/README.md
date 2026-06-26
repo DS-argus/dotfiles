@@ -2,11 +2,12 @@
 
 ## 기본 정보
 
-- 설정 파일: `~/.tmux.conf` -> `~/.config/tmux/.tmux.conf`
+- 설정 파일: `~/.config/tmux/tmux.conf`
 - prefix 키: `Ctrl-Space`
 - 터미널 타입: `xterm-256color` + RGB override
 - 스크롤백 버퍼: `100000`
-- 플러그인: `vim-tmux-navigator`, `tmux-resurrect`, `tmux-copycat`, `tmux-open`, `tmux-powerkit`
+- 플러그인 매니저: `tpack`
+- 플러그인: `vim-tmux-navigator`, `tmux-resurrect`, `tmux-open`, `tmux-powerkit`
 
 ## 공통 동작
 
@@ -68,27 +69,23 @@
 
 ## 플러그인 단축키
 
+- `tpack`: tmux plugin 설치, 업데이트, 정리, TUI 관리
+  - `Prefix I`: 설정에 선언된 플러그인 설치
+  - `Prefix U`: 플러그인 업데이트
+  - `Prefix M-u`: 설정에 없는 플러그인 정리
+  - `Prefix T`: tpack TUI 열기
 - `vim-tmux-navigator`: Vim split과 tmux pane 사이를 같은 키로 자연스럽게 이동
   - `Ctrl-h` / `j` / `k` / `l`: `vim-tmux-navigator`로 Vim과 tmux pane 사이 이동
   - `Ctrl-\`: `vim-tmux-navigator`로 마지막 pane으로 이동
 - `tmux-resurrect`: tmux 세션, window, pane 상태를 저장하고 나중에 복원
   - `Prefix C-s`: `tmux-resurrect`로 세션 저장
   - `Prefix C-r`: `tmux-resurrect`로 세션 복원
-- `tmux-copycat`: copy-mode 검색을 강화하고 URL, 파일 경로, 숫자, 해시, IP 같은 패턴으로 빠르게 이동
-  - `Prefix /`: regex 검색 시작
-  - `Prefix F`: 파일 경로 검색
-  - `Prefix G`: git status 파일 항목 검색
-  - `Prefix L`: URL 검색. `http://`, `https://`, `git@`, `git://`, `ssh://`, `ftp://`, `file:///` 패턴을 검색
-  - `Prefix D`: 숫자 검색. 기존 tmux `choose-client` 기본 키를 덮어씀
-  - `Prefix H`: SHA-1/SHA-256 해시 검색
-  - `Prefix A`: IP 주소 검색
-  - `n` / `N`: copycat 검색 결과에서 다음 / 이전 match 이동
 - `tmux-open`: copy-mode에서 선택된 URL, 파일, 검색어를 바로 열기
   - `o`: 선택한 URL/파일을 OS 기본 앱으로 열기
   - `C-o`: 선택한 파일을 `$EDITOR`로 열기
   - `S`: 선택한 텍스트를 Google 검색으로 열기
 - `tmux-powerkit`: 상태바 테마, 세션/창 표시, 날짜/날씨 같은 플러그인 정보를 렌더링
-  - `Prefix T`: `tmux-powerkit` 테마 선택기 열기
+  - `Prefix P`: `tmux-powerkit` 테마 선택기 열기
   - `Prefix C-d`: `tmux-powerkit` 캐시 비우기
   - `Prefix C-e`: `tmux-powerkit` 옵션 보기
   - `Prefix C-y`: `tmux-powerkit` 키바인딩 보기
@@ -100,4 +97,4 @@
 - `tmux attach -t <name>`: 기존 세션에 접속
 - `tmux rename-session -t <old> <new>`: 세션 이름 변경
 - `tmux kill-session -t <name>`: 세션 종료
-- `tmux source-file ~/.tmux.conf`: 설정 다시 로드
+- `tmux source-file ~/.config/tmux/tmux.conf`: 설정 다시 로드
