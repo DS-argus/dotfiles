@@ -6,6 +6,7 @@ zsh/.zsh_sessions/
 .gjc/
 .omc/
 .omx/
+configstore/
 
 # App-local state not managed by this repo
 gh/
