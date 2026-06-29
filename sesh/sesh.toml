@@ -1,0 +1,16 @@
+#:schema https://github.com/joshmedeski/sesh/raw/main/sesh.schema.json
+dir_length = 1
+
+cache = false
+
+[[session]]
+name = "tmux config"
+path = "$XDG_CONFIG_HOME/tmux"
+startup_command = "nvim tmux.conf"
+preview_command = "bat --color=always $XDG_CONFIG_HOME/tmux/tmux.conf"
+
+[[session]]
+name = "zsh config"
+path = "$XDG_CONFIG_HOME/zsh"
+startup_command = "nvim .zshrc"
+preview_command = "eza --all --git --icons --color=always $XDG_CONFIG_HOME/zsh"
