@@ -12,3 +12,8 @@ hash = "424ada4807b20ccd4fc85d1d7c26d1e4"
 use = "BennyOe/tokyo-night"
 rev = "8e6296f"
 hash = "d9da921c3bd37ba32ee27a8a7a40461f"
+
+[[flavor.deps]]
+use = "AdithyanA2005/nord"
+rev = "34970be"
+hash = "6e1d257f00b540acbeb194082ce073c2"

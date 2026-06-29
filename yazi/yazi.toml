@@ -18,8 +18,8 @@ mouse_events   = [ "click", "scroll", "drag" ]
 title_format   = "Yazi: {cwd}"
 
 [preview] # 우측 preview 패널
-wrap            = "no"
-tab_size        = 2
+wrap            = "yes"
+tab_size        = 4
 max_width       = 1200
 max_height      = 1000
 cache_dir       = ""
@@ -42,7 +42,6 @@ leaf = [
 # editor 띄우는 명령어
 edit = [
 	{ run = 'nvim %*', block = true, desc = "nvim", for = "macos" },
-	{ run = 'cursor %*', orphan = true, desc = "Cursor", for = "macos" },
 	{ run = '${EDITOR:-vi} %*', desc = "$EDITOR", block = true, for = "linux" },
 	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
 	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },

@@ -1,6 +1,5 @@
 [flavor]
-dark  = "tokyo-night"
-light = "tokyo-night"
+dark  = "nord"
 
 [cmp]
 icon_file = "󰈔"
