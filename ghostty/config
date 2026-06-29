@@ -1,5 +1,5 @@
 # 사용할 컬러 테마.
-theme = "TokyoNight Storm"
+theme = "Nord"
 
 # 기본 코드 폰트는 JetBrains Mono로 유지.
 font-family = "JetBrains Mono"
@@ -48,11 +48,11 @@ cursor-opacity = 0.8
 adjust-cursor-thickness = 120%
 
 # 창 전체 배경 투명도.
-background-opacity = 0.95
+background-opacity = 0.85
 # 투명 배경 뒤를 부드럽게 블러 처리.
-background-blur = 15
+background-blur = 20
 # 셀 배경에도 투명도 적용.
-background-opacity-cells = true
+background-opacity-cells = false
 
 # macOS 타이틀바 숨김.
 macos-titlebar-style = hidden
@@ -78,6 +78,8 @@ shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,
 
 # 앱이 OSC로 보내는 데스크톱 알림 허용.
 desktop-notifications = true
+
+macos-icon = xray
 
 # for tmux prefix : ctrl + space 를 ctrl + a로 전달 (윈도우 ssh 접속을 위해)
 keybind = ctrl+space=text:\x01
