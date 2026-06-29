@@ -37,7 +37,7 @@ theme = "ocean-transparent"
 # editor = '"C:\Program Files\Notepad++\notepad++.exe" --some-flag'
 #
 # Priority: --editor flag > LEAF_EDITOR > this setting > nano (notepad on Windows)
-editor = "nvim"
+editor = 'nvim +{$line} +"normal! zz"'
 
 # Maximum content width (number of columns)
 # Limits how wide the rendered content can be.
@@ -68,3 +68,11 @@ content_bg = "reset"
 toc_bg = "reset"
 toc_inactive_bg = "reset"
 status_bg = "reset"
+
+[themes.ocean-transparent.markdown]
+code_frame = "#7f91a8"
+code_gutter = "#a3b1c6"
+code_label = "#8bd5ca"
+table_border = "#7f91a8"
+table_separator = "#7f91a8"
+heading_underline = "#7f91a8"
