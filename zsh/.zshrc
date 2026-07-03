@@ -69,13 +69,18 @@ autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
 # -----------------------------------------------------------------------------
 # Key Bindings (키 바인딩 설정)
 # -----------------------------------------------------------------------------
+# 기본 zsh vi 모드
+bindkey -v
+export KEYTIMEOUT=10
+bindkey -M viins 'jk' vi-cmd-mode
+
 # Tab과 Shift+Tab으로 zsh-completions 순환
-bindkey '^I' menu-complete                    # Tab 키
-bindkey "$terminfo[kcbt]" reverse-menu-complete  # Shift+Tab 키
+bindkey -M viins '^I' menu-complete                    # Tab 키
+[[ -n "$terminfo[kcbt]" ]] && bindkey -M viins "$terminfo[kcbt]" reverse-menu-complete  # Shift+Tab 키
 
 # Ctrl+O로 autosuggestion 수락 : 원래는 오른쪽 방향키
 if (( AUTOSUGGESTIONS_LOADED )); then
-  bindkey '^O' autosuggest-accept
+  bindkey -M viins '^O' autosuggest-accept
 fi
 
 # bun completions

@@ -1,89 +1,110 @@
 format = """
-$directory$git_branch$git_status$python$lua$golang$rust$cmd_duration
-$character"""
+$directory${custom.giturl}$git_branch${custom.git_worktree}$git_status$python$lua$golang$rust$cmd_duration$character"""
 
 add_newline = true
-palette = 'tokyonight_night'
+palette = 'nord'
 
 [directory]
-style = 'bold fg:neon_cyan'
+style = 'bold fg:frost1'
 format = '[$path]($style) '
-truncation_length = 3
-truncation_symbol = '.../'
+truncation_length = 2
+truncation_symbol = '…/'
 truncate_to_repo = false
 
 [directory.substitutions]
-'~' = ' '
-'.config' = '󰒓'
-'Desktop' = ' '
-'Programming' = ' '
+#'~' = ' '
+#'.config' = '󰒓'
+#'Desktop' = ' '
+#'Programming' = ' '
 
 [character]
-success_symbol = '[❯](bold fg:neon_blue) '
-error_symbol = '[❯](bold fg:neon_pink) '
+success_symbol = '[ ](bold fg:aurora_green)'
+error_symbol = '[✘ ](bold fg:aurora_red)'
+vimcmd_symbol = '[: ](bold fg:aurora_yellow)'
+
+[custom.giturl]
+description = 'Display symbol for remote Git server'
+command = '''
+remote=$(git ls-remote --get-url 2>/dev/null)
+case "$remote" in
+  *github*) printf " " ;;
+  *gitlab*) printf " " ;;
+  *bitbucket*) printf " " ;;
+  *git*) printf " " ;;
+  *) printf " " ;;
+esac
+'''
+when = 'git rev-parse --is-inside-work-tree >/dev/null 2>&1'
+format = '[$output](bold fg:frost1) '
+require_repo = true
+ignore_timeout = true
 
 [git_branch]
-style = 'fg:neon_purple bold'
-symbol = ''
-format = '[$branch]($style) '
+symbol = ' '
+style = 'fg:polar0 bg:frost2 bold'
+format = '[](fg:frost2)[$symbol$branch]($style)[](fg:frost2) '
+
+[custom.git_worktree]
+description = 'Show indicator when inside a git worktree'
+command = 'printf "⛓"'
+when = 'git rev-parse --is-inside-work-tree >/dev/null 2>&1 && test "$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" != "$(git rev-parse --path-format=absolute --git-dir 2>/dev/null)"'
+format = '[$output](bold fg:aurora_green) '
+require_repo = true
+ignore_timeout = true
 
 [git_status]
-ahead = '⇡${count}'
-behind = '⇣${count}'
-diverged = '⇕⇡${ahead_count}⇣${behind_count}'
-untracked = '?${count}'
-modified = '!${count}'
-conflicted = '=${count}'
-staged = '+${count}'
-stashed = '*${count}'
-deleted = '-${count}'
-style = 'fg:neon_orange bold'
+ahead = '[⇡${count}](fg:frost1)'
+behind = '[⇣${count}](fg:aurora_orange)'
+diverged = '[⇕⇡${ahead_count}⇣${behind_count}](fg:aurora_purple)'
+untracked = '[?${count}](fg:aurora_red)'
+modified = '[!${count}](fg:aurora_yellow)'
+conflicted = '[=${count}](fg:aurora_red)'
+staged = '[+${count}](fg:aurora_green)'
+stashed = '[*${count}](fg:aurora_purple)'
+deleted = '[-${count}](fg:aurora_red)'
+renamed = '[»${count}](fg:frost2)'
+style = 'bold'
 format = '[$all_status$ahead_behind]($style) '
 
 [python]
-style = 'fg:python_blue bold'
+style = 'fg:frost3 bold'
 symbol = ''
 format = '[$symbol]($style) '
 
 [lua]
-style = 'fg:lua_blue bold'
+style = 'fg:frost2 bold'
 symbol = ''
 format = '[$symbol]($style) '
 
 [rust]
-style = 'fg:rust_orange bold'
+style = 'fg:aurora_orange bold'
 symbol = ''
 format = '[$symbol]($style) '
 
 [golang]
-style = 'fg:go_blue bold'
+style = 'fg:frost1 bold'
 symbol = "\U000f07d3"  # "󰟓 "
 format = '[$symbol]($style) '
 
 [cmd_duration]
 min_time = 500
-style = 'fg:soft_gray'
+style = 'fg:polar3'
 format = '[$duration]($style) '
 
-[palettes.tokyonight_night]
-blue = '#7aa2f7'
-cyan = '#7dcfff'
-green = '#9ece6a'
-orange = '#ff9e64'
-purple = '#bb9af7'
-red = '#f7768e'
-yellow = '#e0af68'
-gray = '#627e97'
-white = '#cbe0f0'
-black = '#011628'
-neon_blue = '#82aaff'
-neon_cyan = '#86e1fc'
-neon_purple = '#c099ff'
-neon_pink = '#ff7ab8'
-neon_orange = '#ffb86c'
-neon_yellow = '#ffd866'
-soft_gray = '#7f96aa'
-python_blue = '#3776ab'
-lua_blue = '#51a0cf'
-rust_orange = '#dea584'
-go_blue = '#00add8'
+[palettes.nord]
+polar0 = '#2E3440'
+polar1 = '#3B4252'
+polar2 = '#434C5E'
+polar3 = '#4C566A'
+snow0 = '#D8DEE9'
+snow1 = '#E5E9F0'
+snow2 = '#ECEFF4'
+frost0 = '#8FBCBB'
+frost1 = '#88C0D0'
+frost2 = '#81A1C1'
+frost3 = '#5E81AC'
+aurora_red = '#BF616A'
+aurora_orange = '#D08770'
+aurora_yellow = '#EBCB8B'
+aurora_green = '#A3BE8C'
+aurora_purple = '#B48EAD'
