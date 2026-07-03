@@ -9,9 +9,9 @@ font-family = "Symbols Nerd Font Mono"
 font-family = "D2Coding ligature"
 
 # 기본 텍스트를 약간 기울어진 Medium Italic으로 렌더링.
-font-style = "Medium Italic"
+font-style = "Medium"
 # ANSI bold 요청은 SemiBold 스타일로 매핑.
-font-style-bold = "SemiBold Italic"
+font-style-bold = "SemiBold"
 # ANSI italic 요청은 Medium Italic으로 매핑.
 font-style-italic = "Medium Italic"
 # ANSI bold+italic 요청은 SemiBold Italic으로 매핑.
