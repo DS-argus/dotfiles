@@ -7,7 +7,7 @@
 - 터미널 타입: `xterm-256color` + RGB override
 - 스크롤백 버퍼: `100000`
 - 플러그인 매니저: `tpack`
-- 플러그인: `vim-tmux-navigator`, `tmux-resurrect`, `tmux-open`, `tmux-powerkit`
+- 플러그인: `vim-tmux-navigator`, `tmux-resurrect`, `tmux-open`, `tmux-dotbar`
 
 ## 공통 동작
 
@@ -84,11 +84,8 @@
   - `o`: 선택한 URL/파일을 OS 기본 앱으로 열기
   - `C-o`: 선택한 파일을 `$EDITOR`로 열기
   - `S`: 선택한 텍스트를 Google 검색으로 열기
-- `tmux-powerkit`: 상태바 테마, 세션/창 표시, 날짜/날씨 같은 플러그인 정보를 렌더링
-  - `Prefix P`: `tmux-powerkit` 테마 선택기 열기
-  - `Prefix C-d`: `tmux-powerkit` 캐시 비우기
-  - `Prefix C-e`: `tmux-powerkit` 옵션 보기
-  - `Prefix C-y`: `tmux-powerkit` 키바인딩 보기
+- `tmux-dotbar`: 세션, 창 번호, SSH/zoom 상태, 시각을 간결한 상태줄로 표시
+  - 별도 단축키 없음; prefix 입력 중에는 세션 색상이 바뀐다.
 
 ## 셸에서 자주 쓰는 명령
 
