@@ -25,6 +25,12 @@ keymap.set("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "아래 창으로
 keymap.set("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "위 창으로 이동" })
 keymap.set("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>", { desc = "오른쪽 창으로 이동" })
 
+-- AeroSpace가 alt(option) 키를 전역으로 쓰므로, AeroSpace가 안 잡고 터미널로 새어 들어온
+-- alt 조합이 ESC+키로 오동작하지 않도록 전부 무시 (M-hjkl은 위의 창 이동 매핑 유지)
+for _, key in ipairs(vim.split("abcdefgimnopqrstuvwxyz0123456789", "")) do
+	keymap.set({ "n", "i", "v" }, "<M-" .. key .. ">", "<Nop>", { desc = "alt 조합 무시 (AeroSpace 전용)" })
+end
+
 -- tab management
 keymap.set("n", "<leader>tn", "<cmd>tabnext<CR>", { desc = "다음 탭" })
 keymap.set("n", "<leader>tp", "<cmd>tabprevious<CR>", { desc = "이전 탭" })
