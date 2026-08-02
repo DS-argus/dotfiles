@@ -1,0 +1,168 @@
+#!/bin/bash
+# SketchyBar — Nord 투명 플로팅 바 (AeroSpace 연동)
+CONFIG_DIR="$HOME/.config/sketchybar"
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+source "$CONFIG_DIR/colors.sh"
+
+FONT="JetBrainsMono Nerd Font"
+
+# ---------------------------------------------------------------- bar
+sketchybar --bar \
+  height=28 \
+  position=top \
+  sticky=on \
+  margin=8 \
+  y_offset=6 \
+  corner_radius=9 \
+  color=$BAR_COLOR \
+  shadow=off \
+  padding_left=5 \
+  padding_right=5
+
+# ---------------------------------------------------------------- defaults
+sketchybar --default \
+  icon.font="$FONT:Bold:12.0" \
+  icon.color=$TEXT \
+  label.font="$FONT:SemiBold:11.0" \
+  label.color=$TEXT \
+  icon.padding_left=5 \
+  icon.padding_right=3 \
+  label.padding_left=3 \
+  label.padding_right=5 \
+  background.corner_radius=5 \
+  background.height=20
+
+# ---------------------------------------------------------------- events
+sketchybar --add event aerospace_workspace_change
+sketchybar --add event aerospace_mode_change
+
+# ---------------------------------------------------------------- aerospace mode badge (leftmost)
+sketchybar --add item mode left \
+  --subscribe mode aerospace_mode_change \
+  --set mode \
+    icon="󰒓" \
+    icon.color=$BG_DARK \
+    icon.padding_left=8 \
+    icon.padding_right=8 \
+    background.color=$YELLOW \
+    background.drawing=on \
+    drawing=off \
+    click_script="aerospace mode main && sketchybar --trigger aerospace_mode_change MODE=main" \
+    script="$PLUGIN_DIR/mode.sh"
+
+# ---------------------------------------------------------------- workspaces (left)
+# 워크스페이스 목록은 aerospace.toml 바인딩에서 파싱 (빈 워크스페이스는 런타임 목록에서 빠질 수 있음)
+WORKSPACES=$(grep -oE "'workspace [0-9A-Za-z]+'" "$HOME/.config/aerospace/aerospace.toml" | tr -d "'" | awk '{print $2}' | sort -u)
+[ -z "$WORKSPACES" ] && WORKSPACES=$(aerospace list-workspaces --all)
+
+for sid in $WORKSPACES; do
+  sketchybar --add item "space.$sid" left \
+    --subscribe "space.$sid" aerospace_workspace_change front_app_switched \
+    --set "space.$sid" \
+      icon="$sid" \
+      icon.padding_left=7 \
+      icon.padding_right=3 \
+      icon.highlight_color=$BG_DARK \
+      label.font="sketchybar-app-font:Regular:13.0" \
+      label.padding_left=0 \
+      label.padding_right=7 \
+      label.y_offset=-1 \
+      label.drawing=off \
+      background.color=$FROST1 \
+      background.drawing=off \
+      click_script="aerospace workspace $sid" \
+      script="$PLUGIN_DIR/aerospace.sh $sid"
+done
+
+# ---------------------------------------------------------------- front app (left)
+sketchybar --add item front_app left \
+  --subscribe front_app front_app_switched \
+  --set front_app \
+    icon="󰣆" \
+    icon.color=$FROST2 \
+    icon.padding_left=10 \
+    label.font="$FONT:Bold:11.0" \
+    script="$PLUGIN_DIR/front_app.sh"
+
+# ---------------------------------------------------------------- status (right, 추가 순 = 오른쪽부터)
+sketchybar --add item clock right \
+  --set clock \
+    icon="󰥔" \
+    icon.font="$FONT:Bold:14.0" \
+    icon.color=$FROST1 \
+    update_freq=10 \
+    click_script="open -a Calendar" \
+    script="$PLUGIN_DIR/clock.sh"
+
+sketchybar --add item battery right \
+  --subscribe battery system_woke power_source_change \
+  --set battery \
+    icon.font="$FONT:Bold:14.0" \
+    update_freq=120 \
+    click_script="open 'x-apple.systempreferences:com.apple.Battery-Settings.extension'" \
+    script="$PLUGIN_DIR/battery.sh"
+
+sketchybar --add item volume right \
+  --subscribe volume volume_change \
+  --set volume \
+    icon.font="$FONT:Bold:14.0" \
+    icon.color=$FROST2 \
+    click_script="osascript -e 'set volume output muted (not (output muted of (get volume settings)))'" \
+    script="$PLUGIN_DIR/volume.sh"
+
+sketchybar --add item input_source right \
+  --set input_source \
+    icon.font="$FONT:Bold:13.0" \
+    update_freq=1 \
+    click_script="open 'x-apple.systempreferences:com.apple.Keyboard-Settings.extension'" \
+    script="$PLUGIN_DIR/input_source.sh"
+
+sketchybar --add item wifi right \
+  --subscribe wifi wifi_change \
+  --set wifi \
+    icon.font="$FONT:Bold:14.0" \
+    update_freq=30 \
+    click_script="open 'x-apple.systempreferences:com.apple.wifi-settings-extension'" \
+    script="$PLUGIN_DIR/wifi.sh"
+
+sketchybar --add item vpn right \
+  --set vpn \
+    icon="󰦝" \
+    icon.font="$FONT:Bold:14.0" \
+    icon.color=$GREEN \
+    drawing=off \
+    update_freq=5 \
+    click_script="open 'x-apple.systempreferences:com.apple.Network-Settings.extension'" \
+    script="$PLUGIN_DIR/vpn.sh"
+
+sketchybar --add item focus right \
+  --set focus \
+    icon="󰤄" \
+    icon.font="$FONT:Bold:14.0" \
+    icon.color=$FROST3 \
+    drawing=off \
+    update_freq=5 \
+    click_script="open 'x-apple.systempreferences:com.apple.Focus-Settings.extension'" \
+    script="$PLUGIN_DIR/focus.sh"
+
+# ---------------------------------------------------------------- island groups
+# 바는 투명, 아이템 묶음에만 배경 → 빈 영역은 배경화면 그대로
+sketchybar --add bracket left_group mode '/space\..*/' front_app \
+  --set left_group \
+    background.color=$GROUP_COLOR \
+    background.corner_radius=9 \
+    background.height=28 \
+    background.border_color=$BORDER \
+    background.border_width=2
+
+sketchybar --add bracket right_group clock battery volume input_source wifi vpn focus \
+  --set right_group \
+    background.color=$GROUP_COLOR \
+    background.corner_radius=9 \
+    background.height=28 \
+    background.border_color=$BORDER \
+    background.border_width=2
+# ---------------------------------------------------------------- init
+sketchybar --update
+sketchybar --trigger aerospace_workspace_change \
+  FOCUSED_WORKSPACE="$(aerospace list-workspaces --focused)"
