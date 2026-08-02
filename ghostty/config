@@ -83,3 +83,5 @@ macos-icon = xray
 
 # for tmux prefix : ctrl + space 를 ctrl + a로 전달 (윈도우 ssh 접속을 위해)
 keybind = ctrl+space=text:\x01
+# 배경 투명(0.85) ↔ 불투명 토글 (macOS 전용).
+keybind = cmd+u=toggle_background_opacity
