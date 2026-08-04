@@ -94,20 +94,43 @@ sketchybar --add item clock right \
     click_script="open -a Calendar" \
     script="$PLUGIN_DIR/clock.sh"
 
+sketchybar --add item calendar right \
+  --set calendar \
+    icon="󰃭" \
+    icon.font="$FONT:Bold:14.0" \
+    icon.color=$YELLOW \
+    label.max_chars=28 \
+    drawing=off \
+    update_freq=300 \
+    click_script="open -a Calendar" \
+    script="$PLUGIN_DIR/calendar.sh"
+
 sketchybar --add item battery right \
-  --subscribe battery system_woke power_source_change \
+  --subscribe battery system_woke power_source_change mouse.clicked \
   --set battery \
     icon.font="$FONT:Bold:14.0" \
     update_freq=120 \
-    click_script="open 'x-apple.systempreferences:com.apple.Battery-Settings.extension'" \
+    popup.align=center \
+    popup.y_offset=6 \
+    popup.height=26 \
+    popup.background.color=$GROUP_COLOR \
+    popup.background.corner_radius=9 \
+    popup.background.border_color=$BORDER \
+    popup.background.border_width=2 \
     script="$PLUGIN_DIR/battery.sh"
 
 sketchybar --add item volume right \
-  --subscribe volume volume_change \
+  --subscribe volume volume_change mouse.clicked mouse.scrolled \
   --set volume \
     icon.font="$FONT:Bold:14.0" \
     icon.color=$FROST2 \
-    click_script="osascript -e 'set volume output muted (not (output muted of (get volume settings)))'" \
+    popup.align=center \
+    popup.y_offset=6 \
+    popup.height=28 \
+    popup.background.color=$GROUP_COLOR \
+    popup.background.corner_radius=9 \
+    popup.background.border_color=$BORDER \
+    popup.background.border_width=2 \
     script="$PLUGIN_DIR/volume.sh"
 
 sketchybar --add item input_source right \
@@ -125,15 +148,6 @@ sketchybar --add item wifi right \
     click_script="open 'x-apple.systempreferences:com.apple.wifi-settings-extension'" \
     script="$PLUGIN_DIR/wifi.sh"
 
-sketchybar --add item vpn right \
-  --set vpn \
-    icon="󰦝" \
-    icon.font="$FONT:Bold:14.0" \
-    icon.color=$GREEN \
-    drawing=off \
-    update_freq=5 \
-    click_script="open 'x-apple.systempreferences:com.apple.Network-Settings.extension'" \
-    script="$PLUGIN_DIR/vpn.sh"
 
 sketchybar --add item focus right \
   --set focus \
@@ -145,6 +159,83 @@ sketchybar --add item focus right \
     click_script="open 'x-apple.systempreferences:com.apple.Focus-Settings.extension'" \
     script="$PLUGIN_DIR/focus.sh"
 
+# ---------------------------------------------------------------- developer services island (right)
+sketchybar --add item dev_separator right \
+  --set dev_separator \
+    width=6 \
+    icon.drawing=off \
+    label.drawing=off
+
+sketchybar --add item dev_network right \
+  --subscribe dev_network mouse.clicked \
+  --set dev_network \
+    icon="󰦝" \
+    icon.font="$FONT:Bold:14.0" \
+    drawing=off \
+    update_freq=15 \
+    popup.align=center \
+    popup.y_offset=6 \
+    popup.height=26 \
+    popup.background.color=$GROUP_COLOR \
+    popup.background.corner_radius=9 \
+    popup.background.border_color=$BORDER \
+    popup.background.border_width=2 \
+    script="$PLUGIN_DIR/dev_network.sh"
+
+sketchybar --add item docker right \
+  --set docker \
+    icon="󰡨" \
+    icon.font="$FONT:Bold:14.0" \
+    drawing=off \
+    update_freq=10 \
+    click_script="open -a Docker" \
+    script="$PLUGIN_DIR/docker.sh"
+
+sketchybar --add item github right \
+  --set github \
+    icon="󰊤" \
+    icon.font="$FONT:Bold:14.0" \
+    drawing=off \
+    update_freq=300 \
+    click_script="open 'https://github.com/notifications'" \
+    script="$PLUGIN_DIR/github.sh"
+
+# ---------------------------------------------------------------- compact popups
+# Volume: draggable slider + mute toggle
+sketchybar --add slider volume.slider popup.volume 140 \
+  --subscribe volume.slider mouse.clicked \
+  --set volume.slider \
+    slider.highlight_color=$FROST1 \
+    slider.background.color=$MUTED \
+    slider.background.height=6 \
+    slider.background.corner_radius=3 \
+    slider.knob="●" \
+    slider.knob.color=$TEXT \
+    padding_left=10 \
+    padding_right=10 \
+    script="$PLUGIN_DIR/volume_control.sh"
+
+sketchybar --add item volume.mute popup.volume \
+  --subscribe volume.mute mouse.clicked \
+  --set volume.mute \
+    icon="󰝟" \
+    icon.color=$FROST2 \
+    label="음소거" \
+    script="$PLUGIN_DIR/volume_control.sh"
+
+# Battery: source and remaining-time/status details
+sketchybar --add item battery.source popup.battery \
+  --set battery.source icon="󰂄" icon.color=$GREEN label="전원 상태"
+sketchybar --add item battery.detail popup.battery \
+  --set battery.detail icon="󰔟" icon.color=$FROST1 label="남은 시간"
+
+# Tailscale: address, MagicDNS hostname and online peer count
+sketchybar --add item dev_network.ip popup.dev_network \
+  --set dev_network.ip icon="󰩠" icon.color=$GREEN label="IP"
+sketchybar --add item dev_network.host popup.dev_network \
+  --set dev_network.host icon="󰒋" icon.color=$FROST2 label="Host"
+sketchybar --add item dev_network.peers popup.dev_network \
+  --set dev_network.peers icon="󰓾" icon.color=$FROST1 label="Online peers"
 # ---------------------------------------------------------------- island groups
 # 바는 투명, 아이템 묶음에만 배경 → 빈 영역은 배경화면 그대로
 sketchybar --add bracket left_group mode '/space\..*/' front_app \
@@ -155,8 +246,58 @@ sketchybar --add bracket left_group mode '/space\..*/' front_app \
     background.border_color=$BORDER \
     background.border_width=2
 
-sketchybar --add bracket right_group clock battery volume input_source wifi vpn focus \
+sketchybar --add item system_separator right \
+  --set system_separator \
+    width=6 \
+    icon.drawing=off \
+    label.drawing=off
+# ---------------------------------------------------------------- system monitor island (right)
+# 오른쪽 상태 아일랜드 왼쪽에 CPU 숫자+그래프와 memory pressure를 별도 표시
+sketchybar --add item memory right \
+  --set memory \
+    icon="󰍛" \
+    icon.font="$FONT:Bold:14.0" \
+    label.width=30 \
+    label.align=right \
+    update_freq=5 \
+    click_script="open -a 'Activity Monitor'" \
+    script="$PLUGIN_DIR/memory.sh"
+
+sketchybar --add graph cpu_graph right 38 \
+  --set cpu_graph \
+    graph.line_width=1.5 \
+    background.drawing=on \
+    background.color=0x00000000 \
+    background.height=18 \
+    y_offset=0 \
+    update_freq=3 \
+    click_script="open -a 'Activity Monitor'" \
+    script="$PLUGIN_DIR/cpu.sh"
+
+sketchybar --add item cpu right \
+  --set cpu \
+    icon="󰻠" \
+    icon.font="$FONT:Bold:14.0" \
+    label.width=30 \
+    label.align=right \
+    click_script="open -a 'Activity Monitor'"
+sketchybar --add bracket right_group clock calendar battery volume input_source wifi focus \
   --set right_group \
+    background.color=$GROUP_COLOR \
+    background.corner_radius=9 \
+    background.height=28 \
+    background.border_color=$BORDER \
+    background.border_width=2
+
+sketchybar --add bracket dev_group github docker dev_network \
+  --set dev_group \
+    background.color=$GROUP_COLOR \
+    background.corner_radius=9 \
+    background.height=28 \
+    background.border_color=$BORDER \
+    background.border_width=2
+sketchybar --add bracket system_group cpu cpu_graph memory \
+  --set system_group \
     background.color=$GROUP_COLOR \
     background.corner_radius=9 \
     background.height=28 \

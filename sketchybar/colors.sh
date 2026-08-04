@@ -1,6 +1,9 @@
 #!/bin/bash
 # Nord palette (starship/tmux/borders와 통일)
 
+# brew service로 실행된 플러그인에서도 Homebrew/앱 번들 CLI를 찾는다.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
 export BAR_COLOR=0x00000000   # 바 자체는 완전 투명 (아이템 그룹에만 배경)
 export GROUP_COLOR=0xd92e3440 # polar0, 85% 불투명 — 아일랜드 배경
 export BORDER=0x73d8dee9      # snow0, 45% — 아일랜드 테두리
