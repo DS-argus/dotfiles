@@ -1,6 +1,9 @@
 require("full-border"):setup({
 	type = ui.Border.ROUNDED,
 })
+require("session"):setup {
+	sync_yanked = true,
+}
 
 function Linemode:size_and_mtime()
 	local time = math.floor(self._file.cha.mtime or 0)
