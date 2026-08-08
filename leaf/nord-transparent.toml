@@ -1,0 +1,127 @@
+# leaf — Nord (transparent)
+#
+# Nord 팔레트(https://www.nordtheme.com/)를 leaf 테마 스키마에 매핑한 것.
+# 터미널 배경이 그대로 비치도록 표면 배경(content/toc/status)은 "reset"으로 둔다.
+# 강조용 배경(선택 항목, 검색 매치, inline code 등)만 불투명 색을 쓴다.
+#
+# nord0  #2E3440   nord4  #D8DEE9   nord8  #88C0D0   nord12 #D08770
+# nord1  #3B4252   nord5  #E5E9F0   nord9  #81A1C1   nord13 #EBCB8B
+# nord2  #434C5E   nord6  #ECEFF4   nord10 #5E81AC   nord14 #A3BE8C
+# nord3  #4C566A   nord7  #8FBCBB   nord11 #BF616A   nord15 #B48EAD
+# #616E88 은 공식 nord-vim이 주석용으로 쓰는 out-of-palette 색이다.
+
+base = "ocean"
+syntax = "base16-ocean.dark"
+
+[ui]
+# --- 표면: 투명 유지 ---
+content_bg = "reset"
+toc_bg = "reset"
+toc_inactive_bg = "reset"
+status_bg = "reset"
+
+# --- 경계선 / 구분자 ---
+toc_border = "#434C5E"       # nord2
+status_separator = "#4C566A" # nord3
+
+# --- 상태줄 ---
+status_brand_fg = "#2E3440"    # nord0
+status_brand_bg = "#88C0D0"    # nord8
+status_filename_fg = "#D8DEE9" # nord4
+status_filename_bg = "#3B4252" # nord1
+status_watch_fg = "#A3BE8C"    # nord14
+status_watch_bg = "#3B4252"    # nord1
+status_reloaded_fg = "#2E3440" # nord0
+status_reloaded_bg = "#A3BE8C" # nord14
+status_search_fg = "#EBCB8B"   # nord13
+status_search_bg = "#3B4252"   # nord1
+status_success_fg = "#A3BE8C"  # nord14
+status_success_bg = "#3B4252"  # nord1
+status_warning_fg = "#EBCB8B"  # nord13
+status_error_fg = "#BF616A"    # nord11
+status_error_bg = "#3B4252"    # nord1
+status_shortcut_fg = "#616E88"
+status_percent_fg = "#88C0D0"  # nord8
+
+# --- 목차(TOC) ---
+scrollbar_hover = "#88C0D0"             # nord8
+toc_hover_fg = "#ECEFF4"                # nord6
+toc_header_fg = "#616E88"
+toc_active_bg = "#3B4252"               # nord1 (선택 강조라 불투명)
+toc_accent = "#88C0D0"                  # nord8
+toc_index_inactive = "#4C566A"          # nord3
+toc_primary_active = "#ECEFF4"          # nord6
+toc_primary_inactive = "#D8DEE9"        # nord4
+toc_secondary_inactive = "#4C566A"      # nord3
+toc_secondary_text_active = "#D8DEE9"   # nord4
+toc_secondary_text_inactive = "#616E88"
+
+[markdown]
+# --- 본문 ---
+text = "#D8DEE9"        # nord4
+strong_text = "#ECEFF4" # nord6
+rule = "#434C5E"        # nord2
+
+# --- 제목 ---
+heading_1 = "#88C0D0"         # nord8
+heading_2 = "#A3BE8C"         # nord14
+heading_3 = "#81A1C1"         # nord9
+heading_4 = "#B48EAD"         # nord15
+heading_other = "#D08770"     # nord12
+heading_underline = "#434C5E" # nord2
+
+# --- 코드 ---
+code_frame = "#4C566A"     # nord3
+code_gutter = "#4C566A"    # nord3
+code_label = "#616E88"
+inline_code_fg = "#D08770" # nord12
+inline_code_bg = "#3B4252" # nord1
+
+# --- 목록 / 체크박스 ---
+list_level_1 = "#A3BE8C"   # nord14
+list_level_2 = "#88C0D0"   # nord8
+list_level_3 = "#B48EAD"   # nord15
+ordered_list = "#EBCB8B"   # nord13
+task_checked = "#A3BE8C"   # nord14
+task_unchecked = "#616E88"
+
+# --- 표 ---
+table_border = "#4C566A"    # nord3
+table_separator = "#434C5E" # nord2
+table_header = "#88C0D0"    # nord8
+table_cell = "#D8DEE9"      # nord4
+
+# --- 인용 / 링크 ---
+blockquote_marker = "#616E88"
+blockquote_text = "#D8DEE9" # nord4
+link_icon = "#88C0D0"       # nord8
+link_text = "#88C0D0"       # nord8
+link_hover = "#8FBCBB"      # nord7
+
+# --- 검색 / 하이라이트 ---
+search_highlight_bg = "#434C5E" # nord2
+search_match_bg = "#EBCB8B"     # nord13
+mark_fg = "#ECEFF4"             # nord6
+mark_bg = "#5E81AC"             # nord10
+
+# --- LaTeX ---
+latex_inline_fg = "#B48EAD" # nord15
+latex_inline_bg = "#3B4252" # nord1
+latex_block_fg = "#B48EAD"  # nord15
+
+# --- Mermaid ---
+mermaid_keyword = "#D08770"  # nord12
+mermaid_arrow = "#88C0D0"    # nord8
+mermaid_label = "#A3BE8C"    # nord14
+mermaid_block_fg = "#D8DEE9" # nord4
+
+# --- GitHub alert ---
+alert_note = "#81A1C1"      # nord9
+alert_tip = "#A3BE8C"       # nord14
+alert_important = "#B48EAD" # nord15
+alert_warning = "#EBCB8B"   # nord13
+alert_caution = "#BF616A"   # nord11
+
+# --- 각주 ---
+footnote_ref = "#88C0D0"  # nord8
+footnote_text = "#D8DEE9" # nord4
