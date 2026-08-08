@@ -40,8 +40,11 @@ cursor-style = block
 # 커서 깜빡임 비활성화.
 cursor-style-blink = false
 
-# 커서 색상.
-cursor-color = "#00FFAA"
+# 커서 색상: Nord aurora orange(nord12). Nord에서 유일한 난색이라
+# 온통 청회색인 화면에서 커서만 즉시 눈에 들어온다.
+cursor-color = "#D08770"
+# 블록 커서 안쪽 글자색. Nord 테마 기본값이 #282828(gruvbox 계열)이라 nord0으로 덮는다.
+cursor-text = "#2E3440"
 # 커서 불투명도.
 cursor-opacity = 0.8
 # 블록 커서를 약간 더 도톰하게 표시.
