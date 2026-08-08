@@ -6,48 +6,51 @@ icon_file = "󰈔"
 icon_folder = "󰉋"
 icon_command = "󰘳"
 
+# 아이콘 색은 nord flavor(flavors/nord.yazi/flavor.toml)의 [filetype] 규칙과 맞춘다.
+# image/* → nord7, {audio,video}/* → nord13, archive → nord15,
+# document → nord14, link → nord15, dir → nord9
 [icon]
 prepend_dirs = [
-	{ name = ".config", text = "󰒓", fg = "#7dcfff" },
-	{ name = ".git", text = "󰊢", fg = "#f7768e" },
-	{ name = "Desktop", text = "󰟀", fg = "#7aa2f7" },
-	{ name = "Documents", text = "󰈙", fg = "#9ece6a" },
-	{ name = "Downloads", text = "󰉍", fg = "#e0af68" },
-	{ name = "Pictures", text = "󰋩", fg = "#e0af68" },
+	{ name = ".config", text = "󰒓", fg = "#81A1C1" },  # nord9  dir
+	{ name = ".git", text = "󰊢", fg = "#BF616A" },     # nord11 git은 빨강으로 구분
+	{ name = "Desktop", text = "󰟀", fg = "#81A1C1" },  # nord9  dir
+	{ name = "Documents", text = "󰈙", fg = "#A3BE8C" },# nord14 document
+	{ name = "Downloads", text = "󰉍", fg = "#EBCB8B" },# nord13
+	{ name = "Pictures", text = "󰋩", fg = "#8FBCBB" }, # nord7  image
 ]
 
 prepend_files = [
-	{ name = ".gitignore", text = "󰊢", fg = "#f7768e" },
-	{ name = "Dockerfile", text = "󰡨", fg = "#7dcfff" },
-	{ name = "README.md", text = "󰍔", fg = "#7dcfff" },
+	{ name = ".gitignore", text = "󰊢", fg = "#BF616A" },# nord11 .git과 통일
+	{ name = "Dockerfile", text = "󰡨", fg = "#88C0D0" },# nord8
+	{ name = "README.md", text = "󰍔", fg = "#88C0D0" }, # nord8  md와 통일
 ]
 
 prepend_exts = [
-	{ name = "md", text = "󰍔", fg = "#7dcfff" },
-	{ name = "lua", text = "󰢱", fg = "#7aa2f7" },
-	{ name = "toml", text = "󰰤", fg = "#e0af68" },
-	{ name = "yaml", text = "󰈙", fg = "#e0af68" },
-	{ name = "yml", text = "󰈙", fg = "#e0af68" },
-	{ name = "json", text = "󰘦", fg = "#9ece6a" },
-	{ name = "lock", text = "󰌾", fg = "#bb9af7" },
-	{ name = "png", text = "󰋩", fg = "#e0af68" },
-	{ name = "jpg", text = "󰋩", fg = "#e0af68" },
-	{ name = "jpeg", text = "󰋩", fg = "#e0af68" },
-	{ name = "svg", text = "󰜡", fg = "#7dcfff" },
-	{ name = "zip", text = "󰗄", fg = "#bb9af7" },
-	{ name = "tar", text = "󰗄", fg = "#bb9af7" },
-	{ name = "gz", text = "󰗄", fg = "#bb9af7" },
-	{ name = "7z", text = "󰗄", fg = "#bb9af7" },
-	{ name = "mp3", text = "󰎆", fg = "#f7768e" },
-	{ name = "wav", text = "󰎆", fg = "#f7768e" },
-	{ name = "mp4", text = "󰕧", fg = "#f7768e" },
+	{ name = "md", text = "󰍔", fg = "#88C0D0" },   # nord8
+	{ name = "lua", text = "󰢱", fg = "#81A1C1" },  # nord9
+	{ name = "toml", text = "󰰤", fg = "#EBCB8B" }, # nord13
+	{ name = "yaml", text = "󰈙", fg = "#EBCB8B" }, # nord13
+	{ name = "yml", text = "󰈙", fg = "#EBCB8B" },  # nord13
+	{ name = "json", text = "󰘦", fg = "#A3BE8C" }, # nord14
+	{ name = "lock", text = "󰌾", fg = "#B48EAD" }, # nord15
+	{ name = "png", text = "󰋩", fg = "#8FBCBB" },  # nord7  image/*
+	{ name = "jpg", text = "󰋩", fg = "#8FBCBB" },  # nord7  image/*
+	{ name = "jpeg", text = "󰋩", fg = "#8FBCBB" }, # nord7  image/*
+	{ name = "svg", text = "󰜡", fg = "#8FBCBB" },  # nord7  image/*
+	{ name = "zip", text = "󰗄", fg = "#B48EAD" },  # nord15 archive
+	{ name = "tar", text = "󰗄", fg = "#B48EAD" },  # nord15 archive
+	{ name = "gz", text = "󰗄", fg = "#B48EAD" },   # nord15 archive
+	{ name = "7z", text = "󰗄", fg = "#B48EAD" },   # nord15 archive
+	{ name = "mp3", text = "󰎆", fg = "#EBCB8B" },  # nord13 audio/*
+	{ name = "wav", text = "󰎆", fg = "#EBCB8B" },  # nord13 audio/*
+	{ name = "mp4", text = "󰕧", fg = "#EBCB8B" },  # nord13 video/*
 ]
 
 prepend_conds = [
-	{ if = "hidden & dir", text = "󰉖", fg = "#565f89" },
-	{ if = "hidden", text = "󰘓", fg = "#565f89" },
-	{ if = "link", text = "", fg = "#7dcfff" },
-	{ if = "orphan", text = "", fg = "#f7768e" },
-	{ if = "exec & !dir", text = "󰆍", fg = "#9ece6a" },
-	{ if = "dir", text = "󰉋", fg = "#7aa2f7" },
+	{ if = "hidden & dir", text = "󰉖", fg = "#4C566A" },# nord3  muted
+	{ if = "hidden", text = "󰘓", fg = "#4C566A" },      # nord3  muted
+	{ if = "link", text = "", fg = "#B48EAD" },        # nord15 link
+	{ if = "orphan", text = "", fg = "#BF616A" },      # nord11
+	{ if = "exec & !dir", text = "󰆍", fg = "#A3BE8C" }, # nord14
+	{ if = "dir", text = "󰉋", fg = "#81A1C1" },         # nord9  dir
 ]
