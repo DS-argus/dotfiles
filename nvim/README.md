@@ -126,7 +126,7 @@ LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 �
 
 | 플러그인                  | 기능                                               |
 | ------------------------- | -------------------------------------------------- |
-| `tokyonight.nvim`         | colorscheme                                        |
+| `nord.nvim`               | colorscheme (Nord, transparent)                    |
 | `lualine.nvim`            | statusline                                         |
 | `noice.nvim`              | command line, message UI                           |
 | `nvim-notify`             | notification backend                               |
