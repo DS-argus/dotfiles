@@ -66,7 +66,7 @@ defaults write NSGlobalDomain _HIHideMenuBar -bool true
 
 ## Version Snapshot
 
-Current local versions as of 2026-08-04. These are a reference snapshot, not
+Current local versions as of 2026-08-08. These are a reference snapshot, not
 version pins for `brew install`.
 
 | Tool | Version |
@@ -78,19 +78,19 @@ version pins for `brew install`.
 | zsh-autosuggestions | 0.7.1 |
 | starship | 1.26.0 |
 | tmux | 3.7b |
-| tpack | 1.2.1 |
+| tpack | 2.0.3 |
 | bash | 5.2.37 |
 | git | 2.55.0 |
-| Neovim | 0.12.2 |
+| Neovim | 0.12.4 |
 | Yazi | 26.5.6 |
-| leaf-md | 1.26.1 |
+| leaf-md | 1.27.0 |
 | btop | 1.4.7 |
 | AeroSpace | 0.21.3-Beta |
 | SketchyBar | 2.24.0 |
 | JankyBorders | 1.9.0 |
-| sketchybar-app-font | 2.0.68 |
-| icalBuddy | 1.10.1 |
-| GitHub CLI | 2.96.0 |
+| sketchybar-app-font | 2.0.71 |
+| icalBuddy | 1.10.1_1 |
+| GitHub CLI | 2.97.0 |
 
 ## Required Symlinks
 
