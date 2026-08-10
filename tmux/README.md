@@ -3,7 +3,7 @@
 ## 기본 정보
 
 - 설정 파일: `~/.config/tmux/tmux.conf`
-- prefix 키: `Ctrl-Space`
+- prefix 키: `Ctrl-a`
 - 터미널 타입: `xterm-256color` + RGB override
 - 스크롤백 버퍼: `100000`
 - 플러그인 매니저: `tpack`

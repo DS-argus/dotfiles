@@ -69,28 +69,76 @@ defaults write NSGlobalDomain _HIHideMenuBar -bool true
 Current local versions as of 2026-08-08. These are a reference snapshot, not
 version pins for `brew install`.
 
-| Tool | Version |
-| --- | --- |
-| Ghostty | 1.3.1 |
-| zsh | 5.9 |
-| zsh-completions | 0.36.0 |
-| zsh-syntax-highlighting | 0.8.0 |
-| zsh-autosuggestions | 0.7.1 |
-| starship | 1.26.0 |
-| tmux | 3.7b |
-| tpack | 2.0.3 |
-| bash | 5.2.37 |
-| git | 2.55.0 |
-| Neovim | 0.12.4 |
-| Yazi | 26.5.6 |
-| leaf-md | 1.27.0 |
-| btop | 1.4.7 |
-| AeroSpace | 0.21.3-Beta |
-| SketchyBar | 2.24.0 |
-| JankyBorders | 1.9.0 |
-| sketchybar-app-font | 2.0.71 |
-| icalBuddy | 1.10.1_1 |
-| GitHub CLI | 2.97.0 |
+| Tool                    | Version     |
+| ----------------------- | ----------- |
+| Ghostty                 | 1.3.1       |
+| zsh                     | 5.9         |
+| zsh-completions         | 0.36.0      |
+| zsh-syntax-highlighting | 0.8.0       |
+| zsh-autosuggestions     | 0.7.1       |
+| starship                | 1.26.0      |
+| tmux                    | 3.7b        |
+| tpack                   | 2.0.3       |
+| bash                    | 5.2.37      |
+| git                     | 2.55.0      |
+| Neovim                  | 0.12.4      |
+| Yazi                    | 26.5.6      |
+| leaf-md                 | 1.27.0      |
+| btop                    | 1.4.7       |
+| AeroSpace               | 0.21.3-Beta |
+| SketchyBar              | 2.24.0      |
+| JankyBorders            | 1.9.0       |
+| sketchybar-app-font     | 2.0.71      |
+| icalBuddy               | 1.10.1_1    |
+| GitHub CLI              | 2.97.0      |
+
+## Scripts
+
+`bin/` holds helper scripts. They are not on `PATH`; run them from this
+repository.
+
+### `bin/wallpaper-set`
+
+Sets the desktop and lock screen to one image.
+
+```zsh
+./bin/wallpaper-set ~/Pictures/Wallpapers/nord-waves.jpg
+./bin/wallpaper-set https://example.com/wallpaper.png
+./bin/wallpaper-set --show           # print the current state only
+./bin/wallpaper-set <image> --scale fill
+```
+
+A URL, or a path outside `~/Pictures/Wallpapers/`, is copied there first and the
+copy is used; a path already inside it is left alone. Wallpapers live outside
+this repository because they are assets, not configuration.
+
+`--scale` defaults to `auto`: images with a flat background use `fit` padded
+with that background color, so a landscape image is not cropped on a portrait
+display, and photos use `fill`.
+
+Since macOS 14 the lock screen mirrors the desktop and cannot be set
+separately, so the script also points the login window background
+(`com.apple.wallpaper SystemWallpaperURL`) at the same file.
+
+Requires `brew install wallpaper imagemagick`.
+
+## zsh Completion Permissions
+
+If a new zsh shell reports `compinit: insecure directories` after installing
+`zsh-completions`, remove group/other write permission from Homebrew's
+completion directories once:
+
+```zsh
+brew_share="$(brew --prefix)/share"
+chmod go-w "$brew_share"
+[[ -d "$brew_share/zsh" ]] && chmod -R go-w "$brew_share/zsh"
+```
+
+Verify that `compaudit` no longer reports any paths:
+
+```zsh
+zsh -fc 'autoload -Uz compaudit; compaudit'
+```
 
 ## Required Symlinks
 
@@ -105,8 +153,8 @@ Everything else in this README is expected to read directly from
 ## Notes
 
 - `zsh/privates.zsh` is intentionally ignored and sourced only when present.
-- `tmux/plugins/` and `yazi/flavors/` are generated or installed content and are
-  ignored by Git.
+- `tmux/plugins/`, `yazi/plugins/`, and `yazi/flavors/` are generated or
+  installed content and are ignored by Git.
 - Run `ya pkg install` after cloning or pulling Yazi plugin/flavor changes.
 - AeroSpace requires macOS Accessibility permission.
 - `icalBuddy` requires Calendar access for the SketchyBar upcoming-event item.

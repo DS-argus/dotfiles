@@ -116,7 +116,12 @@ fetch_workers    = 5
 preload_workers  = 2
 process_workers  = 5
 bizarre_retry    = 3
-image_alloc      = 536870912  # 512MB
+# 0 = magick에 -limit memory/-limit disk 를 붙이지 않는다.
+# yazi는 image_alloc > 0 이면 "-limit disk 1MiB"를 같이 하드코딩하는데,
+# 대형 이미지(예: 6016x6016 HEIC)는 픽셀 캐시를 디스크로 넘기려다
+# "cache resources exhausted"로 죽는다. 메모리를 올려도 디스크 한계가 바뀌지 않아 소용없다.
+# 크기 안전장치는 아래 image_bound 가 따로 담당한다.
+image_alloc      = 0
 image_bound      = [ 10000, 10000 ]
 suppress_preload = false
 
