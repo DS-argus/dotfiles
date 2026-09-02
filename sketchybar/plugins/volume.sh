@@ -8,6 +8,8 @@ if [ "$SENDER" = "mouse.clicked" ]; then
   else
     sketchybar --set battery popup.drawing=off \
                --set dev_network popup.drawing=off \
+               --set wifi popup.drawing=off \
+               --set bluetooth popup.drawing=off \
                --set "$NAME" popup.drawing=toggle
   fi
   exit 0
@@ -35,7 +37,7 @@ case "$VOLUME" in
   *)              ICON="󰝟" ;;
 esac
 
-[ "$MUTED" = "true" ] && MUTE_LABEL="음소거 해제" || MUTE_LABEL="음소거"
+[ "$MUTED" = "true" ] && MUTE_LABEL="Unmute" || MUTE_LABEL="Mute"
 
 sketchybar --set "$NAME" icon="$ICON" label="${VOLUME}%" \
            --set volume.slider slider.percentage="$VOLUME" \

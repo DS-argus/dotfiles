@@ -1,5 +1,5 @@
 #!/bin/bash
-# Tailscale은 상세 팝업을, 그 외 VPN은 연결 프로필 이름을 표시.
+# VPN 연결 시 아이콘만 표시하고, 상세 정보는 팝업에 둔다.
 source "$HOME/.config/sketchybar/colors.sh"
 
 if [ "$SENDER" = "mouse.clicked" ]; then
@@ -8,6 +8,8 @@ if [ "$SENDER" = "mouse.clicked" ]; then
   else
     sketchybar --set volume popup.drawing=off \
                --set battery popup.drawing=off \
+               --set wifi popup.drawing=off \
+               --set bluetooth popup.drawing=off \
                --set "$NAME" popup.drawing=toggle
   fi
   exit 0
@@ -28,9 +30,9 @@ except Exception:
 ' 2>/dev/null)"
   IFS=$'\t' read -r STATE IP DNS PEERS <<< "$TS"
   if [ "$STATE" = "Running" ] && [ -n "$IP" ]; then
-    sketchybar --set "$NAME" drawing=on icon.color=$GREEN label="TS" \
+    sketchybar --set "$NAME" drawing=on icon.color=$GREEN \
                --set dev_network.ip label="IP · $IP" \
-               --set dev_network.host label="Host · ${DNS:-알 수 없음}" \
+               --set dev_network.host label="Host · ${DNS:-Unknown}" \
                --set dev_network.peers label="Online peers · ${PEERS:-0}"
     exit 0
   fi
@@ -38,7 +40,7 @@ fi
 
 SERVICE="$(scutil --nc list 2>/dev/null | awk -F '"' '/\(Connected\)/ { print $2; exit }')"
 if [ -n "$SERVICE" ]; then
-  sketchybar --set "$NAME" drawing=on icon.color=$GREEN label="$SERVICE" \
+  sketchybar --set "$NAME" drawing=on icon.color=$GREEN \
              --set dev_network.ip label="VPN · $SERVICE" \
              --set dev_network.host label="" \
              --set dev_network.peers label=""

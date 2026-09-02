@@ -25,10 +25,10 @@ sketchybar --default \
   icon.color=$TEXT \
   label.font="$FONT:SemiBold:11.0" \
   label.color=$TEXT \
-  icon.padding_left=5 \
-  icon.padding_right=3 \
-  label.padding_left=3 \
-  label.padding_right=5 \
+  icon.padding_left=3 \
+  icon.padding_right=2 \
+  label.padding_left=2 \
+  label.padding_right=3 \
   background.corner_radius=5 \
   background.height=20
 
@@ -42,8 +42,8 @@ sketchybar --add item mode left \
   --set mode \
     icon="󰒓" \
     icon.color=$BG_DARK \
-    icon.padding_left=8 \
-    icon.padding_right=8 \
+    icon.padding_left=6 \
+    icon.padding_right=6 \
     background.color=$YELLOW \
     background.drawing=on \
     drawing=off \
@@ -60,12 +60,12 @@ for sid in $WORKSPACES; do
     --subscribe "space.$sid" aerospace_workspace_change front_app_switched \
     --set "space.$sid" \
       icon="$sid" \
-      icon.padding_left=7 \
-      icon.padding_right=3 \
+      icon.padding_left=5 \
+      icon.padding_right=2 \
       icon.highlight_color=$BG_DARK \
       label.font="sketchybar-app-font:Regular:13.0" \
       label.padding_left=0 \
-      label.padding_right=7 \
+      label.padding_right=5 \
       label.y_offset=-1 \
       label.drawing=off \
       background.color=$FROST1 \
@@ -80,7 +80,7 @@ sketchybar --add item front_app left \
   --set front_app \
     icon="󰣆" \
     icon.color=$FROST2 \
-    icon.padding_left=10 \
+    icon.padding_left=7 \
     label.font="$FONT:Bold:11.0" \
     script="$PLUGIN_DIR/front_app.sh"
 
@@ -99,7 +99,7 @@ sketchybar --add item calendar right \
     icon="󰃭" \
     icon.font="$FONT:Bold:14.0" \
     icon.color=$YELLOW \
-    label.max_chars=28 \
+    label.max_chars=12 \
     drawing=off \
     update_freq=300 \
     click_script="open -a Calendar" \
@@ -114,7 +114,7 @@ sketchybar --add item battery right \
     popup.y_offset=6 \
     popup.height=26 \
     popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=9 \
+    popup.background.corner_radius=3 \
     popup.background.border_color=$BORDER \
     popup.background.border_width=2 \
     script="$PLUGIN_DIR/battery.sh"
@@ -128,26 +128,59 @@ sketchybar --add item volume right \
     popup.y_offset=6 \
     popup.height=28 \
     popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=9 \
+    popup.background.corner_radius=3 \
     popup.background.border_color=$BORDER \
     popup.background.border_width=2 \
     script="$PLUGIN_DIR/volume.sh"
 
-sketchybar --add item input_source right \
-  --set input_source \
-    icon.font="$FONT:Bold:13.0" \
-    update_freq=1 \
-    click_script="open 'x-apple.systempreferences:com.apple.Keyboard-Settings.extension'" \
-    script="$PLUGIN_DIR/input_source.sh"
-
 sketchybar --add item wifi right \
-  --subscribe wifi wifi_change \
+  --subscribe wifi wifi_change system_woke mouse.entered mouse.exited mouse.exited.global \
   --set wifi \
     icon.font="$FONT:Bold:14.0" \
+    label.drawing=off \
     update_freq=30 \
     click_script="open 'x-apple.systempreferences:com.apple.wifi-settings-extension'" \
+    popup.align=center \
+    popup.y_offset=6 \
+    popup.height=26 \
+    popup.background.color=$GROUP_COLOR \
+    popup.background.corner_radius=3 \
+    popup.background.border_color=$BORDER \
+    popup.background.border_width=2 \
     script="$PLUGIN_DIR/wifi.sh"
 
+sketchybar --add item bluetooth right \
+  --subscribe bluetooth system_woke mouse.entered mouse.exited mouse.exited.global \
+  --set bluetooth \
+    icon.font="$FONT:Bold:14.0" \
+    label.drawing=off \
+    update_freq=30 \
+    click_script="open 'x-apple.systempreferences:com.apple.BluetoothSettings'" \
+    popup.align=center \
+    popup.y_offset=6 \
+    popup.height=26 \
+    popup.background.color=$GROUP_COLOR \
+    popup.background.corner_radius=3 \
+    popup.background.border_color=$BORDER \
+    popup.background.border_width=2 \
+    script="$PLUGIN_DIR/bluetooth.sh"
+
+sketchybar --add item dev_network right \
+  --subscribe dev_network mouse.clicked \
+  --set dev_network \
+    icon="󰦝" \
+    icon.font="$FONT:Bold:14.0" \
+    label.drawing=off \
+    drawing=off \
+    update_freq=15 \
+    popup.align=center \
+    popup.y_offset=6 \
+    popup.height=26 \
+    popup.background.color=$GROUP_COLOR \
+    popup.background.corner_radius=3 \
+    popup.background.border_color=$BORDER \
+    popup.background.border_width=2 \
+    script="$PLUGIN_DIR/dev_network.sh"
 
 sketchybar --add item focus right \
   --set focus \
@@ -159,37 +192,12 @@ sketchybar --add item focus right \
     click_script="open 'x-apple.systempreferences:com.apple.Focus-Settings.extension'" \
     script="$PLUGIN_DIR/focus.sh"
 
-# ---------------------------------------------------------------- developer services island (right)
+# ---------------------------------------------------------------- GitHub notifications island (right)
 sketchybar --add item dev_separator right \
   --set dev_separator \
     width=6 \
     icon.drawing=off \
     label.drawing=off
-
-sketchybar --add item dev_network right \
-  --subscribe dev_network mouse.clicked \
-  --set dev_network \
-    icon="󰦝" \
-    icon.font="$FONT:Bold:14.0" \
-    drawing=off \
-    update_freq=15 \
-    popup.align=center \
-    popup.y_offset=6 \
-    popup.height=26 \
-    popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=9 \
-    popup.background.border_color=$BORDER \
-    popup.background.border_width=2 \
-    script="$PLUGIN_DIR/dev_network.sh"
-
-sketchybar --add item docker right \
-  --set docker \
-    icon="󰡨" \
-    icon.font="$FONT:Bold:14.0" \
-    drawing=off \
-    update_freq=10 \
-    click_script="open -a Docker" \
-    script="$PLUGIN_DIR/docker.sh"
 
 sketchybar --add item github right \
   --set github \
@@ -220,14 +228,26 @@ sketchybar --add item volume.mute popup.volume \
   --set volume.mute \
     icon="󰝟" \
     icon.color=$FROST2 \
-    label="음소거" \
+    label="Mute" \
     script="$PLUGIN_DIR/volume_control.sh"
 
 # Battery: source and remaining-time/status details
 sketchybar --add item battery.source popup.battery \
-  --set battery.source icon="󰂄" icon.color=$GREEN label="전원 상태"
+  --set battery.source icon="󰂄" icon.color=$GREEN label="Power Source"
 sketchybar --add item battery.detail popup.battery \
-  --set battery.detail icon="󰔟" icon.color=$FROST1 label="남은 시간"
+  --set battery.detail icon="󰔟" icon.color=$FROST1 label="Time Remaining"
+
+# Wi-Fi: 연결 상태와 현재 IP
+sketchybar --add item wifi.status popup.wifi \
+  --set wifi.status icon="󰖩" icon.color=$FROST2 label="Wi-Fi · Checking"
+sketchybar --add item wifi.ip popup.wifi \
+  --set wifi.ip icon="󰩠" icon.color=$FROST1 label="IP · Checking"
+
+# Bluetooth: 전원 상태와 연결 기기
+sketchybar --add item bluetooth.status popup.bluetooth \
+  --set bluetooth.status icon="󰂯" icon.color=$FROST3 label="Bluetooth · Checking"
+sketchybar --add item bluetooth.devices popup.bluetooth \
+  --set bluetooth.devices icon="󰂱" icon.color=$FROST1 label="Devices · Checking" label.max_chars=32
 
 # Tailscale: address, MagicDNS hostname and online peer count
 sketchybar --add item dev_network.ip popup.dev_network \
@@ -241,7 +261,7 @@ sketchybar --add item dev_network.peers popup.dev_network \
 sketchybar --add bracket left_group mode '/space\..*/' front_app \
   --set left_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=9 \
+    background.corner_radius=3 \
     background.height=28 \
     background.border_color=$BORDER \
     background.border_width=2
@@ -281,25 +301,25 @@ sketchybar --add item cpu right \
     label.width=30 \
     label.align=right \
     click_script="open -a 'Activity Monitor'"
-sketchybar --add bracket right_group clock calendar battery volume input_source wifi focus \
+sketchybar --add bracket right_group clock calendar battery volume wifi bluetooth dev_network focus \
   --set right_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=9 \
+    background.corner_radius=3 \
     background.height=28 \
     background.border_color=$BORDER \
     background.border_width=2
 
-sketchybar --add bracket dev_group github docker dev_network \
+sketchybar --add bracket dev_group github \
   --set dev_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=9 \
+    background.corner_radius=3 \
     background.height=28 \
     background.border_color=$BORDER \
     background.border_width=2
 sketchybar --add bracket system_group cpu cpu_graph memory \
   --set system_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=9 \
+    background.corner_radius=3 \
     background.height=28 \
     background.border_color=$BORDER \
     background.border_width=2
