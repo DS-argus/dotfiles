@@ -87,7 +87,9 @@ gaps.inner.horizontal = 10
 gaps.inner.vertical =   10
 gaps.outer.left =       10
 gaps.outer.bottom =     10
-gaps.outer.top =        42    # sketchybar(y_offset 6 + height 28) + 여백 8
+# 내장 화면은 macOS가 메뉴 막대/노치 영역을 이미 비워 두므로 추가 여백만 적용한다.
+# 외장 화면은 sketchybar(y_offset 6 + height 28) + 여백 8을 그대로 확보한다.
+gaps.outer.top =        [{ monitor."built-in" = 8 }, 42]
 gaps.outer.right =      10
 
 # 'main' binding mode declaration
