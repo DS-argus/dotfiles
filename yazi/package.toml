@@ -8,6 +8,11 @@ use = "KKV9/compress"
 rev = "cb6e8ec"
 hash = "424ada4807b20ccd4fc85d1d7c26d1e4"
 
+[[plugin.deps]]
+use = "XYenon/clipboard"
+rev = "b25ec96"
+hash = "9f07d7de37a430833ef33b92c0bcf8cb"
+
 [[flavor.deps]]
 use = "AdithyanA2005/nord"
 rev = "34970be"
