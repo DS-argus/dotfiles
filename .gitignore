@@ -37,4 +37,5 @@ yazi/plugins/
 yazi/flavors/
 
 # Local notes
+TERMINAL_QUICKSTART.md
 TROUBLESHOOTING.md

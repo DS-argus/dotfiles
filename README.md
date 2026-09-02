@@ -55,7 +55,7 @@ brew install btop
 # AeroSpace, SketchyBar, JankyBorders, and status-bar helpers.
 brew install --cask nikitabobko/tap/aerospace
 brew tap FelixKratz/formulae
-brew install sketchybar borders ical-buddy gh
+brew install sketchybar borders ical-buddy gh blueutil
 brew install --cask font-sketchybar-app-font
 brew services start sketchybar
 gh auth login
@@ -158,5 +158,5 @@ Everything else in this README is expected to read directly from
 - Run `ya pkg install` after cloning or pulling Yazi plugin/flavor changes.
 - AeroSpace requires macOS Accessibility permission.
 - `icalBuddy` requires Calendar access for the SketchyBar upcoming-event item.
-- Docker and Tailscale integrations are optional and hide themselves when their
-  CLIs are unavailable.
+- The Tailscale integration is optional and hides itself when its CLI is
+  unavailable.
