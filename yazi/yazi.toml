@@ -44,7 +44,7 @@ github_preview = [
 ]
 # editor 띄우는 명령어
 edit = [
-	{ run = 'nvim %*', block = true, desc = "nvim", for = "macos" },
+	{ run = 'nvim %s', block = true, desc = "nvim", for = "macos" },
 	{ run = '${EDITOR:-vi} %*', desc = "$EDITOR", block = true, for = "linux" },
 	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
 	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
