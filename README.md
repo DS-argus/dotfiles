@@ -156,6 +156,8 @@ Everything else in this README is expected to read directly from
 - `tmux/plugins/`, `yazi/plugins/`, and `yazi/flavors/` are generated or
   installed content and are ignored by Git.
 - Run `ya pkg install` after cloning or pulling Yazi plugin/flavor changes.
+- The tracked `yazi/plugins/system-clipboard.yazi` symlink points to the installed
+  `XYenon/clipboard` plugin, avoiding Yazi's reserved built-in `clipboard` name.
 - AeroSpace requires macOS Accessibility permission.
 - `icalBuddy` requires Calendar access for the SketchyBar upcoming-event item.
 - The Tailscale integration is optional and hides itself when its CLI is

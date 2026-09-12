@@ -35,7 +35,8 @@ herdr/session.json
 
 # Installed/generated plugin assets
 tmux/plugins/
-yazi/plugins/
+yazi/plugins/*
+!yazi/plugins/system-clipboard.yazi
 yazi/flavors/
 
 # Local notes
