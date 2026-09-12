@@ -24,6 +24,8 @@ raycast/
 sqlit/
 swiftpm/
 ytdc/
+homerow/
+hammerspoon/
 
 # Herdr runtime artifacts
 herdr/*.bak-*
