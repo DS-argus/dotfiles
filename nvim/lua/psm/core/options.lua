@@ -33,49 +33,6 @@ opt.foldexpr = "0"
 opt.foldlevel = 99 -- 기본적으로 모든 fold를 펼쳐둠
 opt.foldlevelstart = 99 -- 파일을 열 때도 모든 fold를 펼쳐둠
 
-local treesitter_fold_filetypes = {
-	c = true,
-	css = true,
-	dockerfile = true,
-	go = true,
-	gomod = true,
-	gosum = true,
-	gowork = true,
-	html = true,
-	json = true,
-	lua = true,
-	python = true,
-	rust = true,
-	vim = true,
-	yaml = true,
-}
-
-local fold_group = vim.api.nvim_create_augroup("PsmFolds", { clear = true })
-
-vim.api.nvim_create_autocmd("FileType", {
-	group = fold_group,
-	callback = function(args)
-		local filetype = vim.bo[args.buf].filetype
-
-		if not treesitter_fold_filetypes[filetype] then
-			vim.opt_local.foldmethod = "manual"
-			vim.opt_local.foldexpr = "0"
-			return
-		end
-
-		local has_parser = pcall(vim.treesitter.get_parser, args.buf)
-
-		if not has_parser then
-			vim.opt_local.foldmethod = "manual"
-			vim.opt_local.foldexpr = "0"
-			return
-		end
-
-		vim.opt_local.foldmethod = "expr"
-		vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-	end,
-})
-
 -- 편집 동작
 opt.backspace = "indent,eol,start" -- 들여쓰기, 줄 끝, 입력 시작 지점에서 백스페이스 허용
 opt.confirm = true -- 저장하지 않은 버퍼를 닫을 때 확인

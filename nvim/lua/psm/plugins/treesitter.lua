@@ -1,64 +1,52 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	event = { "BufReadPre", "BufNewFile" },
+	branch = "main",
+	lazy = false,
 	build = ":TSUpdate",
 	dependencies = {
-		"windwp/nvim-ts-autotag",
+		{ "windwp/nvim-ts-autotag", opts = {} },
 	},
 	config = function()
-		-- import nvim-treesitter plugin
-		local treesitter = require("nvim-treesitter.configs")
+		local treesitter = require("nvim-treesitter")
+		local editor = require("psm.core.treesitter")
 
-		-- configure treesitter
-		treesitter.setup({ -- enable syntax highlighting
-			highlight = {
-				enable = true,
-				disable = { "bash" },
-			},
-			-- enable indentation
-			indent = { enable = true },
-			-- enable autotagging (w/ nvim-ts-autotag plugin)
-			autotag = {
-				enable = true,
-			},
-			-- ensure these language parsers are installed
-			ensure_installed = {
-				"json",
-				-- "javascript",
-				-- "typescript",
-				-- "tsx",
-				"yaml",
-				"html",
-				"css",
-				-- "prisma",
-				"markdown",
-				"markdown_inline",
-				-- "svelte",
-				-- "graphql",
+		treesitter.setup({ install_dir = vim.fn.stdpath("data") .. "/site" })
+		editor.setup()
+
+		-- Include all previously installed parsers, including the web languages.
+		treesitter
+			.install({
 				"bash",
-				"lua",
-				"vim",
+				"c",
+				"css",
 				"dockerfile",
 				"gitignore",
-				"query",
-				"vimdoc",
-				"c",
-				"python", -- Python 파서 추가 (성능 개선)
 				"go",
 				"gomod",
-				"gowork",
 				"gosum",
+				"gowork",
+				"html",
+				"javascript",
+				"json",
+				"lua",
+				"markdown",
+				"markdown_inline",
+				"prisma",
+				"python",
+				"query",
 				"rust",
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
-					scope_incremental = false,
-					node_decremental = "<bs>",
-				},
-			},
-		})
+				"svelte",
+				"tsx",
+				"typescript",
+				"vim",
+				"vimdoc",
+				"yaml",
+			})
+			:await(function(err)
+				if not err then
+					-- First installation can finish after the initial FileType event.
+					vim.schedule(editor.refresh)
+				end
+			end)
 	end,
 }

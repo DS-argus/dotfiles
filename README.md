@@ -40,7 +40,7 @@ brew install git lazygit
 ln -sfn ~/.config/git/.gitconfig ~/.gitconfig
 
 # Neovim.
-brew install neovim
+brew install neovim tree-sitter-cli
 
 # Yazi and preview/open helper tools used by this config.
 brew install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick chafa csvlens
