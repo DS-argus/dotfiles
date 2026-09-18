@@ -26,6 +26,7 @@ swiftpm/
 ytdc/
 homerow/
 hammerspoon/
+codexbar/
 
 # Herdr runtime artifacts
 herdr/*.bak-*
