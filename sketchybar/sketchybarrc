@@ -301,6 +301,34 @@ sketchybar --add item cpu right \
     label.width=30 \
     label.align=right \
     click_script="open -a 'Activity Monitor'"
+
+# CPU/RAM과 분리된 Codex 계정 사용량 아일랜드
+sketchybar --add item codex_separator right \
+  --set codex_separator width=6 icon.drawing=off label.drawing=off
+
+# right 항목은 추가할수록 왼쪽에 배치되므로 화면의 역순으로 등록
+sketchybar --add item codex.x5.secondary right \
+  --set codex.x5.secondary icon="×5" icon.font="$FONT:Bold:10.0" icon.color=$FROST2 label.font="$FONT:SemiBold:10.0"
+sketchybar --add item codex.divider.2 right \
+  --set codex.divider.2 icon.drawing=off label="│" label.font="$FONT:Bold:12.0" label.color=$FROST3 label.padding_left=2 label.padding_right=2
+sketchybar --add item codex.x5.primary right \
+  --set codex.x5.primary icon="×5" icon.font="$FONT:Bold:10.0" icon.color=$FROST1 label.font="$FONT:SemiBold:10.0"
+sketchybar --add item codex.divider.1 right \
+  --set codex.divider.1 icon.drawing=off label="│" label.font="$FONT:Bold:12.0" label.color=$FROST3 label.padding_left=2 label.padding_right=2
+sketchybar --add item codex.x20 right \
+  --set codex.x20 icon="×20" icon.font="$FONT:Bold:10.0" icon.color=$FROST0 label.font="$FONT:SemiBold:10.0"
+sketchybar --add item codex_usage right \
+  --set codex_usage \
+    icon=":codex:" \
+    icon.font="sketchybar-app-font:Regular:14.0" \
+    icon.color=$FROST2 \
+    icon.padding_left=5 \
+    icon.padding_right=4 \
+    label.drawing=off \
+    update_freq=60 \
+    script="$PLUGIN_DIR/codex_usage.sh"
+sketchybar --set codex_usage click_script="$PLUGIN_DIR/codexbar_toggle.sh" \
+  --set '/codex\..*/' click_script="$PLUGIN_DIR/codexbar_toggle.sh"
 sketchybar --add bracket right_group clock calendar battery volume wifi bluetooth dev_network focus \
   --set right_group \
     background.color=$GROUP_COLOR \
@@ -311,6 +339,13 @@ sketchybar --add bracket right_group clock calendar battery volume wifi bluetoot
 
 sketchybar --add bracket dev_group github \
   --set dev_group \
+    background.color=$GROUP_COLOR \
+    background.corner_radius=3 \
+    background.height=28 \
+    background.border_color=$BORDER \
+    background.border_width=2
+sketchybar --add bracket codex_group codex_usage codex.x20 codex.divider.1 codex.x5.primary codex.divider.2 codex.x5.secondary \
+  --set codex_group \
     background.color=$GROUP_COLOR \
     background.corner_radius=3 \
     background.height=28 \
