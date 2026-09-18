@@ -1,0 +1,18 @@
+# Match Leaf's Nord/transparent reading appearance.
+# Leaf uses base16-ocean.dark for code; Nord matches its document/UI palette.
+--theme="Nord"
+
+# Keep the document uncluttered: no header, grid, Git markers or line numbers.
+# Use bat -n to show line numbers when needed.
+--style="plain"
+--wrap="auto"
+--italic-text="always"
+
+# Stay in a full-screen reader even for short files; q exits, / searches.
+# Override LESS's F/X flags to keep short files open and restore the screen.
+--paging="always"
+--pager="less -R -+F -+X"
+
+# Preserve clean output when redirected or piped.
+--color="auto"
+--decorations="auto"
