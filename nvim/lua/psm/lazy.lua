@@ -19,6 +19,14 @@ require("lazy").setup({
 		enabled = true, -- 플러그인 업데이트 확인
 		notify = true, -- 업데이트 있으면 알림
 	},
+	ui = {
+		size = { width = 0.85, height = 0.8 },
+		border = "double",
+		backdrop = 60,
+		title = "Lazy",
+		title_pos = "center",
+		pills = true,
+	},
 	change_detection = {
 		notify = false, -- 설정 파일 변경 감지
 	},

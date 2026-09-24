@@ -131,6 +131,10 @@ suppress_preload = false
 
 [plugin]  # 파일 정보 조회와 미리보기를 어떻게 처리할지
 
+prepend_fetchers = [
+	{ url = "*",  run = "git", group = "git" },
+	{ url = "*/", run = "git", group = "git" },
+]
 fetchers = [
 	# Mimetype
 	{ url = "*/",         run = "mime.dir",    prio = "high", group = "mime" },

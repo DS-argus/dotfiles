@@ -54,3 +54,21 @@ prepend_conds = [
 	{ if = "exec & !dir", text = "󰆍", fg = "#A3BE8C" }, # nord14
 	{ if = "dir", text = "󰉋", fg = "#81A1C1" },         # nord9  dir
 ]
+
+[git]
+untracked = { fg = "#B48EAD" }              # 보라: 추적되지 않음
+unstaged  = { fg = "#EBCB8B" }              # 노랑: stage 전 수정
+staged    = { fg = "#A3BE8C" }              # 초록: staged 수정
+added     = { fg = "#A3BE8C" }              # 초록: staged 새 파일
+deleted   = { fg = "#BF616A" }              # 빨강: 삭제
+updated   = { fg = "#D08770", bold = true } # 굵은 주황: 충돌
+
+untracked_sign = "? "
+unstaged_sign  = "M "
+staged_sign    = "S "
+added_sign     = "A "
+deleted_sign   = "D "
+updated_sign   = "! "
+ignored_sign   = ""
+unknown_sign   = ""
+clean_sign     = ""
