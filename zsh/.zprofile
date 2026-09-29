@@ -8,7 +8,7 @@
 # Homebrew Environment
 # -----------------------------------------------------------------------------
 if [[ -x /opt/homebrew/bin/brew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 fi
 
 # -----------------------------------------------------------------------------
@@ -16,23 +16,21 @@ fi
 # -----------------------------------------------------------------------------
 export OBSIDIAN_APP_DIR="${OBSIDIAN_APP_DIR:-/Applications/Obsidian.app}"
 if [[ -d "${OBSIDIAN_APP_DIR}/Contents/MacOS" ]]; then
-  export PATH="${PATH}:${OBSIDIAN_APP_DIR}/Contents/MacOS"
+  path+=("${OBSIDIAN_APP_DIR}/Contents/MacOS")
 fi
 
 # -----------------------------------------------------------------------------
 # Golang
 # -----------------------------------------------------------------------------
 export GOPATH="$HOME/go"
-if [[ ":$PATH:" != *":$GOPATH/bin:"* ]]; then
-  export PATH="${PATH}:${GOPATH}/bin"
-fi
+path+=("$GOPATH/bin")
 
 # -----------------------------------------------------------------------------
 # Bun
 # -----------------------------------------------------------------------------
 export BUN_INSTALL="$HOME/.bun"
-if [[ -d "$BUN_INSTALL/bin" && ":$PATH:" != *":$BUN_INSTALL/bin:"* ]]; then
-  export PATH="$BUN_INSTALL/bin:$PATH"
+if [[ -d "$BUN_INSTALL/bin" ]]; then
+  path=("$BUN_INSTALL/bin" $path)
 fi
 
 # # -----------------------------------------------------------------------------
@@ -41,3 +39,6 @@ fi
 # if [[ -n "${HOMEBREW_PREFIX:-}" && -d "${HOMEBREW_PREFIX}/opt/postgresql@16/bin" ]]; then
 #   export PATH="${HOMEBREW_PREFIX}/opt/postgresql@16/bin:${PATH}"
 # fi
+
+# 로그인 초기화 이후 우선순위 확정: 로컬 실행 파일 > Bun > Homebrew
+path=("$HOME/.local/bin" $path)

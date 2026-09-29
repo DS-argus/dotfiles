@@ -30,6 +30,8 @@ alias cd="z"
 # aliaes for rust
 alias cn="cargo new"
 alias cr="cargo run"
+alias cre="cargo run --example"
+alias crb="cargo run --bin"
 
 # aliaes for docker
 alias dkn='docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Status}}"'     # 실행 중인 컨테이너 목록 출력 (ID, Image, Names, Status)

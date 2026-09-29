@@ -8,8 +8,6 @@
 # Locale Settings (언어 및 지역 설정)
 # -----------------------------------------------------------------------------
 export LANG="en_US.UTF-8"        # 모든 카테고리의 기본 로케일 설정
-export LC_ALL="en_US.UTF-8"      # 다른 모든 로케일 설정을 덮어씀
-export LC_CTYPE="en_US.UTF-8"    # 문자 분류 및 대소문자 변환 제어
 
 # -----------------------------------------------------------------------------
 # Base Directories & Shared Environment
@@ -23,8 +21,11 @@ export OBSIDIAN_VAULT_DIR="${OBSIDIAN_VAULT_DIR:-$HOME/Desktop/Obsidian/Argus}"
 # -----------------------------------------------------------------------------
 # Development Environment (개발 환경 설정)
 # -----------------------------------------------------------------------------
+# PATH와 연결된 배열에서 첫 번째 경로만 유지
+typeset -U path PATH
+
 # Rust 개발 환경 초기화
 [ -f "$CARGO_HOME/env" ] && . "$CARGO_HOME/env"
 
-# uv
-export PATH="$HOME/.local/bin:$PATH"
+# 로컬 실행 파일 (uv 등): 비로그인 셸에서도 우선 사용
+path=("$HOME/.local/bin" $path)

@@ -9,10 +9,8 @@
 # -----------------------------------------------------------------------------
 HISTFILE=$HOME/.zhistory         # 히스토리 파일 위치
 SAVEHIST=1000                    # 히스토리 파일에 저장할 명령어 수
-HISTSIZE=999                     # 메모리에 보관할 히스토리 수
+HISTSIZE=2000                    # 메모리에 보관할 히스토리 수
 setopt share_history             # 모든 세션 간 히스토리 공유
-setopt hist_expire_dups_first    # 중복 항목을 먼저 만료
-setopt hist_ignore_dups          # 연속된 중복 명령어 무시
 setopt hist_verify               # 히스토리 확장 시 확인 프롬프트
 setopt HIST_IGNORE_ALL_DUPS      # 모든 중복 명령어 무시
 
@@ -31,8 +29,6 @@ setopt HIST_IGNORE_ALL_DUPS      # 모든 중복 명령어 무시
 # Codex MCP env
 [[ -f "$HOME/.codex/mcp.env" ]] && source "$HOME/.codex/mcp.env"
 
-# OMC(oh-my-claudecode) Telegram 알림 활성화 : claude로 직접 실행해도 알림 전송
-export OMC_TELEGRAM=1
 
 # -----------------------------------------------------------------------------
 # Zsh Plugins (zsh 플러그인들)
@@ -41,12 +37,6 @@ export OMC_TELEGRAM=1
 BREW_PREFIX="${HOMEBREW_PREFIX:-}"
 if [[ -z "$BREW_PREFIX" ]] && command -v brew >/dev/null 2>&1; then
   BREW_PREFIX="$(brew --prefix)"
-fi
-
-# 문법 강조 플러그인 : 입력한 명령어의 문법을 색상으로 구분
-# https://github.com/zsh-users/zsh-syntax-highlighting
-if [[ -n "$BREW_PREFIX" && -f "${BREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
-  source "${BREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
 # 자동 제안 플러그인 : 이전에 입력한 명령을 자동으로 회색 글씨로 예측
@@ -85,3 +75,9 @@ fi
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# 문법 강조는 다른 플러그인, 자동완성, 키 바인딩 설정 이후에 로드
+# https://github.com/zsh-users/zsh-syntax-highlighting
+if [[ -n "$BREW_PREFIX" && -f "${BREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "${BREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
