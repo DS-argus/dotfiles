@@ -1,8 +1,22 @@
 format = """
-$directory${custom.giturl}$git_branch${custom.git_worktree}$git_status$python$lua$golang$rust$cmd_duration$character"""
+$username$hostname$directory${custom.giturl}$git_branch${custom.git_worktree}$git_status$python$lua$golang$rust$cmd_duration$character"""
 
 add_newline = true
 palette = 'nord'
+
+[username]
+show_always = true
+style_user = 'bold fg:aurora_red'
+style_root = 'bold fg:aurora_red'
+format = '[$user]($style)'
+
+[hostname]
+ssh_only = false
+style = 'bold fg:aurora_red'
+format = '[@$hostname]($style)[│](fg:polar3) '
+
+[hostname.aliases]
+SoungminMacBookPro = 'ithaca'
 
 [directory]
 style = 'bold fg:frost1'
