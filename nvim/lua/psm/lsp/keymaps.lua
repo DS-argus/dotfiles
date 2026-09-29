@@ -24,6 +24,10 @@ function M.on_attach(args)
 	map("n", "<leader>rn", vim.lsp.buf.rename, "심볼 이름 바꾸기")
 	map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "코드 액션")
 	map("n", "<leader>ld", vim.diagnostic.open_float, "줄 진단 보기")
+	map("n", "<leader>lh", function()
+		local filter = { bufnr = args.buf }
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(filter), filter)
+	end, "인레이 힌트 토글")
 	map("n", "<leader>ls", vim.lsp.buf.document_symbol, "문서 심볼 보기")
 end
 

@@ -30,7 +30,8 @@ Treesitter는 [공식 `main` 설정 방식](https://github.com/nvim-treesitter/n
     │   ├── init.lua
     │   ├── servers.lua
     │   ├── keymaps.lua
-    │   ├── pyright.lua
+    │   ├── ty.lua
+    │   ├── pyright.lua (비활성 보관)
     │   ├── lua_ls.lua
     │   └── gopls.lua
     └── plugins/
@@ -58,10 +59,10 @@ Treesitter는 [공식 `main` 설정 방식](https://github.com/nvim-treesitter/n
 
 | 서버            | 용도   | 커스텀 설정                                                                                  |
 | --------------- | ------ | -------------------------------------------------------------------------------------------- |
-| `pyright`       | Python | 프로젝트 root marker 지정, `.venv`/`VIRTUAL_ENV`/시스템 Python 순서로 `pythonPath` 자동 설정 |
+| `ty`            | Python | 프로젝트 root marker 지정, 가상환경 자동 탐색, workspace 진단, 인레이 힌트 기본 활성화 |
 | `lua_ls`        | Lua    | `vim` global 허용, Neovim runtime library 등록                                               |
 | `gopls`         | Go     | `staticcheck=true`, `go/gomod/gowork` filetype                                               |
-| `rust_analyzer` | Rust   | 기본 설정 사용                                                                               |
+| `rust_analyzer` | Rust   | 기본 설정 + inlay hints 활성화                                                                               |
 
 LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 후처리는 `psm.lsp.servers`에서 각 모듈의 `on_attach`로 위임합니다.
 
@@ -214,16 +215,16 @@ nvim --headless -u NONE -i NONE -l nvim/tests/treesitter.lua
 
 실제 파서 로드, 하이라이트·들여쓰기, 선택 확장과 복귀, Bash 예외, 접기 정책, HTML 태그 처리, Markdown injection을 검사합니다.
 
-### Pyright Python Path
+### ty Python 환경과 인레이 힌트
 
-`pyright`는 다음 순서로 Python 실행 파일을 찾습니다.
+Python 환경 탐색은 ty의 내장 기능을 사용합니다. 활성 `$VIRTUAL_ENV` 또는 프로젝트의 `.venv`를 자동으로 탐색합니다.
+별도 환경을 지정해야 한다면 프로젝트의 `pyproject.toml` 또는 `ty.toml`에서 `environment.python`을 설정합니다.
 
-1. 현재 파일/프로젝트 상위의 `.venv/bin/python`
-2. `$VIRTUAL_ENV/bin/python`
-3. `python3`
-4. `python`
+진단 범위는 `workspace`이며, 변수 타입과 호출 인자 이름 힌트는 LSP 연결 시 자동으로 켜집니다.
+`<leader>lh`로 현재 buffer의 인레이 힌트를 켜고 끌 수 있습니다.
+Ruff 린트와 포맷 설정은 별도로 유지합니다.
 
-LSP attach 후에도 현재 buffer 위치 기준으로 `pythonPath`를 다시 반영합니다.
+기존 `lua/psm/lsp/pyright.lua`는 복구용으로 보관하며, 활성 서버 목록에는 등록하지 않습니다.
 
 ### Grug Far
 
@@ -315,7 +316,7 @@ LSP attach 후에도 현재 buffer 위치 기준으로 `pythonPath`를 다시 �
 
 ### LSP Servers
 
-- `pyright`
+- `ty`
 - `lua_ls`
 - `rust_analyzer`
 - `gopls`

@@ -1,15 +1,16 @@
 local M = {}
 
 M.names = {
-	"pyright",
+	"ty",
 	"lua_ls",
 	"rust_analyzer",
 	"gopls",
 }
 
 M.modules = {
-	pyright = "psm.lsp.pyright",
+	ty = "psm.lsp.ty",
 	lua_ls = "psm.lsp.lua_ls",
+	rust_analyzer = "psm.lsp.rust_analyzer",
 	gopls = "psm.lsp.gopls",
 }
 

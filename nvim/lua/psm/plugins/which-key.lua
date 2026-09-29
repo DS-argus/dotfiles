@@ -38,6 +38,7 @@ return {
 			{ "<leader>s", group = "검색/창/집중" },
 			{ "<leader>t", group = "탭/토글" },
 			{ "<leader>x", group = "진단/문제" },
+			{ "<leader>y", group = "복사" },
 			{ "[", group = "이전" },
 			{ "]", group = "다음" },
 		},

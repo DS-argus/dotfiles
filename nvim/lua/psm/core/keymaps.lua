@@ -7,6 +7,14 @@ keymap.set("i", "jk", "<ESC>", { desc = "jk로 입력 모드 종료" })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "검색 하이라이트 지우기" })
 
+keymap.set("n", "<leader>yn", function()
+	vim.fn.setreg("+", vim.fn.expand("%:t"))
+end, { desc = "파일명 복사" })
+
+keymap.set("n", "<leader>yp", function()
+	vim.fn.setreg("+", vim.fn.expand("%:p"))
+end, { desc = "파일 절대 경로 복사" })
+
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "숫자 증가" }) -- increment
 keymap.set("n", "<leader>-", "<C-x>", { desc = "숫자 감소" }) -- decrement
