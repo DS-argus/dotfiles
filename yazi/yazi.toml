@@ -96,6 +96,9 @@ rules = [
 	{ url = "*.{md,markdown,mdown,mkdn,mkdown}", use = [ "leaf", "github_preview", "edit", "reveal" ] },
 	# Folder
 	{ url = "*/", use = [ "enter", "zip_dir", "tar_gz_dir", "reveal_dir" ] },
+	# Read-first formats; open the source directly and keep editing available via O.
+	{ url = "*.conf", use = [ "edit", "leaf", "reveal" ] },
+	{ url = "*.{json,jsonl,ndjson,toml,yaml,yml,txt,log,ini,cfg,env}", use = [ "leaf", "edit", "reveal" ] },
 	# Text
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
 	# Image
