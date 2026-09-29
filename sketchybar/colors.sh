@@ -5,8 +5,8 @@
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 export BAR_COLOR=0x00000000   # 바 자체는 완전 투명 (아이템 그룹에만 배경)
-export GROUP_COLOR=0xd92e3440 # polar0, 85% 불투명 — 아일랜드 배경
-export BORDER=0x73d8dee9      # snow0, 45% — 아일랜드 테두리
+export GROUP_COLOR=0xf02e3440 # polar0, 94% 불투명 — 아일랜드 배경
+export BORDER=0xbf81a1c1      # frost2, 75% — 아일랜드 테두리
 export BG_DARK=0xff2e3440     # polar0
 export SURFACE=0xff3b4252     # polar1
 export MUTED=0xff4c566a       # polar3
@@ -19,3 +19,5 @@ export YELLOW=0xffebcb8b      # aurora yellow
 export ORANGE=0xffd08770      # aurora orange
 export RED=0xffbf616a         # aurora red
 export GREEN=0xffa3be8c       # aurora green
+
+export PURPLE=0xffb48ead      # aurora purple

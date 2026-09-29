@@ -19,6 +19,6 @@ else
   FILL=0x4088c0d0
 fi
 
-sketchybar --set cpu icon.color=$COLOR label="${CPU}%" \
+sketchybar --set "$NAME" icon.color=$COLOR label="CPU ${CPU}%" \
            --set "$NAME" graph.color=$COLOR graph.fill_color=$FILL \
            --push "$NAME" "$POINT"

@@ -120,6 +120,9 @@ function __icon_map() {
    "Aseprite")
         icon_result=":aseprite:"
         ;;
+   "Aside")
+        icon_result=":aside:"
+        ;;
    "Atom")
         icon_result=":atom:"
         ;;

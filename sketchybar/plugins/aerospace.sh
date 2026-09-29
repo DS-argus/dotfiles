@@ -1,6 +1,6 @@
 #!/bin/bash
 # 워크스페이스 인디케이터: 숫자 + 해당 워크스페이스의 앱 아이콘 스트립
-# 포커스 = frost1 배경 + 어두운 렌더링, 비포커스 = 흰색, 빈 곳 = 숨김
+# 포커스 = frost1 배경 + 어두운 렌더링, 비포커스 = frost1 숫자, 빈 곳 = 숨김
 source "$HOME/.config/sketchybar/colors.sh"
 source "$HOME/.config/sketchybar/plugins/icon_map.sh"
 
@@ -12,7 +12,7 @@ ICON_STRIP=""
 while IFS= read -r app; do
   [ -z "$app" ] && continue
   __icon_map "$app"
-  ICON_STRIP+=" $icon_result"
+  ICON_STRIP+="$icon_result"
 done <<EOF
 $(aerospace list-windows --workspace "$SID" --format '%{app-name}' 2>/dev/null | sort -u)
 EOF
@@ -32,7 +32,7 @@ if [ "$SID" = "$FOCUSED" ]; then
 elif [ -n "$ICON_STRIP" ]; then
   sketchybar --set "$NAME" drawing=on \
     icon.highlight=off \
-    icon.color=$TEXT \
+    icon.color=$FROST1 \
     label.color=$TEXT \
     background.drawing=off \
     "${LABEL_ARGS[@]}"

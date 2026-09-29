@@ -1,36 +1,37 @@
 #!/bin/bash
-# SketchyBar — Nord 투명 플로팅 바 (AeroSpace 연동)
+# SketchyBar — Nord two-row floating islands (AeroSpace integration)
 CONFIG_DIR="$HOME/.config/sketchybar"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 source "$CONFIG_DIR/colors.sh"
 
-FONT="JetBrainsMono Nerd Font"
+FONT="Hack Nerd Font"
 
 # ---------------------------------------------------------------- bar
 sketchybar --bar \
-  height=28 \
+  height=44 \
   position=top \
   sticky=on \
-  margin=8 \
-  y_offset=6 \
-  corner_radius=9 \
+  margin=10 \
+  y_offset=8 \
+  corner_radius=14 \
   color=$BAR_COLOR \
   shadow=off \
-  padding_left=5 \
-  padding_right=5
+  font_smoothing=on \
+  padding_left=8 \
+  padding_right=8
 
 # ---------------------------------------------------------------- defaults
 sketchybar --default \
   icon.font="$FONT:Bold:12.0" \
   icon.color=$TEXT \
-  label.font="$FONT:SemiBold:11.0" \
+  label.font="$FONT:Bold:11.0" \
   label.color=$TEXT \
   icon.padding_left=3 \
   icon.padding_right=2 \
   label.padding_left=2 \
   label.padding_right=3 \
-  background.corner_radius=5 \
-  background.height=20
+  background.corner_radius=8 \
+  background.height=28
 
 # ---------------------------------------------------------------- events
 sketchybar --add event aerospace_workspace_change
@@ -60,11 +61,13 @@ for sid in $WORKSPACES; do
     --subscribe "space.$sid" aerospace_workspace_change front_app_switched \
     --set "space.$sid" \
       icon="$sid" \
+      icon.font="$FONT:Bold:14.0" \
       icon.padding_left=5 \
       icon.padding_right=2 \
+      icon.color=$FROST1 \
       icon.highlight_color=$BG_DARK \
-      label.font="sketchybar-app-font:Regular:13.0" \
-      label.padding_left=0 \
+      label.font="sketchybar-app-font:Regular:15.0" \
+      label.padding_left=2 \
       label.padding_right=5 \
       label.y_offset=-1 \
       label.drawing=off \
@@ -78,126 +81,46 @@ done
 sketchybar --add item front_app left \
   --subscribe front_app front_app_switched \
   --set front_app \
-    icon="󰣆" \
-    icon.color=$FROST2 \
-    icon.padding_left=7 \
+    icon.drawing=off \
     label.font="$FONT:Bold:11.0" \
+    label.color=$YELLOW \
+    label.padding_left=9 \
+    label.padding_right=9 \
+    label.max_chars=18 \
+    click_script="$PLUGIN_DIR/open_related_app.sh current" \
     script="$PLUGIN_DIR/front_app.sh"
 
 # ---------------------------------------------------------------- status (right, 추가 순 = 오른쪽부터)
+# Zero-width top row shares the following item's horizontal slot.
+sketchybar --add item calendar right \
+  --set calendar width=0 icon.drawing=off icon.padding_left=0 icon.padding_right=0 \
+    label.width=96 label.padding_left=0 label.padding_right=4 label.align=left label.font="$FONT:Bold:11.0" \
+    label.color=$TEXT label.y_offset=10 \
+    click_script="open -a Calendar"
 sketchybar --add item clock right \
-  --set clock \
-    icon="󰥔" \
-    icon.font="$FONT:Bold:14.0" \
-    icon.color=$FROST1 \
-    update_freq=10 \
-    click_script="open -a Calendar" \
+  --set clock width=100 icon.drawing=off icon.padding_left=0 icon.padding_right=0 \
+    label.width=96 label.padding_left=0 label.padding_right=4 label.align=left label.font="$FONT:Bold:15.0" \
+    label.color=$FROST1 label.y_offset=-8 \
+    update_freq=10 click_script="open -a Calendar" \
     script="$PLUGIN_DIR/clock.sh"
 
-sketchybar --add item calendar right \
-  --set calendar \
-    icon="󰃭" \
-    icon.font="$FONT:Bold:14.0" \
-    icon.color=$YELLOW \
-    label.max_chars=12 \
-    drawing=off \
-    update_freq=300 \
-    click_script="open -a Calendar" \
-    script="$PLUGIN_DIR/calendar.sh"
+# Lower status row shares the battery item's horizontal slot.
+sketchybar --add item battery.status right \
+  --set battery.status width=0 icon.drawing=off \
+    label="AC Power" label.width=58 label.align=left \
+    label.font="$FONT:Bold:9.0" label.color=$FROST0 label.y_offset=-7 \
+    click_script="open 'x-apple.systempreferences:com.apple.Battery-Settings.extension'"
 
 sketchybar --add item battery right \
-  --subscribe battery system_woke power_source_change mouse.clicked \
-  --set battery \
-    icon.font="$FONT:Bold:14.0" \
+  --subscribe battery system_woke power_source_change \
+  --set battery width=88 \
+    icon.font="$FONT:Bold:20.0" icon.width=20 icon.padding_right=6 \
+    label.font="$FONT:Bold:10.0" label.width=58 label.align=left label.y_offset=6 \
     update_freq=120 \
-    popup.align=center \
-    popup.y_offset=6 \
-    popup.height=26 \
-    popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=3 \
-    popup.background.border_color=$BORDER \
-    popup.background.border_width=2 \
+    click_script="open 'x-apple.systempreferences:com.apple.Battery-Settings.extension'" \
     script="$PLUGIN_DIR/battery.sh"
 
-sketchybar --add item volume right \
-  --subscribe volume volume_change mouse.clicked mouse.scrolled \
-  --set volume \
-    icon.font="$FONT:Bold:14.0" \
-    icon.color=$FROST2 \
-    popup.align=center \
-    popup.y_offset=6 \
-    popup.height=28 \
-    popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=3 \
-    popup.background.border_color=$BORDER \
-    popup.background.border_width=2 \
-    script="$PLUGIN_DIR/volume.sh"
-
-sketchybar --add item wifi right \
-  --subscribe wifi wifi_change system_woke mouse.entered mouse.exited mouse.exited.global \
-  --set wifi \
-    icon.font="$FONT:Bold:14.0" \
-    label.drawing=off \
-    update_freq=30 \
-    click_script="open 'x-apple.systempreferences:com.apple.wifi-settings-extension'" \
-    popup.align=center \
-    popup.y_offset=6 \
-    popup.height=26 \
-    popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=3 \
-    popup.background.border_color=$BORDER \
-    popup.background.border_width=2 \
-    script="$PLUGIN_DIR/wifi.sh"
-
-sketchybar --add item bluetooth right \
-  --subscribe bluetooth system_woke mouse.entered mouse.exited mouse.exited.global \
-  --set bluetooth \
-    icon.font="$FONT:Bold:14.0" \
-    label.drawing=off \
-    update_freq=30 \
-    click_script="open 'x-apple.systempreferences:com.apple.BluetoothSettings'" \
-    popup.align=center \
-    popup.y_offset=6 \
-    popup.height=26 \
-    popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=3 \
-    popup.background.border_color=$BORDER \
-    popup.background.border_width=2 \
-    script="$PLUGIN_DIR/bluetooth.sh"
-
-sketchybar --add item dev_network right \
-  --subscribe dev_network mouse.clicked \
-  --set dev_network \
-    icon="󰦝" \
-    icon.font="$FONT:Bold:14.0" \
-    label.drawing=off \
-    drawing=off \
-    update_freq=15 \
-    popup.align=center \
-    popup.y_offset=6 \
-    popup.height=26 \
-    popup.background.color=$GROUP_COLOR \
-    popup.background.corner_radius=3 \
-    popup.background.border_color=$BORDER \
-    popup.background.border_width=2 \
-    script="$PLUGIN_DIR/dev_network.sh"
-
-sketchybar --add item focus right \
-  --set focus \
-    icon="󰤄" \
-    icon.font="$FONT:Bold:14.0" \
-    icon.color=$FROST3 \
-    drawing=off \
-    update_freq=5 \
-    click_script="open 'x-apple.systempreferences:com.apple.Focus-Settings.extension'" \
-    script="$PLUGIN_DIR/focus.sh"
-
-# ---------------------------------------------------------------- GitHub notifications island (right)
-sketchybar --add item dev_separator right \
-  --set dev_separator \
-    width=6 \
-    icon.drawing=off \
-    label.drawing=off
+# ---------------------------------------------------------------- GitHub notifications (right status group)
 
 sketchybar --add item github right \
   --set github \
@@ -208,61 +131,13 @@ sketchybar --add item github right \
     click_script="open 'https://github.com/notifications'" \
     script="$PLUGIN_DIR/github.sh"
 
-# ---------------------------------------------------------------- compact popups
-# Volume: draggable slider + mute toggle
-sketchybar --add slider volume.slider popup.volume 140 \
-  --subscribe volume.slider mouse.clicked \
-  --set volume.slider \
-    slider.highlight_color=$FROST1 \
-    slider.background.color=$MUTED \
-    slider.background.height=6 \
-    slider.background.corner_radius=3 \
-    slider.knob="●" \
-    slider.knob.color=$TEXT \
-    padding_left=10 \
-    padding_right=10 \
-    script="$PLUGIN_DIR/volume_control.sh"
-
-sketchybar --add item volume.mute popup.volume \
-  --subscribe volume.mute mouse.clicked \
-  --set volume.mute \
-    icon="󰝟" \
-    icon.color=$FROST2 \
-    label="Mute" \
-    script="$PLUGIN_DIR/volume_control.sh"
-
-# Battery: source and remaining-time/status details
-sketchybar --add item battery.source popup.battery \
-  --set battery.source icon="󰂄" icon.color=$GREEN label="Power Source"
-sketchybar --add item battery.detail popup.battery \
-  --set battery.detail icon="󰔟" icon.color=$FROST1 label="Time Remaining"
-
-# Wi-Fi: 연결 상태와 현재 IP
-sketchybar --add item wifi.status popup.wifi \
-  --set wifi.status icon="󰖩" icon.color=$FROST2 label="Wi-Fi · Checking"
-sketchybar --add item wifi.ip popup.wifi \
-  --set wifi.ip icon="󰩠" icon.color=$FROST1 label="IP · Checking"
-
-# Bluetooth: 전원 상태와 연결 기기
-sketchybar --add item bluetooth.status popup.bluetooth \
-  --set bluetooth.status icon="󰂯" icon.color=$FROST3 label="Bluetooth · Checking"
-sketchybar --add item bluetooth.devices popup.bluetooth \
-  --set bluetooth.devices icon="󰂱" icon.color=$FROST1 label="Devices · Checking" label.max_chars=32
-
-# Tailscale: address, MagicDNS hostname and online peer count
-sketchybar --add item dev_network.ip popup.dev_network \
-  --set dev_network.ip icon="󰩠" icon.color=$GREEN label="IP"
-sketchybar --add item dev_network.host popup.dev_network \
-  --set dev_network.host icon="󰒋" icon.color=$FROST2 label="Host"
-sketchybar --add item dev_network.peers popup.dev_network \
-  --set dev_network.peers icon="󰓾" icon.color=$FROST1 label="Online peers"
 # ---------------------------------------------------------------- island groups
 # 바는 투명, 아이템 묶음에만 배경 → 빈 영역은 배경화면 그대로
 sketchybar --add bracket left_group mode '/space\..*/' front_app \
   --set left_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=3 \
-    background.height=28 \
+    background.corner_radius=12 \
+    background.height=42 \
     background.border_color=$BORDER \
     background.border_width=2
 
@@ -271,93 +146,179 @@ sketchybar --add item system_separator right \
     width=6 \
     icon.drawing=off \
     label.drawing=off
-# ---------------------------------------------------------------- system monitor island (right)
-# 오른쪽 상태 아일랜드 왼쪽에 CPU 숫자+그래프와 memory pressure를 별도 표시
-sketchybar --add item memory right \
-  --set memory \
-    icon="󰍛" \
-    icon.font="$FONT:Bold:14.0" \
-    label.width=30 \
-    label.align=right \
-    update_freq=5 \
-    click_script="open -a 'Activity Monitor'" \
-    script="$PLUGIN_DIR/memory.sh"
-
-sketchybar --add graph cpu_graph right 38 \
+# ---------------------------------------------------------------- compact monitor graphs
+# Efterklang layout: the graph owns its icon and right-aligned overlay label.
+sketchybar --add graph memory_graph right 42 \
+  --set memory_graph \
+    graph.line_width=1.3 graph.color=$FROST2 \
+    background.drawing=on background.color=0x00000000 background.height=12 y_offset=-5 \
+    icon="" icon.font="$FONT:Bold:18.0" icon.color=$PURPLE \
+    icon.padding_left=4 icon.padding_right=6 icon.y_offset=5 \
+    label="RAM --%" label.font="$FONT:Bold:9.0" label.width=0 \
+    label.align=right label.padding_left=0 label.padding_right=0 label.y_offset=12 \
+    padding_right=5 update_freq=5 \
+    click_script="open -a 'Activity Monitor'" script="$PLUGIN_DIR/memory.sh"
+sketchybar --add graph cpu_graph right 42 \
   --set cpu_graph \
-    graph.line_width=1.5 \
-    background.drawing=on \
-    background.color=0x00000000 \
-    background.height=18 \
-    y_offset=0 \
-    update_freq=3 \
-    click_script="open -a 'Activity Monitor'" \
-    script="$PLUGIN_DIR/cpu.sh"
+    graph.line_width=1.3 graph.color=$FROST2 \
+    background.drawing=on background.color=0x00000000 background.height=12 y_offset=-5 \
+    icon="" icon.font="$FONT:Bold:18.0" icon.color=$FROST1 \
+    icon.padding_left=4 icon.padding_right=6 icon.y_offset=5 \
+    label="CPU --%" label.font="$FONT:Bold:9.0" label.width=0 \
+    label.align=right label.padding_left=0 label.padding_right=0 label.y_offset=12 \
+    padding_right=10 update_freq=3 \
+    click_script="open -a 'Activity Monitor'" script="$PLUGIN_DIR/cpu.sh"
 
-sketchybar --add item cpu right \
-  --set cpu \
-    icon="󰻠" \
-    icon.font="$FONT:Bold:14.0" \
-    label.width=30 \
-    label.align=right \
-    click_script="open -a 'Activity Monitor'"
+# Compact upload/download rows, without a Wi-Fi connection icon.
+sketchybar --add item network.up right \
+  --set network.up width=0 y_offset=7 \
+    icon="" icon.font="$FONT:Bold:12.0" icon.color=$PURPLE \
+    icon.padding_left=8 icon.padding_right=1 \
+    label="-- B/s" label.width=58 label.align=right \
+    label.font="$FONT:Bold:9.0" label.color=$PURPLE \
+    label.padding_left=1 label.padding_right=8 \
+    update_freq=3 script="$PLUGIN_DIR/network_rate.sh" \
+    click_script="open 'x-apple.systempreferences:com.apple.Network-Settings.extension'"
+sketchybar --add item network.down right \
+  --set network.down y_offset=-7 \
+    icon="" icon.font="$FONT:Bold:12.0" icon.color=$FROST1 \
+    icon.padding_left=8 icon.padding_right=1 \
+    label="-- B/s" label.width=58 label.align=right \
+    label.font="$FONT:Bold:9.0" label.color=$FROST1 \
+    label.padding_left=1 label.padding_right=8 \
+    click_script="open 'x-apple.systempreferences:com.apple.Network-Settings.extension'"
 
 # CPU/RAM과 분리된 Codex 계정 사용량 아일랜드
 sketchybar --add item codex_separator right \
   --set codex_separator width=6 icon.drawing=off label.drawing=off
 
-# right 항목은 추가할수록 왼쪽에 배치되므로 화면의 역순으로 등록
-sketchybar --add item codex.x5.secondary right \
-  --set codex.x5.secondary icon="×5" icon.font="$FONT:Bold:10.0" icon.color=$FROST2 label.font="$FONT:SemiBold:10.0"
-sketchybar --add item codex.divider.2 right \
-  --set codex.divider.2 icon.drawing=off label="│" label.font="$FONT:Bold:12.0" label.color=$FROST3 label.padding_left=2 label.padding_right=2
-sketchybar --add item codex.x5.primary right \
-  --set codex.x5.primary icon="×5" icon.font="$FONT:Bold:10.0" icon.color=$FROST1 label.font="$FONT:SemiBold:10.0"
-sketchybar --add item codex.divider.1 right \
-  --set codex.divider.1 icon.drawing=off label="│" label.font="$FONT:Bold:12.0" label.color=$FROST3 label.padding_left=2 label.padding_right=2
-sketchybar --add item codex.x20 right \
-  --set codex.x20 icon="×20" icon.font="$FONT:Bold:10.0" icon.color=$FROST0 label.font="$FONT:SemiBold:10.0"
+# Each column stacks three rows; separate items allow independent colors.
+codex_column() {
+  local suffix="$1" column_width="$2" color="$3"
+  local account offset slot
+  for account in x5.secondary x5.primary x20; do
+    case "$account" in
+      x5.secondary) offset=-12; slot=0 ;;
+      x5.primary) offset=0; slot=0 ;;
+      x20) offset=12; slot="$column_width" ;;
+    esac
+    sketchybar --add item "codex.${account}${suffix}" right \
+      --set "codex.${account}${suffix}" width="$slot" drawing=off \
+        icon.drawing=off icon.padding_left=0 icon.padding_right=0 label="--" label.width="$column_width" \
+        label.align=left label.padding_left=0 label.padding_right=0 \
+        label.y_offset="$offset" label.color="$color" label.font="$FONT:Bold:10.0"
+  done
+}
+# Right-side items are registered from the rightmost column to the leftmost.
+codex_column .credits 24 "$PURPLE"
+codex_column .reset 42 "$FROST2"
+codex_column "" 30 "$TEXT"
+codex_column .tier 24 "$FROST1"
+sketchybar --set codex.x20.tier label="×20" \
+  --set codex.x5.primary.tier label="×5" \
+  --set codex.x5.secondary.tier label="×5" \
+  --set '/codex\..*\.credits/' label=""
+
 sketchybar --add item codex_usage right \
   --set codex_usage \
     icon=":codex:" \
-    icon.font="sketchybar-app-font:Regular:14.0" \
+    icon.font="sketchybar-app-font:Regular:22.0" \
     icon.color=$FROST2 \
-    icon.padding_left=5 \
+    icon.padding_left=4 \
     icon.padding_right=4 \
     label.drawing=off \
     update_freq=60 \
     script="$PLUGIN_DIR/codex_usage.sh"
 sketchybar --set codex_usage click_script="$PLUGIN_DIR/codexbar_toggle.sh" \
   --set '/codex\..*/' click_script="$PLUGIN_DIR/codexbar_toggle.sh"
-sketchybar --add bracket right_group clock calendar battery volume wifi bluetooth dev_network focus \
-  --set right_group \
-    background.color=$GROUP_COLOR \
-    background.corner_radius=3 \
-    background.height=28 \
-    background.border_color=$BORDER \
-    background.border_width=2
-
-sketchybar --add bracket dev_group github \
-  --set dev_group \
-    background.color=$GROUP_COLOR \
-    background.corner_radius=3 \
-    background.height=28 \
-    background.border_color=$BORDER \
-    background.border_width=2
-sketchybar --add bracket codex_group codex_usage codex.x20 codex.divider.1 codex.x5.primary codex.divider.2 codex.x5.secondary \
+sketchybar --add bracket codex_group codex_usage '/codex\..*/' \
   --set codex_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=3 \
-    background.height=28 \
+    background.corner_radius=12 \
+    background.height=42 \
     background.border_color=$BORDER \
     background.border_width=2
-sketchybar --add bracket system_group cpu cpu_graph memory \
+# Unified network, monitoring, battery and clock island.
+sketchybar --add bracket system_group network.up network.down cpu_graph memory_graph system_separator github battery battery.status calendar clock \
   --set system_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=3 \
-    background.height=28 \
+    background.corner_radius=12 \
+    background.height=42 \
     background.border_color=$BORDER \
     background.border_width=2
+# Left-aligned rows share an inset; the date sets the visual content width.
+sketchybar --add item portrait.calendar right \
+  --set portrait.calendar width=0 drawing=off icon.drawing=off icon.padding_left=0 icon.padding_right=0 \
+    label.width=87 label.padding_left=0 label.padding_right=0 label.align=left \
+    label.font="$FONT:Bold:11.0" label.color=$TEXT label.y_offset=10 \
+    click_script="open -a Calendar"
+sketchybar --add item portrait.clock right \
+  --set portrait.clock width=100 drawing=off icon.drawing=off icon.padding_left=0 icon.padding_right=0 \
+    label.width=87 label.padding_left=0 label.padding_right=0 label.align=left \
+    label.font="$FONT:Bold:15.0" label.color=$FROST1 label.y_offset=-8 \
+    click_script="open -a Calendar"
+sketchybar --add bracket portrait_clock_group portrait.calendar portrait.clock \
+  --set portrait_clock_group drawing=off background.color=$GROUP_COLOR \
+    background.corner_radius=12 background.height=42 \
+    background.border_color=$BORDER background.border_width=2
+
+# Upcoming calendar event between media and Codex (right items add leftwards).
+sketchybar --add item upcoming.separator right \
+  --set upcoming.separator width=6 drawing=off icon.drawing=off label.drawing=off
+sketchybar --add item upcoming.detail right \
+  --set upcoming.detail width=0 drawing=off icon.drawing=off \
+    icon.padding_left=0 icon.padding_right=0 \
+    label.width=120 label.padding_left=0 label.padding_right=6 label.align=left \
+    label.font="$FONT:Bold:11.0" label.color=$FROST1 label.y_offset=-7
+sketchybar --add item upcoming.title right \
+  --set upcoming.title width=126 drawing=off icon.drawing=off \
+    icon.padding_left=0 icon.padding_right=0 \
+    label.width=120 label.padding_left=0 label.padding_right=6 label.align=left \
+    label.font="$FONT:Bold:11.0" label.color=$TEXT label.y_offset=7 \
+    update_freq=60 updates=on script="$PLUGIN_DIR/calendar.sh" \
+  --subscribe upcoming.title system_woke
+sketchybar --add item upcoming.icon right \
+  --set upcoming.icon drawing=off icon="󰃭" icon.font="$FONT:Bold:20.0" \
+    icon.color=$FROST1 icon.padding_left=8 icon.padding_right=6 label.drawing=off
+sketchybar --set '/upcoming\..*/' click_script="open -a Calendar"
+sketchybar --add bracket upcoming_group upcoming.icon upcoming.title upcoming.detail \
+  --set upcoming_group drawing=off background.color=$GROUP_COLOR \
+    background.corner_radius=12 background.height=42 \
+    background.border_color=$BORDER background.border_width=2
+
+# Now Playing: only visible while the active macOS media session is playing.
+sketchybar --add item media.separator right \
+  --set media.separator width=6 drawing=off icon.drawing=off label.drawing=off
+sketchybar --add item media.artist right \
+  --set media.artist width=0 drawing=off icon.drawing=off \
+    icon.padding_left=0 icon.padding_right=0 \
+    label.width=180 label.padding_left=0 label.padding_right=6 label.align=left \
+    label.font="$FONT:Bold:11.0" label.color=$FROST0 label.y_offset=-7 label.max_chars=26 label.scroll_duration=320 scroll_texts=on
+sketchybar --add item media.title right \
+  --set media.title width=186 drawing=off icon.drawing=off \
+    icon.padding_left=0 icon.padding_right=0 \
+    label.width=180 label.padding_left=0 label.padding_right=6 label.align=left \
+    label.font="$FONT:Bold:11.0" label.color=$TEXT label.y_offset=7 label.max_chars=26 label.scroll_duration=320 scroll_texts=on \
+    update_freq=3 updates=on script="$PLUGIN_DIR/media.sh" \
+  --subscribe media.title system_woke
+sketchybar --add item media.icon right \
+  --set media.icon drawing=off icon="󰎆" icon.font="$FONT:Bold:22.0" \
+    icon.color=$PURPLE icon.padding_left=8 icon.padding_right=8 label.drawing=off
+sketchybar --set media.title click_script="$PLUGIN_DIR/open_related_app.sh media" \
+  --set media.artist click_script="$PLUGIN_DIR/open_related_app.sh media" \
+  --set media.icon click_script="media-control toggle-play-pause"
+sketchybar --add bracket media_group media.icon media.title media.artist \
+  --set media_group drawing=off background.color=$GROUP_COLOR \
+    background.corner_radius=12 background.height=42 \
+    background.border_color=$BORDER background.border_width=2
+
+# Re-evaluate orientation after display changes/wake and hot-plug settling.
+sketchybar --add item display_layout left \
+  --set display_layout drawing=off updates=on update_freq=30 \
+    script="$PLUGIN_DIR/display_layout.sh" \
+  --subscribe display_layout display_change system_woke
+"$PLUGIN_DIR/display_layout.sh"
+
 # ---------------------------------------------------------------- init
 sketchybar --update
 sketchybar --trigger aerospace_workspace_change \
