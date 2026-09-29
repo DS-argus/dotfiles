@@ -293,13 +293,13 @@ sketchybar --add item media.artist right \
   --set media.artist width=0 drawing=off icon.drawing=off \
     icon.padding_left=0 icon.padding_right=0 \
     label.width=180 label.padding_left=0 label.padding_right=6 label.align=left \
-    label.font="$FONT:Bold:11.0" label.color=$FROST0 label.y_offset=-7 label.max_chars=26 label.scroll_duration=320 scroll_texts=on
+    label.font="$FONT:Bold:11.0" label.color=$FROST0 label.y_offset=-7 label.max_chars=1 scroll_texts=off
 sketchybar --add item media.title right \
   --set media.title width=186 drawing=off icon.drawing=off \
     icon.padding_left=0 icon.padding_right=0 \
     label.width=180 label.padding_left=0 label.padding_right=6 label.align=left \
-    label.font="$FONT:Bold:11.0" label.color=$TEXT label.y_offset=7 label.max_chars=26 label.scroll_duration=320 scroll_texts=on \
-    update_freq=3 updates=on script="$PLUGIN_DIR/media.sh" \
+    label.font="$FONT:Bold:11.0" label.color=$TEXT label.y_offset=7 label.max_chars=1 label.scroll_duration=320 scroll_texts=on \
+    update_freq=3 updates=on script="MEDIA_FONT_SIZE=11 MEDIA_TEXT_WIDTH=180 \"$PLUGIN_DIR/media.sh\"" \
   --subscribe media.title system_woke
 sketchybar --add item media.icon right \
   --set media.icon drawing=off icon="󰎆" icon.font="$FONT:Bold:22.0" \
