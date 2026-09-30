@@ -17,7 +17,7 @@ ARGS=()
 for item in clock calendar system_group mode battery battery.status \
   github cpu_graph memory_graph network.up \
   network.down system_separator codex_usage \
-  codex_separator codex_group '/codex\..*/' media_group '/media\..*/' upcoming_group '/upcoming\..*/'; do
+  codex_separator codex_group '/codex\..*/' claude_usage '/claude\..*/' quota.divider media_group '/media\..*/' upcoming_group '/upcoming\..*/'; do
   ARGS+=(--set "$item" display="$TARGETS")
 done
 # The compact clock is only needed on displays not receiving the full bar.

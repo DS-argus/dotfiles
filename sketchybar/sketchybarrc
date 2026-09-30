@@ -136,7 +136,7 @@ sketchybar --add item github right \
 sketchybar --add bracket left_group mode '/space\..*/' front_app \
   --set left_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=12 \
+    background.corner_radius=10 \
     background.height=42 \
     background.border_color=$BORDER \
     background.border_width=2
@@ -192,6 +192,40 @@ sketchybar --add item network.down right \
 sketchybar --add item codex_separator right \
   --set codex_separator width=6 icon.drawing=off label.drawing=off
 
+# Claude's two windows form the right column of the shared quota island.
+claude_column() {
+  local suffix="$1" column_width="$2" color="$3"
+  local row offset slot
+  for row in weekly session; do
+    if [ "$row" = session ]; then offset=7; slot="$column_width"; else offset=-7; slot=0; fi
+    sketchybar --add item "claude.${row}${suffix}" right \
+      --set "claude.${row}${suffix}" width="$slot" \
+        icon.drawing=off icon.padding_left=0 icon.padding_right=0 \
+        label="--" label.width="$column_width" label.padding_left=0 label.padding_right=0 \
+        label.align=left label.y_offset="$offset" label.color="$color" label.font="$FONT:Bold:10.0"
+  done
+}
+claude_column .reset 48 "$FROST2"
+claude_column "" 30 "$MUTED"
+claude_column .window 44 "$TEXT"
+sketchybar --set claude.session.window label="×5(5h)" \
+  --set claude.weekly.window label="×5(7d)" \
+  --set claude.session label=" --%" --set claude.weekly label=" --%" \
+  --set '/claude\..*/' click_script="$PLUGIN_DIR/codexbar_toggle.sh"
+sketchybar --add item claude.logo right \
+  --set claude.logo icon=":claude:" icon.font="sketchybar-app-font:Regular:22.0" \
+    icon.color=$ORANGE icon.padding_left=4 icon.padding_right=6 label.drawing=off \
+    click_script="$PLUGIN_DIR/codexbar_toggle.sh"
+sketchybar --add item claude_usage right \
+  --set claude_usage width=0 drawing=off updates=on icon.drawing=off label.drawing=off \
+    icon.padding_left=0 icon.padding_right=0 \
+    update_freq=60 script="$PLUGIN_DIR/quota_usage.sh claude" \
+  --subscribe claude_usage system_woke
+sketchybar --add item quota.divider right \
+  --set quota.divider width=12 icon.drawing=off \
+    label="│" label.width=12 label.align=center label.padding_left=0 label.padding_right=0 \
+    label.color=$FROST3 label.font="$FONT:Bold:20.0"
+
 # Each column stacks three rows; separate items allow independent colors.
 codex_column() {
   local suffix="$1" column_width="$2" color="$3"
@@ -211,30 +245,26 @@ codex_column() {
 }
 # Right-side items are registered from the rightmost column to the leftmost.
 codex_column .credits 24 "$PURPLE"
-codex_column .reset 42 "$FROST2"
+codex_column .reset 48 "$FROST2"
 codex_column "" 30 "$TEXT"
-codex_column .tier 24 "$FROST1"
+codex_column .tier 24 "$TEXT"
 sketchybar --set codex.x20.tier label="×20" \
   --set codex.x5.primary.tier label="×5" \
   --set codex.x5.secondary.tier label="×5" \
   --set '/codex\..*\.credits/' label=""
 
+# One centered Codex logo also triggers its independent usage refresh.
 sketchybar --add item codex_usage right \
-  --set codex_usage \
-    icon=":codex:" \
-    icon.font="sketchybar-app-font:Regular:22.0" \
-    icon.color=$FROST2 \
-    icon.padding_left=4 \
-    icon.padding_right=4 \
-    label.drawing=off \
-    update_freq=60 \
-    script="$PLUGIN_DIR/codex_usage.sh"
+  --set codex_usage drawing=off updates=on icon=":codex:" \
+    icon.font="sketchybar-app-font:Regular:22.0" icon.color=$FROST2 \
+    icon.padding_left=4 icon.padding_right=4 label.drawing=off \
+    update_freq=60 script="$PLUGIN_DIR/quota_usage.sh codex"
 sketchybar --set codex_usage click_script="$PLUGIN_DIR/codexbar_toggle.sh" \
   --set '/codex\..*/' click_script="$PLUGIN_DIR/codexbar_toggle.sh"
-sketchybar --add bracket codex_group codex_usage '/codex\..*/' \
+sketchybar --add bracket codex_group codex_usage '/codex\..*/' '/claude\..*/' quota.divider \
   --set codex_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=12 \
+    background.corner_radius=10 \
     background.height=42 \
     background.border_color=$BORDER \
     background.border_width=2
@@ -242,7 +272,7 @@ sketchybar --add bracket codex_group codex_usage '/codex\..*/' \
 sketchybar --add bracket system_group network.up network.down cpu_graph memory_graph system_separator github battery battery.status calendar clock \
   --set system_group \
     background.color=$GROUP_COLOR \
-    background.corner_radius=12 \
+    background.corner_radius=10 \
     background.height=42 \
     background.border_color=$BORDER \
     background.border_width=2
@@ -259,7 +289,7 @@ sketchybar --add item portrait.clock right \
     click_script="open -a Calendar"
 sketchybar --add bracket portrait_clock_group portrait.calendar portrait.clock \
   --set portrait_clock_group drawing=off background.color=$GROUP_COLOR \
-    background.corner_radius=12 background.height=42 \
+    background.corner_radius=10 background.height=42 \
     background.border_color=$BORDER background.border_width=2
 
 # Upcoming calendar event between media and Codex (right items add leftwards).
@@ -268,12 +298,12 @@ sketchybar --add item upcoming.separator right \
 sketchybar --add item upcoming.detail right \
   --set upcoming.detail width=0 drawing=off icon.drawing=off \
     icon.padding_left=0 icon.padding_right=0 \
-    label.width=120 label.padding_left=0 label.padding_right=6 label.align=left \
+    label.width=132 label.padding_left=0 label.padding_right=10 label.align=left \
     label.font="$FONT:Bold:11.0" label.color=$FROST1 label.y_offset=-7
 sketchybar --add item upcoming.title right \
-  --set upcoming.title width=126 drawing=off icon.drawing=off \
+  --set upcoming.title width=142 drawing=off icon.drawing=off \
     icon.padding_left=0 icon.padding_right=0 \
-    label.width=120 label.padding_left=0 label.padding_right=6 label.align=left \
+    label.width=132 label.padding_left=0 label.padding_right=10 label.align=left \
     label.font="$FONT:Bold:11.0" label.color=$TEXT label.y_offset=7 \
     update_freq=60 updates=on script="$PLUGIN_DIR/calendar.sh" \
   --subscribe upcoming.title system_woke
@@ -283,7 +313,7 @@ sketchybar --add item upcoming.icon right \
 sketchybar --set '/upcoming\..*/' click_script="open -a Calendar"
 sketchybar --add bracket upcoming_group upcoming.icon upcoming.title upcoming.detail \
   --set upcoming_group drawing=off background.color=$GROUP_COLOR \
-    background.corner_radius=12 background.height=42 \
+    background.corner_radius=10 background.height=42 \
     background.border_color=$BORDER background.border_width=2
 
 # Now Playing: only visible while the active macOS media session is playing.
@@ -309,7 +339,7 @@ sketchybar --set media.title click_script="$PLUGIN_DIR/open_related_app.sh media
   --set media.icon click_script="media-control toggle-play-pause"
 sketchybar --add bracket media_group media.icon media.title media.artist \
   --set media_group drawing=off background.color=$GROUP_COLOR \
-    background.corner_radius=12 background.height=42 \
+    background.corner_radius=10 background.height=42 \
     background.border_color=$BORDER background.border_width=2
 
 # Re-evaluate orientation after display changes/wake and hot-plug settling.
