@@ -183,7 +183,7 @@ Neovim tabpage는 파일 탭이 아니라 window layout 묶음으로 사용합�
 
 ### Treesitter 편집 동작
 
-`plugins/treesitter.lua`는 파서 설치와 플러그인 설정을, `core/treesitter.lua`는 버퍼별 하이라이트·들여쓰기·접기를 담당합니다. 하이라이트와 접기는 Neovim 내장 API를 사용합니다. Bash는 기존처럼 Treesitter 하이라이트만 제외하고 들여쓰기는 유지합니다. HTML 태그 처리는 `nvim-ts-autotag`를 독립 설정합니다.
+`plugins/treesitter.lua`는 파서 설치와 플러그인 설정을, `core/treesitter.lua`는 버퍼별 하이라이트·들여쓰기·접기를 담당합니다. 하이라이트와 접기는 Neovim 내장 API를 사용합니다. Bash(`sh`/`bash` filetype)는 기존처럼 Treesitter 하이라이트만 제외하고 들여쓰기와 접기는 유지합니다. HTML 태그 처리는 `nvim-ts-autotag`를 독립 설정합니다.
 
 기존에 설치되어 있던 JavaScript, TypeScript, TSX, Prisma, Svelte를 포함해 25개 파서를 설치 목록에 명시했습니다.
 

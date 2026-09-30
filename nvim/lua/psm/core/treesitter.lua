@@ -42,6 +42,7 @@ vim.treesitter.query.set(
 )
 
 local fold_filetypes = {
+	bash = true,
 	c = true,
 	css = true,
 	dockerfile = true,
@@ -54,6 +55,7 @@ local fold_filetypes = {
 	lua = true,
 	python = true,
 	rust = true,
+	sh = true,
 	vim = true,
 	yaml = true,
 }

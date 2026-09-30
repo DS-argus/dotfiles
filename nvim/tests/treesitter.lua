@@ -199,6 +199,17 @@ assert_equal(vim.api.nvim_buf_get_lines(bash_buf, 0, -1, false), {
 	"  echo treesitter",
 	"fi",
 }, "Bash Treesitter indentation changed")
+assert_equal(vim.wo.foldmethod, "expr", "Bash must use Treesitter folds")
+assert_equal(vim.fn.foldlevel(2), 1, "Bash if block must fold")
+
+local sh_buf = new_buffer("sh", {
+	"f() {",
+	"  echo sh",
+	"}",
+})
+assert_equal(vim.treesitter.highlighter.active[sh_buf], nil, "sh must remain excluded from Treesitter highlighting")
+assert_equal(vim.wo.foldmethod, "expr", "sh must use Treesitter folds")
+assert_equal(vim.fn.foldlevel(2), 1, "sh function must fold")
 
 local markdown_buf = new_buffer("markdown", {
 	"---",
