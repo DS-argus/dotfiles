@@ -292,7 +292,7 @@ sketchybar --add bracket portrait_clock_group portrait.calendar portrait.clock \
     background.corner_radius=10 background.height=42 \
     background.border_color=$BORDER background.border_width=2
 
-# Upcoming calendar event between media and Codex (right items add leftwards).
+# The nearest calendar event: title above its date/time, between media and quotas.
 sketchybar --add item upcoming.separator right \
   --set upcoming.separator width=6 drawing=off icon.drawing=off label.drawing=off
 sketchybar --add item upcoming.detail right \
