@@ -62,10 +62,17 @@ brew install sketchybar borders ical-buddy gh blueutil
 brew install --cask font-sketchybar-app-font
 brew services start sketchybar
 gh auth login
-
-# Hide the native menu bar while keeping it available at the screen edge.
-defaults write NSGlobalDomain _HIHideMenuBar -bool true
 ```
+
+Hide the native macOS menu bar so SketchyBar can take the top edge. Set this in
+System Settings, not with `defaults write`: the command only stores the
+preference and does not apply it to the running menu bar.
+
+1. Open **System Settings > Control Center**.
+2. Set **Automatically hide and show the menu bar** to **Always**.
+3. If it already says **Always** but the menu bar is still visible (this can
+   happen after a macOS update), switch it to **Never** and then back to
+   **Always**.
 
 ## Version Snapshot
 
