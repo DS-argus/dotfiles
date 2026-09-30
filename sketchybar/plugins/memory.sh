@@ -1,22 +1,38 @@
 #!/bin/bash
-# macOS memory pressure 기반 가용량을 사용률 형태로 표시
+# 활동 모니터의 "사용된 메모리"(앱 + 와이어드 + 압축)를 표시하고, 색은 커널 메모리 압박 단계를 따른다
 source "$HOME/.config/sketchybar/colors.sh"
 
-FREE="$(memory_pressure -Q 2>/dev/null | awk '/System-wide memory free percentage:/ { gsub(/%/, "", $5); print $5 }')"
-[ -z "$FREE" ] && exit 0
-USED=$((100 - FREE))
+TOTAL_BYTES="$(sysctl -n hw.memsize 2>/dev/null)"
+USED="$(vm_stat 2>/dev/null | awk -v total="$TOTAL_BYTES" '
+  /page size of/ { for (i = 1; i <= NF; i++) if ($i == "of") page = $(i + 1) }
+  /^Anonymous pages:/ { anon = $3 }
+  /^Pages purgeable:/ { purgeable = $3 }
+  /^Pages wired down:/ { wired = $4 }
+  /^Pages occupied by compressor:/ { compressed = $5 }
+  END {
+    if (page == 0 || total == 0) exit
+    used = int((anon - purgeable + wired + compressed) * page / total * 100 + 0.5)
+    if (used > 100) used = 100
+    print used
+  }')"
+[ -z "$USED" ] && exit 0
 POINT="$(awk -v used="$USED" 'BEGIN { printf "%.2f", used / 100 }')"
 
-if [ "$FREE" -lt 10 ]; then
-  COLOR=$RED
-  FILL=0x40bf616a
-elif [ "$FREE" -lt 20 ]; then
-  COLOR=$YELLOW
-  FILL=0x40ebcb8b
-else
-  COLOR=$PURPLE
-  FILL=0x40b48ead
-fi
+# kern.memorystatus_vm_pressure_level: 1 정상, 2 경고, 4 위험
+case "$(sysctl -n kern.memorystatus_vm_pressure_level 2>/dev/null)" in
+  4)
+    COLOR=$RED
+    FILL=0x40bf616a
+    ;;
+  2)
+    COLOR=$YELLOW
+    FILL=0x40ebcb8b
+    ;;
+  *)
+    COLOR=$PURPLE
+    FILL=0x40b48ead
+    ;;
+esac
 
 sketchybar --set "$NAME" icon.color=$COLOR label="RAM ${USED}%" \
            --set memory_graph graph.color=$COLOR graph.fill_color=$FILL \
