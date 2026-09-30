@@ -58,21 +58,3 @@ watch = true
 # Text files (txt, csv, log...) are rendered as plain Markdown.
 # Default: [] (Markdown only)
 # extras = ["txt", "csv", "rs", "java", "json", "yaml"]
-
-[themes.ocean-transparent]
-base = "ocean"
-syntax = "base16-ocean.dark"
-
-[themes.ocean-transparent.ui]
-content_bg = "reset"
-toc_bg = "reset"
-toc_inactive_bg = "reset"
-status_bg = "reset"
-
-[themes.ocean-transparent.markdown]
-code_frame = "#7f91a8"
-code_gutter = "#a3b1c6"
-code_label = "#8bd5ca"
-table_border = "#7f91a8"
-table_separator = "#7f91a8"
-heading_underline = "#7f91a8"
