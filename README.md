@@ -52,6 +52,9 @@ brew install leaf-md
 # btop resource monitor.
 brew install btop
 
+# glazepkg (gpk) package manager TUI.
+brew install neur0map/tap/gpk
+
 # AeroSpace, SketchyBar, JankyBorders, and status-bar helpers.
 brew install --cask nikitabobko/tap/aerospace
 brew tap FelixKratz/formulae
