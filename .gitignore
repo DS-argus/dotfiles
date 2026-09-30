@@ -2,6 +2,9 @@
 zsh/privates.zsh
 zsh/.zsh_sessions/
 
+# Private quota account mapping
+sketchybar/accounts.local.sh
+
 # Agent and CLI runtime state
 .gjc/
 .omc/
@@ -27,6 +30,7 @@ ytdc/
 homerow/
 hammerspoon/
 codexbar/
+leaf/source
 
 # Herdr runtime artifacts
 herdr/*.bak-*
