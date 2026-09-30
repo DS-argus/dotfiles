@@ -88,7 +88,7 @@ version pins for `brew install`.
 | AeroSpace               | 0.21.3-Beta |
 | SketchyBar              | 2.24.0      |
 | JankyBorders            | 1.9.0       |
-| sketchybar-app-font     | 2.0.71      |
+| sketchybar-app-font     | 3.0.5       |
 | icalBuddy               | 1.10.1_1    |
 | GitHub CLI              | 2.97.0      |
 
