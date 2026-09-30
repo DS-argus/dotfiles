@@ -88,7 +88,7 @@ render_window() {
 }
 
 render() {
-  local fetched failed stale item entry window row i width offset credits drawing
+  local fetched failed stale item entry window row i width offset credits drawing tier prefix
   NOW="$(date +%s)"
   fetched="$(printf '%s' "$STATE" | jq -r '.fetchedAt // 0')"
   failed="$(printf '%s' "$STATE" | jq -r '.failed // false')"
@@ -96,6 +96,9 @@ render() {
   [ "$failed" = false ] && [ $((NOW - fetched)) -le $((INTERVAL * 2)) ] || stale=true
   DRAW=()
   if [ "$PROVIDER" = claude ]; then
+    tier="$(printf '%s' "$STATE" | jq -r '.entries[0].tier // empty')"
+    prefix=""; [ -z "$tier" ] || prefix="×$tier"
+    DRAW+=(--set claude.session.window label="${prefix}(5h)" --set claude.weekly.window label="${prefix}(7d)")
     COLOR=$ORANGE; [ "$stale" = false ] || COLOR=$RED
     DRAW+=(--set claude.logo icon.color="$COLOR")
     for row in session weekly; do
@@ -203,11 +206,16 @@ else
   if run_bounded 6 "$AUTH" claude auth status --json &&
     jq -e --arg account "$SKETCHYBAR_CLAUDE_ACCOUNT" '.loggedIn == true and ((.email // "") | ascii_downcase) == ($account | ascii_downcase)' "$AUTH" >/dev/null 2>&1 &&
     run_bounded 45 "$PAYLOAD" codexbar usage --provider claude --source cli --json --no-credits; then
-    ENTRIES="$(jq -ce --arg account "$SKETCHYBAR_CLAUDE_ACCOUNT" '
+    # Claude Code의 계정 프로필이 현재 Max 배수(예: default_claude_max_20x)를 보관한다.
+    TIER="$(jq -r --arg account "$SKETCHYBAR_CLAUDE_ACCOUNT" '
+      .oauthAccount | select(((.emailAddress // "") | ascii_downcase) == ($account | ascii_downcase)) |
+      (.organizationRateLimitTier // .userRateLimitTier // "") | capture("max_(?<x>[0-9]+)x").x
+    ' "$HOME/.claude.json" 2>/dev/null)"
+    ENTRIES="$(jq -ce --arg account "$SKETCHYBAR_CLAUDE_ACCOUNT" --arg tier "$TIER" '
       [.[] | select(.provider == "claude" and .error == null and (.usage.primary.usedPercent | type) == "number"
         and (.usage.secondary.usedPercent | type) == "number"
         and ((.usage.identity.accountEmail // $account | ascii_downcase) == ($account | ascii_downcase))) |
-        {account:$account,usage:{primary:.usage.primary,secondary:.usage.secondary}}] |
+        {account:$account,tier:$tier,usage:{primary:.usage.primary,secondary:.usage.secondary}}] |
       select(length == 1)
     ' "$PAYLOAD" 2>/dev/null)" && success=true
   fi

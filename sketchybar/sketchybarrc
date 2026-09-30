@@ -208,8 +208,8 @@ claude_column() {
 claude_column .reset 48 "$FROST2"
 claude_column "" 30 "$MUTED"
 claude_column .window 44 "$TEXT"
-sketchybar --set claude.session.window label="×5(5h)" \
-  --set claude.weekly.window label="×5(7d)" \
+sketchybar --set claude.session.window label="(5h)" \
+  --set claude.weekly.window label="(7d)" \
   --set claude.session label=" --%" --set claude.weekly label=" --%" \
   --set '/claude\..*/' click_script="$PLUGIN_DIR/codexbar_toggle.sh"
 sketchybar --add item claude.logo right \
