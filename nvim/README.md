@@ -295,9 +295,10 @@ Ruff 린트와 포맷 설정은 별도로 유지합니다.
 
 | 키           | 동작                  |
 | ------------ | --------------------- |
-| `<leader>xx` | Trouble 목록 토글     |
 | `<leader>xw` | workspace diagnostics |
 | `<leader>xd` | document diagnostics  |
+| `<leader>xs` | 심볼 아웃라인         |
+| `<leader>xr` | LSP 정의/참조         |
 | `<leader>xq` | quickfix              |
 | `<leader>xl` | loclist               |
 | `<leader>xt` | TODO Trouble          |
