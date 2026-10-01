@@ -34,6 +34,11 @@ return {
 					luasnip.lsp_expand(args.body)
 				end,
 			},
+			-- 자동완성 메뉴와 문서 창에 K(hover)와 같은 double 테두리를 그린다.
+			window = {
+				completion = cmp.config.window.bordered({ border = "double" }),
+				documentation = cmp.config.window.bordered({ border = "double" }),
+			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
 				["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
