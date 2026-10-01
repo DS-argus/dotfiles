@@ -3,6 +3,17 @@ return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
 	opts = {
+		presets = {
+			-- K(hover)와 signature help 창에 테두리를 그린다.
+			-- preset은 views보다 나중에 합쳐지므로 테두리 스타일도 여기서 지정한다.
+			lsp_doc_border = {
+				views = {
+					hover = {
+						border = { style = "double" },
+					},
+				},
+			},
+		},
 		views = {
 			cmdline_popup = {
 				position = { row = 5, col = "50%" },
