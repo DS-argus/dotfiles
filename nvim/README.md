@@ -119,6 +119,8 @@ LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 �
 | `nvim-lint`                     | lint 실행                                       |
 | `nvim-treesitter`               | parser/query 관리, Treesitter indent            |
 | `nvim-ts-autotag`               | HTML/XML tag 자동 처리                          |
+| `nvim-treesitter-textobjects`   | 함수/클래스/인자 text object와 이동             |
+| `nvim-treesitter-context`       | 현재 함수/블록 시작 줄을 창 상단에 고정         |
 | `nvim-ts-context-commentstring` | JSX/HTML 등 context-aware commentstring         |
 | `nvim-colorizer.lua`            | 색상 코드 하이라이트                            |
 
@@ -196,6 +198,24 @@ Neovim tabpage는 파일 탭이 아니라 window layout 묶음으로 사용합�
 `<leader>v`는 **Space를 누른 뒤 v**를 누르는 순서입니다. 선택 중 다시 Space → v를 누르면 확장됩니다. tmux prefix와 겹치지 않도록 Ctrl + Space 대신 사용합니다.
 
 `core/treesitter_selection.lua`는 내장 노드 탐색에 버퍼별 선택 이력을 더해 기존 단축키 동작을 유지합니다. 파일을 편집하거나 선택 범위를 수동 변경하면 이전 이력을 사용하지 않습니다.
+
+`nvim-treesitter-textobjects`로 구문 단위 text object와 이동을 씁니다 (`plugins/treesitter-textobjects.lua`).
+
+| 모드 | 키 | 동작 |
+| --- | --- | --- |
+| Visual, Operator | `af` / `if` | 함수 전체 / 함수 본문 |
+| Visual, Operator | `ac` / `ic` | 클래스 전체 / 클래스 본문 |
+| Visual, Operator | `aa` / `ia` | 인자 (구분자 포함) / 인자 |
+| Normal, Visual, Operator | `]f` / `[f` | 다음 / 이전 함수 시작 |
+| Normal, Visual, Operator | `]F` / `[F` | 다음 / 이전 함수 끝 |
+| Normal, Visual, Operator | `]C` / `[C` | 다음 / 이전 클래스 시작 |
+
+`nvim-treesitter-context`는 스크롤해도 현재 함수·블록 시작 줄을 창 상단에 최대 3줄 고정합니다 (`plugins/treesitter-context.lua`).
+
+| 키 | 동작 |
+| --- | --- |
+| `[x` | 현재 컨텍스트 시작 줄로 이동 |
+| `<leader>tc` | 컨텍스트 표시 토글 |
 
 ### Treesitter Fold Guard
 
