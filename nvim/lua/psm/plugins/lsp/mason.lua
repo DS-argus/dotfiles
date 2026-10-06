@@ -37,6 +37,7 @@ return {
 				"stylua", -- lua formatter
 				"prettier", -- HTML/CSS/JS formatter
 				"goimports", -- Go import organizer & formatter
+				"eslint_d", -- JS/TS linter
 			},
 			run_on_start = false, -- 시작 시 자동 실행 비활성화
 		})

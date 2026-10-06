@@ -84,7 +84,7 @@ LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 �
 
 ### Lint
 
-`nvim-lint`는 기본적으로 Python에 `ruff`를 연결합니다. lint는 자동 상시 실행이 아니라 토글/수동 실행 중심입니다.
+`nvim-lint`는 Python에 `ruff`, JavaScript/TypeScript/JSX/TSX/Svelte에 `eslint_d`를 연결합니다. lint는 자동 상시 실행이 아니라 토글/수동 실행 중심입니다. `eslint_d`는 프로젝트의 ESLint 설정(`eslint.config.js` 등)과 플러그인을 사용하므로 설정이 없는 프로젝트에서는 진단을 내지 않습니다.
 
 ## 플러그인
 
@@ -353,3 +353,4 @@ Ruff 린트와 포맷 설정은 별도로 유지합니다.
 - `stylua`
 - `prettier`
 - `goimports`
+- `eslint_d`
