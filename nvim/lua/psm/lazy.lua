@@ -18,6 +18,7 @@ require("lazy").setup({
 	checker = {
 		enabled = true, -- 플러그인 업데이트 확인
 		notify = true, -- 업데이트 있으면 알림
+		frequency = 86400, -- 하루 1회 확인 (기본값 3600 = 1시간)
 	},
 	ui = {
 		size = { width = 0.85, height = 0.8 },
