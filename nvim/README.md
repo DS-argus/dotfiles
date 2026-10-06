@@ -80,6 +80,7 @@ LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 �
 | Go                          | `goimports`, `gofmt`                   |
 | Rust                        | `rustfmt`, LSP fallback                |
 | CSS/HTML/JSON/YAML/Markdown | `prettier`                             |
+| JavaScript/TypeScript/JSX/TSX | `prettier`                           |
 
 ### Lint
 
