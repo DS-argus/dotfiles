@@ -211,6 +211,17 @@ assert_equal(vim.treesitter.highlighter.active[sh_buf], nil, "sh must remain exc
 assert_equal(vim.wo.foldmethod, "expr", "sh must use Treesitter folds")
 assert_equal(vim.fn.foldlevel(2), 1, "sh function must fold")
 
+for filetype, lines in pairs({
+	javascript = { "function answer() {", "  return 42;", "}" },
+	javascriptreact = { "function View() {", "  return <div />;", "}" },
+	typescript = { "function answer(): number {", "  return 42;", "}" },
+	typescriptreact = { "function View(): JSX.Element {", "  return <div />;", "}" },
+}) do
+	new_buffer(filetype, lines)
+	assert_equal(vim.wo.foldmethod, "expr", filetype .. " must use Treesitter folds")
+	assert_equal(vim.fn.foldlevel(2), 1, filetype .. " function body must fold")
+end
+
 local markdown_buf = new_buffer("markdown", {
 	"---",
 	"title: smoke",
