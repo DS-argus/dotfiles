@@ -33,7 +33,9 @@ Treesitter는 [공식 `main` 설정 방식](https://github.com/nvim-treesitter/n
     │   ├── ty.lua
     │   ├── pyright.lua (비활성 보관)
     │   ├── lua_ls.lua
-    │   └── gopls.lua
+    │   ├── gopls.lua
+    │   ├── rust_analyzer.lua
+    │   └── vtsls.lua
     └── plugins/
         ├── lsp/
         │   ├── mason.lua
@@ -63,6 +65,7 @@ Treesitter는 [공식 `main` 설정 방식](https://github.com/nvim-treesitter/n
 | `lua_ls`        | Lua    | `vim` global 허용, Neovim runtime library 등록                                               |
 | `gopls`         | Go     | `staticcheck=true`, `go/gomod/gowork` filetype                                               |
 | `rust_analyzer` | Rust   | 기본 설정 + inlay hints 활성화                                                                               |
+| `vtsls`         | JavaScript/TypeScript | 기본 root 탐색(lock 파일, `.git`, Deno 제외) + 인레이 힌트 활성화(매개변수 이름은 리터럴 인자만) |
 
 LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 후처리는 `psm.lsp.servers`에서 각 모듈의 `on_attach`로 위임합니다.
 
@@ -341,6 +344,7 @@ Ruff 린트와 포맷 설정은 별도로 유지합니다.
 - `lua_ls`
 - `rust_analyzer`
 - `gopls`
+- `vtsls`
 
 ### Tools
 

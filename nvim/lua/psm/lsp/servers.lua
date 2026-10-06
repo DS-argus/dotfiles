@@ -5,6 +5,7 @@ M.names = {
 	"lua_ls",
 	"rust_analyzer",
 	"gopls",
+	"vtsls",
 }
 
 M.modules = {
@@ -12,6 +13,7 @@ M.modules = {
 	lua_ls = "psm.lsp.lua_ls",
 	rust_analyzer = "psm.lsp.rust_analyzer",
 	gopls = "psm.lsp.gopls",
+	vtsls = "psm.lsp.vtsls",
 }
 
 function M.opts(server, capabilities)
