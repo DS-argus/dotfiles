@@ -83,14 +83,16 @@ key-mapping.preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
-gaps.inner.horizontal = 10
-gaps.inner.vertical =   10
-gaps.outer.left =       10
-gaps.outer.bottom =     10
-# 내장 화면은 macOS가 메뉴 막대/노치 영역을 이미 비워 두므로 추가 여백만 적용한다.
-# 외장 화면은 sketchybar(y_offset 8 + height 44) + 여백 10을 확보한다.
-gaps.outer.top =        [{ monitor."built-in" = 8 }, 62]
-gaps.outer.right =      10
+gaps.inner.horizontal = 5
+gaps.inner.vertical =   5
+gaps.outer.left =       5
+gaps.outer.bottom =     5
+# 좌우 gap = sketchybar margin. top = sketchybar 하단(y_offset 2 + height 32 = 34) - macOS 창 영역 시작 y + 여백 5
+# 내장 화면: 창 영역이 노치 아래 y 32부터 → 34 - 32 + 5 = 7
+# 외장 화면: 메뉴 막대 자동 숨김이라 y 0부터 → 34 - 0 + 5 = 39
+# gaps.outer.top =        [{ monitor."built-in" = 8 }, 62]
+gaps.outer.top =        [{ monitor."built-in" = 7 }, 39]
+gaps.outer.right =      5
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
