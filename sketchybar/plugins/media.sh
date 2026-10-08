@@ -13,7 +13,7 @@ TITLE="$(printf '%s' "$MEDIA" | jq -r '.title | gsub("[\\r\\n\\t]"; " ")')"
 ARTIST="$(printf '%s' "$MEDIA" | jq -r '(.artist // "") | if length == 0 then "Now Playing" else . end | gsub("[\\r\\n\\t]"; " ")')"
 # Fit each label to its slot using CoreText advances measured for Hack Nerd Font Bold and its
 # macOS fallbacks. SketchyBar truncates by code point, so it receives the same NFC text measured here.
-FITTED="$(python3 - "$TITLE" "$ARTIST" "${MEDIA_FONT_SIZE:-11}" "${MEDIA_TEXT_WIDTH:-180}" <<'PYTHON'
+FITTED="$(python3 - "$TITLE" "$ARTIST" "${MEDIA_FONT_SIZE:-10}" "${MEDIA_TEXT_WIDTH:-164}" <<'PYTHON'
 import sys
 import unicodedata
 

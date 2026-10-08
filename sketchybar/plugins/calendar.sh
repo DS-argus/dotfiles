@@ -40,5 +40,5 @@ TITLE="$(printf '%s' "$EVENT" | jq -r '.title')"
 DETAIL="$(printf '%s' "$EVENT" | jq -r '.detail')"
 sketchybar --set '/upcoming\..*/' drawing=on --set upcoming_group drawing=on \
            --set upcoming.icon icon.color="$FROST1" \
-           --set upcoming.title label="$TITLE" label.y_offset=7 \
-           --set upcoming.detail label="$DETAIL" label.color="$FROST1" label.y_offset=-7
+           --set upcoming.title label="$TITLE" \
+           --set upcoming.detail label="$DETAIL" label.color="$FROST1"

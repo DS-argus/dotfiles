@@ -115,11 +115,13 @@ render() {
     row=0
     for i in "${ACTIVE[@]}"; do
       item="${ITEMS[$i]}"
-      offset=$(((${#ACTIVE[@]} - 1) * 6 - row * 12))
+      # Three rows need a tighter pitch to fit the 32pt bar.
+      step=12; [ "${#ACTIVE[@]}" -le 2 ] || step=9
+      offset=$(((${#ACTIVE[@]} - 1) * step / 2 - row * step))
       for suffix in "" .reset .credits .tier; do
         width=0
         if [ "$row" -eq 0 ]; then
-          case "$suffix" in "") width=30 ;; .reset) width=48 ;; .credits) width=24 ;; .tier) width=24 ;; esac
+          case "$suffix" in "") width=24 ;; .reset) width=38 ;; .credits) width=20 ;; .tier) width=20 ;; esac
         fi
         DRAW+=(--set "$item$suffix" drawing=on width="$width" label.y_offset="$offset")
       done
