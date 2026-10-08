@@ -96,7 +96,7 @@ blockquote_marker = "#616E88"
 blockquote_text = "#D8DEE9" # nord4
 link_icon = "#88C0D0"       # nord8
 link_text = "#88C0D0"       # nord8
-link_hover = "#8FBCBB"      # nord7
+link_hover = "#EBCB8B"      # nord13
 
 # --- 검색 / 하이라이트 ---
 search_highlight_bg = "#434C5E" # nord2
