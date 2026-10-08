@@ -33,11 +33,9 @@ return {
 		-- 3. Tool 설치 (포매터, 린터 등) - LSP와 분리
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"ruff", -- python linter & formatter (black, isort, pylint 대체)
 				"stylua", -- lua formatter
 				"prettier", -- HTML/CSS/JS formatter
 				"goimports", -- Go import organizer & formatter
-				"eslint_d", -- JS/TS linter
 			},
 			run_on_start = false, -- 시작 시 자동 실행 비활성화
 		})

@@ -10,6 +10,9 @@ local function setup_diagnostics()
 				[vim.diagnostic.severity.INFO] = " ",
 			},
 		},
+		-- <leader>ld(open_float) 창. 테두리는 hover/cmp/mason과 같은 double로 맞추고,
+		-- "Diagnostics:" 헤더는 숨기며, 버퍼에 진단 출처가 둘 이상일 때만 [ty]/[Ruff] 같은 출처를 붙인다.
+		float = { border = "double", header = "", source = "if_many" },
 	})
 end
 

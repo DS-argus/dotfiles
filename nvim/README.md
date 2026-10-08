@@ -64,7 +64,9 @@ Treesitter는 [공식 `main` 설정 방식](https://github.com/nvim-treesitter/n
 | `ty`            | Python | 프로젝트 root marker 지정, 가상환경 자동 탐색, workspace 진단, 인레이 힌트 기본 활성화 |
 | `lua_ls`        | Lua    | `vim` global 허용, Neovim runtime library 등록                                               |
 | `gopls`         | Go     | `staticcheck=true`, `go/gomod/gowork` filetype                                               |
-| `rust_analyzer` | Rust   | 기본 설정 + inlay hints 활성화                                                                               |
+| `rust_analyzer` | Rust   | 저장 시 `cargo clippy`로 검사 + inlay hints 활성화                                           |
+| `ruff`          | Python lint | 기본 설정. `# noqa: CODE` 위에서 `K`로 rule 문서 확인                                     |
+| `eslint`        | JS/TS lint | ESLint 설정 파일이 있는 프로젝트에서만 attach, 포맷 비활성화                             |
 | `vtsls`         | JavaScript/TypeScript | 기본 root 탐색(lock 파일, `.git`, Deno 제외) + 인레이 힌트 활성화(매개변수 이름은 리터럴 인자만) |
 
 LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 후처리는 `psm.lsp.servers`에서 각 모듈의 `on_attach`로 위임합니다.
@@ -84,7 +86,14 @@ LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 �
 
 ### Lint
 
-`nvim-lint`는 Python에 `ruff`, JavaScript/TypeScript/JSX/TSX/Svelte에 `eslint_d`를 연결합니다. lint는 자동 상시 실행이 아니라 토글/수동 실행 중심입니다. `eslint_d`는 프로젝트의 ESLint 설정(`eslint.config.js` 등)과 플러그인을 사용하므로 설정이 없는 프로젝트에서는 진단을 내지 않습니다.
+lint도 LSP 진단으로 통일합니다. 별도 lint 플러그인 없이 `vim.diagnostic` 하나로 밑줄, sign, `<leader>ld` float, Trouble에 표시됩니다.
+
+| Filetype                                       | Lint 출처                                                                |
+| ---------------------------------------------- | ------------------------------------------------------------------------ |
+| Python                                         | `ruff` LSP                                                               |
+| JavaScript/TypeScript/JSX/TSX/Svelte/Vue/Astro | `eslint` LSP (프로젝트에 ESLint 설정이 있을 때만 attach, 포맷 기능은 끔) |
+| Rust                                           | `rust_analyzer` 저장 시 `cargo clippy`                                   |
+| Go                                             | `gopls` `staticcheck`                                                    |
 
 ## 플러그인
 
@@ -103,7 +112,7 @@ LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 �
 | `nvim-lspconfig`            | Neovim LSP 서버 설정             |
 | `mason.nvim`                | LSP 서버와 CLI 도구 관리 UI      |
 | `mason-lspconfig.nvim`      | Mason과 LSP 서버 이름 연결       |
-| `mason-tool-installer.nvim` | formatter/linter 도구 관리       |
+| `mason-tool-installer.nvim` | formatter 도구 관리              |
 | `cmp-nvim-lsp`              | LSP completion capability        |
 | `nvim-cmp`                  | completion engine                |
 | `cmp-buffer`                | 현재 buffer completion source    |
@@ -115,12 +124,11 @@ LSP attach 시 공통 키맵과 진단 아이콘을 설정합니다. 서버별 �
 | `neodev.nvim`               | Neovim Lua 개발 보조             |
 | `nvim-lsp-file-operations`  | 파일 rename/move와 LSP 연동      |
 
-### Formatting, Lint, Syntax
+### Formatting, Syntax
 
 | 플러그인                        | 기능                                            |
 | ------------------------------- | ----------------------------------------------- |
 | `conform.nvim`                  | 포맷팅 및 저장 시 포맷                          |
-| `nvim-lint`                     | lint 실행                                       |
 | `nvim-treesitter`               | parser/query 관리, Treesitter indent            |
 | `nvim-ts-autotag`               | HTML/XML tag 자동 처리                          |
 | `nvim-treesitter-textobjects`   | 함수/클래스/인자 text object와 이동             |
@@ -246,7 +254,7 @@ Python 환경 탐색은 ty의 내장 기능을 사용합니다. 활성 `$VIRTUAL
 
 진단 범위는 `workspace`이며, 변수 타입과 호출 인자 이름 힌트는 LSP 연결 시 자동으로 켜집니다.
 `<leader>lh`로 현재 buffer의 인레이 힌트를 켜고 끌 수 있습니다.
-Ruff 린트와 포맷 설정은 별도로 유지합니다.
+Ruff lint 진단은 `ruff` LSP가 담당합니다. 코드 심볼 hover는 ty가, `# noqa: CODE` 주석 위 hover는 ruff가 rule 문서로 응답합니다. Ruff 포맷은 conform에서 별도로 실행합니다.
 
 기존 `lua/psm/lsp/pyright.lua`는 복구용으로 보관하며, 활성 서버 목록에는 등록하지 않습니다.
 
@@ -304,15 +312,14 @@ Ruff 린트와 포맷 설정은 별도로 유지합니다.
 | `<leader>rn` | rename        |
 | `<leader>ca` | code action   |
 | `<leader>ld` | 줄 진단 float |
+| `<leader>lt` | 현재 buffer 진단 표시 토글 |
 | `<leader>ls` | 문서 symbol   |
 
-### Format, Lint, Replace
+### Format, Replace
 
 | 키           | 동작                  |
 | ------------ | --------------------- |
 | `<leader>mf` | 파일/선택 영역 포맷   |
-| `<leader>lt` | lint 토글             |
-| `<leader>ll` | 현재 파일 lint 실행   |
 | `<leader>sr` | 현재 파일 찾기/바꾸기 |
 
 ### Diagnostics, TODO
@@ -346,11 +353,11 @@ Ruff 린트와 포맷 설정은 별도로 유지합니다.
 - `rust_analyzer`
 - `gopls`
 - `vtsls`
+- `ruff`
+- `eslint`
 
 ### Tools
 
-- `ruff`
 - `stylua`
 - `prettier`
 - `goimports`
-- `eslint_d`

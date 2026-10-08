@@ -31,7 +31,7 @@ return {
 			{ "<leader>c", group = "코드" },
 			{ "<leader>f", group = "찾기" },
 			{ "<leader>h", group = "Git 변경" },
-			{ "<leader>l", group = "린트/LSP" },
+			{ "<leader>l", group = "LSP/진단" },
 			{ "<leader>m", group = "문서/포맷" },
 			{ "<leader>n", group = "알림" },
 			{ "<leader>r", group = "이름 변경" },

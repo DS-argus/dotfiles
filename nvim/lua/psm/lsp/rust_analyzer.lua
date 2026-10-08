@@ -1,7 +1,14 @@
 local M = {}
 
 function M.opts()
-	return {}
+	return {
+		settings = {
+			["rust-analyzer"] = {
+				-- 저장 시 cargo check 대신 cargo clippy로 rustc + clippy lint를 함께 받는다.
+				check = { command = "clippy" },
+			},
+		},
+	}
 end
 
 function M.on_attach(args, client)
